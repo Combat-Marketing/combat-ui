@@ -2,6 +2,7 @@
   "name": "@combat-ui/core",
   "version": "0.0.1",
   "description": "A responsive, customizable web component framework targeting modern baseline web standards.",
+  "private": true,
   "keywords": [
     "UI",
     "CSS",
@@ -21,10 +22,45 @@
     }
   ],
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/combat-ui.js"
+    },
+    "./styles": "./dist/styles/index.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "vite docs",
-    "build": "vite build",
-    "typecheck": "tsc --noEmit",
-    "check": ""
+    "dev": "vite --config vite.config.ts",
+    "dev:docs": "vite docs --config vite.config.ts",
+    "build": "npm run clean && npm run typecheck && npm run build:lib && npm run build:docs",
+    "build:lib": "vite build --config vite.config.ts",
+    "build:docs": "vite build docs --config vite.config.ts --outDir ../dist-docs",
+    "typecheck": "tsc -b",
+    "typecheck:clean": "tsc -b --clean",
+    "check": "npm run typecheck && npm run check:css && npm run check:html",
+    "check:css": "stylelint \"src/**/*.css\" \"docs/**/*.css\" \"examples/**/*.css\"",
+    "check:html": "eslint \"docs/**/*.html\" \"examples/**/*.html\"",
+    "clean": "rimraf dist dist-docs .tsbuildinfo"
+  },
+  "browserslist": [
+    "baseline 2025 with downstream"
+  ],
+  "devDependencies": {
+    "@html-eslint/eslint-plugin": "0.53.0",
+    "@html-eslint/parser": "0.53.0",
+    "eslint": "9.39.1",
+    "rimraf": "6.1.2",
+    "stylelint": "16.26.1",
+    "stylelint-config-standard": "39.0.1",
+    "stylelint-plugin-use-baseline": "1.1.3",
+    "typescript": "5.9.3",
+    "vite": "7.3.0",
+    "vite-plugin-dts": "4.5.3"
   }
 }
