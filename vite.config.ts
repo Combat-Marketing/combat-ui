@@ -5,7 +5,7 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     dts({
-      tsConfigPath: "./tsconfig.src.json",
+      tsconfigPath: "./tsconfig.src.json",
       outDir: "dist/types",
       insertTypesEntry: true,
     }),
@@ -16,7 +16,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       formats: ["es"],
-      filename: () => "combat-ui.js",
+      fileName: () => "combat-ui.js",
       cssFileName: "combat-ui",
     },
     rollupOptions: {
