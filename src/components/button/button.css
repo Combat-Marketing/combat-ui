@@ -1,0 +1,90 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([full]) {
+  inline-size: 100%;
+}
+
+.control {
+  --_bg: var(
+    --cui-button-bg,
+    var(--cui-color-surface-muted, oklch(97.3% 0.009 240deg))
+  );
+  --_border: var(
+    --cui-button-border,
+    var(--cui-color-border, oklch(92.5% 0.009 240deg))
+  );
+  --_color: var(
+    --cui-button-color,
+    var(--cui-color-text, oklch(24% 0.04 264deg))
+  );
+
+  display: inline-flex;
+  inline-size: 100%;
+  min-block-size: var(--cui-control-size, 2.5rem);
+  align-items: center;
+  justify-content: center;
+  gap: var(--cui-space-2, 0.5rem);
+  border: var(--cui-border-size, 1px) solid var(--_border);
+  border-radius: var(--cui-control-radius, 0.25rem);
+  background: var(--_bg);
+  color: var(--_color);
+  font: inherit;
+  font-weight: var(--cui-font-weight-strong, 680);
+  padding-block: 0.625rem;
+  padding-inline: 1rem;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+button.control:disabled,
+a.control[aria-disabled="true"] {
+  opacity: 0.58;
+}
+
+:host([variant="primary"]) .control {
+  --_bg: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  --_border: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  --_color: var(--cui-color-on-accent, oklch(100% 0 0deg));
+}
+
+@supports (color: color-mix(in oklch, white, black)) {
+  .control:hover {
+    --_bg: color-mix(
+      in oklch,
+      var(--cui-color-surface-muted, #edf0f4),
+      var(--cui-color-text, #1b1f27) 8%
+    );
+  }
+
+  :host([variant="primary"]) .control:hover {
+    --_bg: color-mix(
+      in oklch,
+      var(--cui-color-accent, oklch(57% 0.18 246deg)),
+      black 8%
+    );
+    --_border: color-mix(
+      in oklch,
+      var(--cui-color-accent, oklch(57% 0.18 246deg)),
+      black 8%
+    );
+  }
+}
