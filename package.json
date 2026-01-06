@@ -52,6 +52,7 @@
     "baseline 2025 with downstream"
   ],
   "devDependencies": {
+    "@types/node": "",
     "@html-eslint/eslint-plugin": "0.53.0",
     "@html-eslint/parser": "0.53.0",
     "eslint": "9.39.1",
