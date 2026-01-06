@@ -36,6 +36,7 @@
   --cui-color-danger: oklch(58% 0.19 28deg);
   --cui-color-success: oklch(58% 0.16 150deg);
   --cui-color-warning: oklch(72% 0.16 82deg);
+  --cui-color-raised: oklch(100% 0 0deg);
   --cui-color-surface: oklch(98% 0.01 265deg);
   --cui-color-surface-muted: oklch(97.3% 0.009 240deg);
   --cui-color-border: oklch(92.5% 0.009 240deg);
