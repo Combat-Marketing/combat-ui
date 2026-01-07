@@ -41,6 +41,7 @@
   --cui-color-surface-muted: oklch(97.3% 0.009 240deg);
   --cui-color-border: oklch(92.5% 0.009 240deg);
   --cui-color-text: oklch(24% 0.04 264deg);
+  --cui-color-text-muted: oklch(41.7% 0.045 264deg);
   --cui-color-focus: var(--cui-color-accent, oklch(57% 0.18 246deg));
 
   /** GENERAL SIZING **/

@@ -1,0 +1,37 @@
+.cui-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  inline-size: 1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cui-text-muted {
+  color: var(--cui-color-text-muted, oklch(41.7% 0.045 264deg));
+}
+
+.cui-text-balance {
+  text-wrap: balance;
+}
+
+.cui-full-bleed {
+  inline-size: 100vi;
+  margin-inline: calc(50% - 50vi);
+}
+
+.cui-size-sm {
+  --cui-control-scale: 0.88;
+}
+
+.cui-size-lg {
+  --cui-control-scale: 1.16;
+}
+
+.cui-density-compact {
+  --cui-density: 0;
+}
+
+.cui-density-comfortable {
+  --cui-density: 1.25;
+}
