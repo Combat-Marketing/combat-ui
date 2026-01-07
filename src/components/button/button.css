@@ -22,7 +22,7 @@
   );
   --_color: var(
     --cui-button-color,
-    var(--cui-color-text, oklch(24% 0.04 264deg))
+    var(--cui-color, oklch(24% 0.04 264deg))
   );
 
   display: inline-flex;
@@ -71,7 +71,7 @@ a.control[aria-disabled="true"] {
     --_bg: color-mix(
       in oklch,
       var(--cui-color-surface-muted, #edf0f4),
-      var(--cui-color-text, #1b1f27) 8%
+      var(--cui-color, #1b1f27) 8%
     );
   }
 

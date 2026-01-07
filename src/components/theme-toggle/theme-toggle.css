@@ -15,7 +15,7 @@ button {
   border: var(--cui-border-size, 1px) solid var(--cui-color-border, oklch(92.5% 0.009 240deg));
   border-radius: var(--cui-control-radius, 0.25rem);
   background: var(--cui-color-raised, oklch(100% 0 0deg));
-  color: var(--cui-color-text, oklch(24% 0.04 264deg));
+  color: var(--cui-color, oklch(24% 0.04 264deg));
   font: inherit;
   font-weight: var(--cui-font-weight-strong, 680);
   padding-block: 0.625rem;

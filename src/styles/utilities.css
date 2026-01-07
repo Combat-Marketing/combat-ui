@@ -8,7 +8,7 @@
 }
 
 .cui-text-muted {
-  color: var(--cui-color-text-muted, oklch(41.7% 0.045 264deg));
+  color: var(--cui-color-muted, oklch(41.7% 0.045 264deg));
 }
 
 .cui-text-balance {
