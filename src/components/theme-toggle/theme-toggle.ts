@@ -11,10 +11,33 @@ export type Theme = (typeof themes)[number];
 
 const themeChangeEvent = "cui-theme-change";
 
+const defaultLabels: Record<Theme, string> = {
+  auto: "Theme: auto",
+  light: "Theme: light",
+  dark: "Theme: dark",
+};
+
+const defaultAriaLabels: Record<Theme, string> = {
+  auto: "Current theme: auto. Change theme.",
+  light: "Current theme: light. Change theme.",
+  dark: "Current theme: dark. Change theme.",
+};
+
 export class CuiThemeToggle extends CombatElement {
   static readonly tagName = "cui-theme-toggle";
 
   static override styles = [cssStyleSheet(themeToggleStyles)];
+
+  static get observedAttributes() {
+    return [
+      "label-auto",
+      "label-light",
+      "label-dark",
+      "aria-label-auto",
+      "aria-label-light",
+      "aria-label-dark",
+    ];
+  }
 
   private readonly handleThemeChange = () => {
     this.render();
@@ -30,6 +53,10 @@ export class CuiThemeToggle extends CombatElement {
     document.removeEventListener(themeChangeEvent, this.handleThemeChange);
   }
 
+  attributeChangedCallback() {
+    this.render();
+  }
+
   private render() {
     if (!this.shadowRoot?.querySelector("button")) {
       this.appendShadowTemplate(`
@@ -39,9 +66,9 @@ export class CuiThemeToggle extends CombatElement {
         </button>
       `);
 
-      this.shadowRoot?.querySelector("button")?.addEventListener("click", () =>
-        this.cycleTheme(),
-      );
+      this.shadowRoot
+        ?.querySelector("button")
+        ?.addEventListener("click", () => this.cycleTheme());
     }
 
     const theme = getTheme();
@@ -49,7 +76,7 @@ export class CuiThemeToggle extends CombatElement {
     const icon = this.shadowRoot?.querySelector("[part='icon']");
 
     if (label) {
-      label.textContent = `Theme: ${theme}`;
+      label.textContent = this.getLabel(theme);
     }
     if (icon) {
       icon.textContent = theme === "dark" ? "D" : theme === "light" ? "L" : "A";
@@ -57,7 +84,7 @@ export class CuiThemeToggle extends CombatElement {
 
     this.shadowRoot
       ?.querySelector("button")
-      ?.setAttribute("aria-label", `Current theme: ${theme}. Change theme.`);
+      ?.setAttribute("aria-label", this.getAriaLabel(theme));
   }
 
   private cycleTheme() {
@@ -65,6 +92,14 @@ export class CuiThemeToggle extends CombatElement {
     const nextIndex = (currentIndex + 1) % themes.length;
     const nextTheme = themes[nextIndex];
     setTheme(nextTheme ?? "auto");
+  }
+
+  private getLabel(theme: Theme): string {
+    return this.getAttribute(`label-${theme}`) ?? defaultLabels[theme];
+  }
+
+  private getAriaLabel(theme: Theme): string {
+    return this.getAttribute(`aria-label-${theme}`) ?? defaultAriaLabels[theme];
   }
 }
 
