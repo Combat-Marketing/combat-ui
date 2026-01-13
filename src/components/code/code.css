@@ -1,0 +1,98 @@
+:host {
+  display: block;
+  color-scheme: dark;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.frame {
+  overflow: hidden;
+  border: var(--cui-border-size, 1px) solid var(--cui-code-border, hsl(220deg 18% 28%));
+  border-radius: var(--cui-radius-2, 0.5rem);
+  background: var(--cui-code-bg, #111827);
+  color: var(--cui-code-text, #dbeafe);
+  box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
+}
+
+.header {
+  display: flex;
+  min-block-size: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cui-space-3, 0.75rem);
+  border-block-end: var(--cui-border-size, 1px) solid var(--cui-code-border, hsl(220deg 18% 28%));
+  background: var(--cui-code-header-bg, hsl(220deg 22% 12%));
+  padding-block: var(--cui-space-2, 0.5rem);
+  padding-inline: var(--cui-space-3, 0.75rem);
+}
+
+.language {
+  color: var(--cui-code-muted, #93a4bc);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  text-transform: uppercase;
+}
+
+.copy {
+  border: var(--cui-border-size, 1px) solid var(--cui-code-border, hsl(220deg 18% 28%));
+  border-radius: var(--cui-radius-control, 0.25rem);
+  background: transparent;
+  color: var(--cui-code-text, #dbeafe);
+  font: inherit;
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  padding-block: 0.35rem;
+  padding-inline: 0.6rem;
+}
+
+.copy:hover {
+  background: hsl(220deg 18% 28% / 45%);
+}
+
+pre {
+  overflow: auto;
+  margin: 0;
+  padding: var(--cui-code-padding, var(--cui-space-4, 1rem));
+  tab-size: var(--cui-code-tab-size, 2);
+}
+
+code {
+  font-family: var(--cui-code-font, SFMono-Regular, consolas, "Liberation Mono", monospace);
+  font-size: var(--cui-code-font-size, var(--cui-font-size-neg-1, 0.875rem));
+  line-height: var(--cui-code-line-height, 1.6);
+}
+
+.token-comment {
+  color: var(--cui-code-comment, #7c8da6);
+}
+
+.token-tag,
+.token-keyword {
+  color: var(--cui-code-keyword, #7dd3fc);
+}
+
+.token-attr,
+.token-property,
+.token-variable {
+  color: var(--cui-code-property, #f9a8d4);
+}
+
+.token-string {
+  color: var(--cui-code-string, #86efac);
+}
+
+.token-number,
+.token-value {
+  color: var(--cui-code-value, #fde68a);
+}
+
+.token-punctuation,
+.token-operator {
+  color: var(--cui-code-punctuation, #cbd5e1);
+}
+
+.token-selector,
+.token-function {
+  color: var(--cui-code-function, #c4b5fd);
+}

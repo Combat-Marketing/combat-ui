@@ -69,7 +69,8 @@
   --cui-split-start: 1fr;
   --cui-split-end: 1fr;
   --cui-split-align: center;
-  --cui-shadow-1: 0 1px 2px hsl(220deg 25% 10% / 12%), 0 1px 1px hsl(220deg 25% 10% / 8%);
+  --cui-shadow-1:
+    0 1px 2px hsl(220deg 25% 10% / 12%), 0 1px 1px hsl(220deg 25% 10% / 8%);
   --cui-shadow-2: 0 12px 28px hsl(220deg 25% 10% / 14%);
   --cui-container: 72rem;
   --cui-container-narrow: 48rem;
@@ -102,6 +103,23 @@
   --cui-navbar-size: 3.25rem;
   --cui-navbar-sticky-offset: 0;
   --cui-navbar-sticky-z-index: 10;
+  --cui-code-bg: #111827;
+  --cui-code-border: hsl(220deg 18% 28%);
+  --cui-code-header-bg: hsl(220deg 22% 12%);
+  --cui-code-text: #dbeafe;
+  --cui-code-muted: #93a4bc;
+  --cui-code-padding: var(--cui-space-4, 1rem);
+  --cui-code-tab-size: 2;
+  --cui-code-font: sfmono-regular, consolas, "Liberation Mono", monospace;
+  --cui-code-font-size: var(--cui-font-size-neg-1, 0.875rem);
+  --cui-code-line-height: 1.6;
+  --cui-code-comment: #7c8da6;
+  --cui-code-keyword: #7dd3fc;
+  --cui-code-property: #f9a8d4;
+  --cui-code-string: #86efac;
+  --cui-code-value: #fde68a;
+  --cui-code-punctuation: #cbd5e1;
+  --cui-code-function: #c4b5fd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -119,7 +137,10 @@
     --cui-color-inverse-surface-raised: oklch(100% 0 0deg);
     --cui-color-inverse-surface-muted: oklch(95.7% 0.01 265deg);
     --cui-color-inverse-border: oklch(86.2% 0.01 265deg);
-    --cui-color-inverse-eyebrow: var(--cui-color-accent, oklch(57% 0.18 246deg));
+    --cui-color-inverse-eyebrow: var(
+      --cui-color-accent,
+      oklch(57% 0.18 246deg)
+    );
   }
 }
 
