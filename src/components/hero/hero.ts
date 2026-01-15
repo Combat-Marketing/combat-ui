@@ -1,0 +1,109 @@
+import { CombatElement, cssStyleSheet } from "../../internal/base-element";
+import heroCss from "./hero.css?inline";
+
+export class CuiHero extends CombatElement {
+  static readonly tagName = "cui-hero";
+  static override styles = [cssStyleSheet(heroCss)];
+  static observedAttributes = [
+    "background-position",
+    "background-size",
+    "background-src",
+  ];
+
+  connectedCallback(): void {
+    this.adoptStyles();
+
+    if (!this.shadowRoot?.querySelector(".hero")) {
+      this.appendShadowTemplate(`
+        <section class="hero" part="hero">
+          <div class="background" part="background" aria-hidden="true"></div>
+          <div class="inner" part="inner">
+            <div class="content" part="content">
+              <slot name="eyebrow"></slot>
+              <slot name="title"></slot>
+              <div class="copy" part="copy">
+                <slot></slot>
+              </div>
+              <slot name="actions"></slot>
+            </div>
+            <div class="media" part="media">
+              <slot name="media"></slot>
+            </div>
+          </div>
+        </section>
+      `);
+    }
+
+    this.syncBackground();
+  }
+
+  attributeChangedCallback(): void {
+    this.syncBackground();
+  }
+
+  get backgroundSrc(): string | null {
+    return this.getAttribute("background-src");
+  }
+
+  set backgroundSrc(value: string | null) {
+    this.setNullableAttribute("background-src", value);
+  }
+
+  get backgroundPosition(): string | null {
+    return this.getAttribute("background-position");
+  }
+
+  set backgroundPosition(value: string | null) {
+    this.setNullableAttribute("background-position", value);
+  }
+
+  get backgroundSize(): string | null {
+    return this.getAttribute("background-size");
+  }
+
+  set backgroundSize(value: string | null) {
+    this.setNullableAttribute("background-size", value);
+  }
+
+  private syncBackground(): void {
+    const backgroundSrc = this.getAttribute("background-src");
+    const backgroundPosition = this.getAttribute("background-position");
+    const backgroundSize = this.getAttribute("background-size");
+
+    if (backgroundSrc) {
+      const escapedSrc = backgroundSrc.replaceAll("\\", "\\\\").replaceAll("\"", "\\\"");
+      this.style.setProperty("--cui-hero-background-image", `url("${escapedSrc}")`);
+    } else {
+      this.style.removeProperty("--cui-hero-background-image");
+    }
+
+    if (backgroundPosition) {
+      this.style.setProperty("--cui-hero-background-position", backgroundPosition);
+    } else {
+      this.style.removeProperty("--cui-hero-background-position");
+    }
+
+    if (backgroundSize) {
+      this.style.setProperty("--cui-hero-background-size", backgroundSize);
+    } else {
+      this.style.removeProperty("--cui-hero-background-size");
+    }
+  }
+
+  private setNullableAttribute(name: string, value: string | null): void {
+    if (value === null || value === "") {
+      this.removeAttribute(name);
+      return;
+    }
+
+    this.setAttribute(name, value);
+  }
+}
+
+export function defineCuiHero(
+  registry: CustomElementRegistry = customElements,
+): void {
+  if (!registry.get(CuiHero.tagName)) {
+    registry.define(CuiHero.tagName, CuiHero);
+  }
+}

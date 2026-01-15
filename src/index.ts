@@ -4,12 +4,14 @@ import { defineCuiThemeToggle, CuiThemeToggle, getTheme, setTheme, type Theme } 
 import { CuiNavbar, defineCuiNavbar } from "./components/navbar";
 import { CuiCode, defineCuiCode } from "./components/code";
 import { CuiTabs, defineCuiTabs } from "./components/tabs";
+import { CuiHero, defineCuiHero } from "./components/hero";
 
 export { CuiThemeToggle, getTheme, setTheme, defineCuiThemeToggle, type Theme };
 export { CuiButton, defineCuiButton };
 export { CuiNavbar, defineCuiNavbar };
 export { CuiCode, defineCuiCode };
 export { CuiTabs, defineCuiTabs };
+export { CuiHero, defineCuiHero };
 
 export function defineCombatUi(
   registry: CustomElementRegistry = customElements
@@ -19,6 +21,7 @@ export function defineCombatUi(
   defineCuiThemeToggle(registry);
   defineCuiCode(registry);
   defineCuiTabs(registry);
+  defineCuiHero(registry);
 }
 
 defineCombatUi()
