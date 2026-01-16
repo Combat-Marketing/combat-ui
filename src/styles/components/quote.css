@@ -1,0 +1,119 @@
+.cui-quote,
+.cui-testimonial {
+  display: grid;
+  gap: var(--cui-quote-gap, var(--cui-space-4, 1rem));
+  border: var(--cui-border-size, 1px) solid var(--cui-quote-border, var(--cui-color-border, #cfd6df));
+  border-radius: var(--cui-quote-radius, var(--cui-radius-2, 0.5rem));
+  background: var(--cui-quote-bg, var(--cui-color-surface-raised, #fff));
+  color: var(--cui-quote-color, var(--cui-color, #1b1f27));
+  box-shadow: var(--cui-quote-shadow, var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%)));
+  padding: var(--cui-quote-padding, var(--cui-space-6, 2rem));
+}
+
+.cui-quote {
+  max-inline-size: var(--cui-quote-size, 52rem);
+}
+
+.cui-quote > :where(blockquote, p),
+.cui-testimonial > :where(blockquote, p),
+.cui-quote-body,
+.cui-testimonial-body {
+  margin: 0;
+  color: inherit;
+  font-size: var(--cui-quote-body-size, var(--cui-font-size-2, 1.5rem));
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: var(--cui-line-height-tight, 1.2);
+  text-wrap: balance;
+}
+
+.cui-quote-mark {
+  color: var(--cui-quote-accent, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  font-size: var(--cui-quote-mark-size, var(--cui-font-size-display, 5.5rem));
+  font-weight: var(--cui-font-weight-display, 760);
+  line-height: 0.75;
+}
+
+.cui-quote-footer,
+.cui-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--cui-space-3, 0.75rem);
+  color: var(--cui-quote-muted-color, var(--cui-color-muted, #5d6675));
+}
+
+.cui-quote-footer :where(cite, span),
+.cui-testimonial-author :where(cite, span) {
+  font-style: normal;
+}
+
+.cui-quote-author,
+.cui-testimonial-name {
+  color: var(--cui-quote-color, var(--cui-color, #1b1f27));
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+.cui-quote-meta,
+.cui-testimonial-role {
+  color: var(--cui-quote-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-text-metadata-size, 0.875rem);
+}
+
+.cui-testimonial-grid {
+  display: grid;
+  gap: var(--cui-content-grid-gap, var(--cui-space-4, 1rem));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--cui-testimonial-grid-min, 18rem)), 1fr));
+}
+
+.cui-testimonial {
+  align-content: start;
+}
+
+.cui-testimonial-avatar {
+  inline-size: var(--cui-testimonial-avatar-size, 3rem);
+  block-size: var(--cui-testimonial-avatar-size, 3rem);
+  border-radius: 50%;
+  background: var(--cui-color-surface-muted, #edf0f4);
+  object-fit: cover;
+}
+
+.cui-testimonial-author-text {
+  display: grid;
+  gap: var(--cui-space-1, 0.25rem);
+}
+
+.cui-quote[data-variant="pull"] {
+  --cui-quote-bg: transparent;
+  --cui-quote-border: transparent;
+  --cui-quote-shadow: none;
+  --cui-quote-padding: var(--cui-space-5, 1.5rem) 0;
+
+  border-block: var(--cui-border-size, 1px) solid var(--cui-quote-border-line, var(--cui-color-border, #cfd6df));
+  border-inline: 0;
+  border-radius: 0;
+}
+
+.cui-quote[data-variant="accent"],
+.cui-testimonial[data-variant="accent"] {
+  border-inline-start: calc(var(--cui-border-size, 1px) * 4) solid var(--cui-quote-accent, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+}
+
+.cui-quote[data-inverse],
+.cui-testimonial[data-inverse] {
+  --cui-quote-bg: var(--cui-color-inverse-surface, #10141b);
+  --cui-quote-border: var(--cui-color-inverse-border, hsl(0deg 0% 100% / 18%));
+  --cui-quote-color: var(--cui-color-inverse, #f7f8fa);
+  --cui-quote-muted-color: var(--cui-color-inverse-muted, hsl(0deg 0% 100% / 78%));
+  --cui-quote-accent: var(--cui-color-inverse-eyebrow, hsl(0deg 0% 100% / 76%));
+}
+
+.cui-quote[data-align="center"],
+.cui-testimonial[data-align="center"] {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cui-quote[data-align="center"] .cui-quote-footer,
+.cui-testimonial[data-align="center"] .cui-testimonial-author {
+  justify-content: center;
+}

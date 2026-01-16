@@ -37,9 +37,10 @@
     <section class="cui-section">
       <div class="cui-container docs-doc-layout">
         <aside class="docs-on-page" aria-label="On this page">
+          <a class="cui-nav-link" href="#hero">Hero</a>
           <a class="cui-nav-link" href="#content-grids">Content grids</a>
           <a class="cui-nav-link" href="#navbar">Navbar</a>
-          <a class="cui-nav-link" href="#buttons">Buttons</a>
+          <a class="cui-nav-link" href="#buttons-tabs">Buttons & tabs</a>
           <a class="cui-nav-link" href="#code">Code</a>
         </aside>
 
@@ -76,7 +77,7 @@
                       alt="Abstract product interface preview">
                   </cui-hero>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <cui-hero variant="split">
                         <p slot="eyebrow">Campaign</p>
                         <h1 slot="title">Launch pages with rich media.</h1>
@@ -105,7 +106,7 @@
                     </div>
                   </cui-hero>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <cui-hero
                         variant="background"
                         background-src="./hero-image.svg"
@@ -138,7 +139,7 @@
                     </video>
                   </cui-hero>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <cui-hero variant="overlay">
                         <h1 slot="title">Video-backed stories with readable copy.</h1>
                         <p>Use overlays when motion supports the message.</p>
@@ -165,7 +166,7 @@
                     </div>
                   </cui-hero>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <cui-hero
                         variant="text"
                         align="center"
@@ -225,7 +226,7 @@
                     </article>
                   </div>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <div class="cui-feature-grid" data-columns="3" data-gap="spacious"
                         style="--cui-feature-icon-size: 3rem;">
                         <article class="cui-feature-card">
@@ -250,23 +251,47 @@
               </section>
 
               <section slot="panel" class="docs-panel">
-                <div class="cui-case-grid" data-columns="2" style="--cui-case-card-media-ratio: 4 / 3;">
-                  <article class="cui-case-card" data-variant="flat">
-                    <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
-                    <div class="cui-case-card-body">
-                      <p class="cui-case-card-meta">Case study</p>
-                      <h3>Campaign launch system</h3>
-                      <p>A reusable content model for event, product, and recruitment campaigns.</p>
-                    </div>
-                  </article>
-                  <article class="cui-case-card">
-                    <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
-                    <div class="cui-case-card-body">
-                      <p class="cui-case-card-meta">Website</p>
-                      <h3>Agency page toolkit</h3>
-                      <p>Composable sections for service pages, proof blocks, and conversion flows.</p>
-                    </div>
-                  </article>
+                <div class="cui-stack">
+                  <div class="cui-case-grid" data-columns="2" style="--cui-case-card-media-ratio: 4 / 3;">
+                    <article class="cui-case-card" data-variant="flat">
+                      <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
+                      <div class="cui-case-card-body">
+                        <p class="cui-case-card-meta">Case study</p>
+                        <h3>Campaign launch system</h3>
+                        <p>A reusable content model for event, product, and recruitment campaigns.</p>
+                      </div>
+                    </article>
+                    <article class="cui-case-card">
+                      <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
+                      <div class="cui-case-card-body">
+                        <p class="cui-case-card-meta">Website</p>
+                        <h3>Agency page toolkit</h3>
+                        <p>Composable sections for service pages, proof blocks, and conversion flows.</p>
+                      </div>
+                    </article>
+                  </div>
+                  <cui-code language="html">
+                    <script type="text/html">
+                      <div class="cui-case-grid" data-columns="2" style="--cui-case-card-media-ratio: 4 / 3;">
+                        <article class="cui-case-card" data-variant="flat">
+                          <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
+                          <div class="cui-case-card-body">
+                            <p class="cui-case-card-meta">Case study</p>
+                            <h3>Campaign launch system</h3>
+                            <p>A reusable content model for event, product, and recruitment campaigns.</p>
+                          </div>
+                        </article>
+                        <article class="cui-case-card">
+                          <img class="cui-case-card-media" src="./hero-image.svg" alt="Abstract interface preview">
+                          <div class="cui-case-card-body">
+                            <p class="cui-case-card-meta">Website</p>
+                            <h3>Agency page toolkit</h3>
+                            <p>Composable sections for service pages, proof blocks, and conversion flows.</p>
+                          </div>
+                        </article>
+                      </div>
+                    </script>
+                  </cui-code>
                 </div>
               </section>
 
@@ -315,7 +340,7 @@
                     </div>
                   </div>
                   <cui-code language="html">
-                    <script type="text/plain">
+                    <script type="text/html">
                       <div class="cui-stats-grid" data-columns="3"
                         style="--cui-stat-value-size: var(--cui-font-size-5, 4rem);">
                         <div class="cui-stat" data-align="center">
@@ -336,7 +361,185 @@
                 </div>
               </section>
             </cui-tabs>
-          </section>
+
+            <section id="navbar" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+              <div class="cui-prose">
+                <h2>Navbar</h2>
+                <p>
+                  Bootstrap-like navigation supports configurable sticky positioning, responsive collapse, dropdowns,
+                  and nested menus.
+                </p>
+              </div>
+              <div class="cui-stack">
+                <div class="docs-preview">
+                  <div class="docs-preview-frame">
+                    <cui-navbar style="--cui-dropdown-animation-distance: 0.375rem;">
+                      <a slot="brand" href="#" class="cui-nav-link">Project</a>
+                      <nav slot="nav" class="cui-nav" aria-label="Project demo">
+                        <a class="cui-nav-link" href="#" aria-current="page">Home</a>
+                        <div class="cui-dropdown">
+                          <button class="cui-nav-link cui-dropdown-toggle" type="button">Services</button>
+                          <div class="cui-dropdown-menu" hidden>
+                            <a class="cui-dropdown-item" href="#">Strategy</a>
+                            <a class="cui-dropdown-item" href="#">Design</a>
+                            <div class="cui-dropdown">
+                              <button class="cui-dropdown-item cui-dropdown-toggle" type="button">Development</button>
+                              <div class="cui-dropdown-menu" hidden>
+                                <a class="cui-dropdown-item" href="#">Frontend</a>
+                                <a class="cui-dropdown-item" href="#">CMS</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <a class="cui-nav-link" href="#">Cases</a>
+                      </nav>
+                      <div slot="actions" class="cui-cluster">
+                        <cui-button>Contact</cui-button>
+                      </div>
+                    </cui-navbar>
+                  </div>
+                </div>
+                <cui-code language="html">
+                  <script type="text/html">
+                  <cui-navbar>
+                    <a slot="brand" href="#" class="cui-nav-link">Project</a>
+                    <nav slot="nav" class="cui-nav" aria-label="Project demo">
+                      <a class="cui-nav-link" href="#" aria-current="page">Home</a>
+                      <div class="cui-dropdown">
+                        <button class="cui-nav-link cui-dropdown-toggle" type="button">Services</button>
+                        <div class="cui-dropdown-menu" hidden>
+                          <a class="cui-dropdown-item" href="#">Strategy</a>
+                          <a class="cui-dropdown-item" href="#">Design</a>
+                          <div class="cui-dropdown">
+                            <button class="cui-dropdown-item cui-dropdown-toggle" type="button">Development</button>
+                            <div class="cui-dropdown-menu" hidden>
+                              <a class="cui-dropdown-item" href="#">Frontend</a>
+                              <a class="cui-dropdown-item" href="#">CMS</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="cui-nav-link" href="#">Cases</a>
+                    </nav>
+                    <div slot="actions" class="cui-cluster">
+                      <cui-button>Contact</cui-button>
+                    </div>
+                  </cui-navbar>
+                </script>
+                </cui-code>
+                <cui-code language="javascript">
+                  <script type="text/javascript">
+                  navbar = document.querySelector("cui-navbar");
+                  navbar.sticky = true;
+                  navbar.stickyOffset = "1rem";
+                  navbar.stickyZIndex = "80";
+                </script>
+                </cui-code>
+              </div>
+            </section>
+            <section id="buttons-tabs" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+              <div class="cui-prose">
+                <h2>Buttons and tabs</h2>
+                <p>Use button components for consistent actions and tabs for compact, keyboard-friendly panels.</p>
+              </div>
+              <div class="cui-stack">
+                <div class="docs-card">
+                  <div class="cui-cluster">
+                    <cui-button variant="primary">Save</cui-button>
+                    <cui-button>Preview</cui-button>
+                    <cui-button disabled>Disabled</cui-button>
+                  </div>
+                </div>
+                <cui-code language="html">
+                  <script type="text/html">
+                    <div class="cui-cluster">
+                      <cui-button variant="primary">Save</cui-button>
+                      <cui-button>Preview</cui-button>
+                      <cui-button disabled>Disabled</cui-button>
+                    </div>
+                  </script>
+                </cui-code>
+
+                <cui-tabs>
+                  <button slot="tab" type="button">Buttons</button>
+                  <button slot="tab" type="button">Forms</button>
+                  <button slot="tab" type="button">Themes</button>
+
+                  <section slot="panel" class="docs-panel">
+                    <p class="cui-text-muted">Actions use component variants and shared size tokens.</p>
+                  </section>
+                  <section slot="panel" class="docs-panel">
+                    <label class="cui-stack" style="--cui-stack-gap: var(--cui-space-2, 0.5rem);">
+                      <span>Email</span>
+                      <input class="cui-input" type="email" placeholder="name@example.com">
+                    </label>
+                  </section>
+                  <section slot="panel" class="docs-panel" data-theme="dark">
+                    <div class="cui-card">
+                      <h3>Scoped dark theme</h3>
+                      <p class="cui-text-muted">Token overrides can be scoped to a subtree.</p>
+                    </div>
+                  </section>
+                </cui-tabs>
+                <cui-code language="html">
+                  <script type="text/html">
+                    <cui-tabs>
+                      <button slot="tab" type="button">Buttons</button>
+                      <button slot="tab" type="button">Forms</button>
+                      <button slot="tab" type="button">Themes</button>
+
+                      <section slot="panel">
+                        <p class="cui-text-muted">Actions use component variants and shared size tokens.</p>
+                      </section>
+                      <section slot="panel">
+                        <label class="cui-stack" style="--cui-stack-gap: var(--cui-space-2, 0.5rem);">
+                          <span>Email</span>
+                          <input class="cui-input" type="email" placeholder="name@example.com">
+                        </label>
+                      </section>
+                      <section slot="panel" class="docs-panel" data-theme="dark">
+                        <div class="cui-card">
+                          <h3>Scoped dark theme</h3>
+                          <p class="cui-text-muted">Token overrides can be scoped to a subtree.</p>
+                        </div>
+                      </section>
+                    </cui-tabs>
+                  </script>
+                </cui-code>
+              </div>
+            </section>
+            <section id="code" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+              <div class="cui-prose">
+                <h2>Code</h2>
+                <p>
+                  The <code>cui-code</code> component provides syntax highlighting and a monospaced font for code
+                  examples. Use the <code>language</code> attribute for automatic language detection or set it to
+                  <code>"none"</code> for plain code blocks without highlighting.
+                </p>
+              </div>
+              <cui-code language="html"><!--
+<cui-code language="javascript">
+  <script type="text/javascript">
+    const button = document.querySelector("cui-button");
+    button.addEventListener("click", () => {
+      alert("Button clicked!");
+    });
+  </script>
+</cui-code>
+--></cui-code>
+              <cui-code language="html">
+                <script type="text/html">
+<cui-code language="javascript"><!--
+    const button = document.querySelector("cui-button");
+    button.addEventListener("click", () => {
+      alert("Button clicked!");
+    });
+  -->
+</cui-code>
+
+</script
+</cui-code>
+            </section>
         </div>
       </div>
     </section>

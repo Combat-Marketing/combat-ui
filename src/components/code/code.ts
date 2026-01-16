@@ -56,10 +56,14 @@ export class CuiCode extends CombatElement {
   }
 
   private readSource(): string {
-    const script = this.querySelector<HTMLScriptElement>(":scope > script");
+    for (const node of Array.from(this.childNodes)) {
+      if (node.nodeType === Node.COMMENT_NODE) {
+        return (node as Comment).data;
+      }
 
-    if (script) {
-      return script.textContent ?? "";
+      if (node instanceof HTMLScriptElement) {
+        return node.textContent ?? "";
+      }
     }
 
     return this.textContent ?? "";
