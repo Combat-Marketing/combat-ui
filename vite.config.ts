@@ -6,7 +6,11 @@ const isDocsRoot = process.argv.some(
   (arg) => arg.replaceAll("\\", "/").endsWith("/docs") || arg === "docs",
 );
 
+const docsDir = resolve(__dirname, "docs");
+const docsPages = ["index", "foundations", "components", "layouts", "theming"];
+
 export default defineConfig({
+  base: isDocsRoot ? "./" : "/",
   plugins: isDocsRoot
     ? []
     : [
@@ -20,6 +24,11 @@ export default defineConfig({
     ? {
         target: "baseline-widely-available",
         sourcemap: true,
+        rollupOptions: {
+          input: Object.fromEntries(
+            docsPages.map((name) => [name, resolve(docsDir, `${name}.html`)]),
+          ),
+        },
       }
     : {
         target: "baseline-widely-available",

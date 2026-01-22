@@ -23,7 +23,9 @@
   ],
   "type": "module",
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "./src/index.ts",
+    "./dist/combat-ui.js"
   ],
   "exports": {
     ".": {
