@@ -1,15 +1,12 @@
 import themeToggleStyles from "./theme-toggle.css?inline";
 
-import {
-  CombatElement,
-  cssStyleSheet,
-  type CombatStyles,
-} from "../../internal/base-element";
+import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 
 const themes = ["auto", "light", "dark"] as const;
 export type Theme = (typeof themes)[number];
 
 const themeChangeEvent = "cui-theme-change";
+const themeStorageKey = "cui-theme";
 
 const defaultLabels: Record<Theme, string> = {
   auto: "Theme: auto",
@@ -111,19 +108,58 @@ export function getTheme(): Theme {
 
 export function setTheme(theme: Theme) {
   const normalizedTheme = themes.includes(theme) ? theme : "auto";
+  applyTheme(normalizedTheme);
+  storeTheme(normalizedTheme);
+}
+
+function applyTheme(theme: Theme): void {
   const currentTheme = getTheme();
 
-  if (normalizedTheme === "auto") {
+  if (theme === "auto") {
     delete document.documentElement.dataset.theme;
   } else {
-    document.documentElement.dataset.theme = normalizedTheme;
+    document.documentElement.dataset.theme = theme;
   }
 
-  if (normalizedTheme !== currentTheme) {
+  if (theme !== currentTheme) {
     document.dispatchEvent(
-      new CustomEvent(themeChangeEvent, { detail: { theme: normalizedTheme } }),
+      new CustomEvent(themeChangeEvent, { detail: { theme } }),
     );
   }
+}
+
+function loadStoredTheme(): Theme | null {
+  try {
+    const stored = window.localStorage?.getItem(themeStorageKey);
+    return themes.includes(stored as Theme) ? (stored as Theme) : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeTheme(theme: Theme): void {
+  try {
+    window.localStorage?.setItem(themeStorageKey, theme);
+  } catch {
+    // localStorage may be unavailable (private mode, disabled, sandboxed iframe).
+  }
+}
+
+if (typeof document !== "undefined") {
+  const stored = loadStoredTheme();
+  if (stored !== null) {
+    applyTheme(stored);
+  }
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", (event) => {
+    if (event.key !== themeStorageKey) {
+      return;
+    }
+    const next = event.newValue;
+    applyTheme(themes.includes(next as Theme) ? (next as Theme) : "auto");
+  });
 }
 
 export function defineCuiThemeToggle(registry = customElements) {

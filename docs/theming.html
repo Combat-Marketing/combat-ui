@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Combat UI theming reference: tokens, scales, density, dark mode, and per-component overrides.">
   <title>Theming · Combat UI</title>
+  <script>
+    try {
+      var t = localStorage.getItem("cui-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (_) {}
+  </script>
   <script type="module" src="./index.ts"></script>
   <link rel="stylesheet" href="./site.css">
 </head>
@@ -512,6 +518,35 @@ cui-button {
             <p class="cui-caption">
               Dark mode rebinds the surface and text token block. Component tokens that reference these names update
               transitively, so you rarely need to author dark-specific overrides.
+            </p>
+
+            <h3>Persistence &amp; FOUC</h3>
+            <p>
+              <code>cui-theme-toggle</code> persists the chosen theme to <code>localStorage</code> under
+              <code>cui-theme</code> and restores it across reloads. It also syncs across tabs via the
+              <code>storage</code> event — change the theme in one tab and other open tabs follow.
+            </p>
+            <p>
+              Module scripts are deferred, which means the saved theme applies just after first paint. To eliminate
+              that flash, drop a tiny synchronous bootstrap in <code>&lt;head&gt;</code> <em>before</em> the framework
+              module loads:
+            </p>
+
+            <cui-code language="html"><!--
+<head>
+  <script>
+    try {
+      var t = localStorage.getItem("cui-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (_) {}
+  </script>
+  <script type="module" src="/your-app.js"></script>
+</head>
+--></cui-code>
+
+            <p class="cui-caption">
+              The snippet only acts on <code>"light"</code> and <code>"dark"</code> — <code>"auto"</code> is the
+              implicit default, so it doesn't need to set anything.
             </p>
           </section>
 
