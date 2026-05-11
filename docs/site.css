@@ -629,18 +629,30 @@
     white-space: pre;
   }
 
-  /* Body tone routing — subtle, docs-friendly tints */
-  html {
+  /* Body tone routing — subtle, theme-aware tints */
+  :root {
+    --docs-tone-dawn: oklch(98% 0.025 70deg);
+    --docs-tone-noon: oklch(98% 0.022 220deg);
+    --docs-tone-dusk: oklch(94% 0.03 290deg);
+  }
+
+  :root[data-theme="dark"] {
+    --docs-tone-dawn: oklch(20% 0.04 60deg);
+    --docs-tone-noon: oklch(18% 0.04 220deg);
+    --docs-tone-dusk: oklch(15% 0.05 290deg);
+  }
+
+  body {
     transition: background-color 600ms ease;
   }
   html[data-cui-tone="dawn"] body {
-    background: oklch(98% 0.025 70deg);
+    background: var(--docs-tone-dawn);
   }
   html[data-cui-tone="noon"] body {
-    background: oklch(98% 0.022 220deg);
+    background: var(--docs-tone-noon);
   }
   html[data-cui-tone="dusk"] body {
-    background: oklch(94% 0.03 290deg);
+    background: var(--docs-tone-dusk);
   }
 
   /* ---------- Reveal demo rig ---------- */

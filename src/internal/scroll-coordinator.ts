@@ -34,7 +34,8 @@ export interface ParallaxRegistration {
 }
 
 const FLAT_STATE: ScrollStageState = { focus: 1, offset: 0, active: true };
-const TONE_MIN_FOCUS = 0.25;
+const TONE_SET_FOCUS = 0.25;
+const TONE_CLEAR_FOCUS = 0.1;
 
 class ScrollCoordinator {
   private readonly stages = new Set<ScrollStageHandle>();
@@ -161,7 +162,7 @@ class ScrollCoordinator {
     const viewportWidth = window.innerWidth;
 
     let bestTone: string | null = null;
-    let bestFocus = TONE_MIN_FOCUS;
+    let bestFocus = 0;
 
     for (const handle of this.visibleStages) {
       const state = this.reduceMotion
@@ -169,14 +170,18 @@ class ScrollCoordinator {
         : this.computeStageState(handle, viewportHeight);
       handle.onUpdate(state);
 
-      if (handle.tone !== null && state.focus >= bestFocus) {
+      if (handle.tone !== null && state.focus > bestFocus) {
         bestFocus = state.focus;
         bestTone = handle.tone;
       }
     }
 
-    if (bestTone !== null && bestTone !== this.activeTone) {
-      this.setActiveTone(bestTone);
+    if (bestTone !== null && bestFocus >= TONE_SET_FOCUS) {
+      if (bestTone !== this.activeTone) {
+        this.setActiveTone(bestTone);
+      }
+    } else if (bestFocus < TONE_CLEAR_FOCUS && this.activeTone !== null) {
+      this.setActiveTone(null);
     }
 
     for (const handle of this.visibleParallaxes) {
@@ -220,7 +225,7 @@ class ScrollCoordinator {
 
   private recomputeTone(): void {
     let bestTone: string | null = null;
-    let bestFocus = TONE_MIN_FOCUS;
+    let bestFocus = TONE_SET_FOCUS;
     for (const handle of this.visibleStages) {
       if (handle.tone === null) continue;
       const state = this.computeStageState(handle, window.innerHeight);
