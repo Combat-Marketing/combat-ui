@@ -738,9 +738,21 @@
     --cui-tree-row-selected: var(--cui-color-surface-raised, #fff);
   }
 
-  .docs-tree-log {
+  .docs-tree-log,
+  .docs-form-log {
     margin-block-start: var(--cui-space-3, 0.75rem);
     min-block-size: 1.25rem;
+  }
+
+  .docs-form-frame {
+    display: grid;
+    gap: var(--cui-space-4, 1rem);
+    align-content: start;
+    max-inline-size: 34rem;
+  }
+
+  .docs-form-frame .cui-stack {
+    --cui-stack-gap: var(--cui-space-3, 0.75rem);
   }
 
   .docs-tree-menu {
