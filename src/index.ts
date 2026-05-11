@@ -6,6 +6,7 @@ import { CuiCode, defineCuiCode } from "./components/code";
 import { CuiTabs, defineCuiTabs } from "./components/tabs";
 import { CuiHero, defineCuiHero } from "./components/hero";
 import { CuiPageIntro, defineCuiPageIntro } from "./components/page-intro";
+import { CuiScrollStage, defineCuiScrollStage } from "./components/scroll-stage";
 
 export { CuiThemeToggle, getTheme, setTheme, defineCuiThemeToggle, type Theme };
 export { CuiButton, defineCuiButton };
@@ -14,6 +15,17 @@ export { CuiCode, defineCuiCode };
 export { CuiTabs, defineCuiTabs };
 export { CuiHero, defineCuiHero };
 export { CuiPageIntro, defineCuiPageIntro };
+export { CuiScrollStage, defineCuiScrollStage };
+export {
+  attachCuiParallax,
+  getScrollCoordinator,
+  type ParallaxHandle,
+  type ParallaxOptions,
+  type ParallaxRegistration,
+  type ScrollStageHandle,
+  type ScrollStageOptions,
+  type ScrollStageState,
+} from "./internal/scroll-coordinator";
 
 export function defineCombatUi(
   registry: CustomElementRegistry = customElements
@@ -25,6 +37,7 @@ export function defineCombatUi(
   defineCuiTabs(registry);
   defineCuiHero(registry);
   defineCuiPageIntro(registry);
+  defineCuiScrollStage(registry);
 }
 
 defineCombatUi()
