@@ -201,7 +201,7 @@
             <div class="cui-prose">
               <h2>Page intro</h2>
               <p>
-                Use <code>cui-page-intro</code> as a page header strip — eyebrow, display title, lead copy, optional
+                Use <code>cui-page-intro</code> as a page header strip: eyebrow, display title, lead copy, optional
                 meta line, action row, and an optional aside column. Variants tune scale and tone for landing, case,
                 vacancy, and campaign pages.
               </p>
@@ -220,7 +220,7 @@
                     <p slot="eyebrow">Theming</p>
                     <h3 slot="title">Composable design tokens for product surfaces.</h3>
                     <p>
-                      Drop tokens at any scope — globally, per section, or inline — and let the cascade do the rest.
+                      Drop tokens at any scope: globally, per section, or inline.
                     </p>
                     <div slot="actions">
                       <cui-button variant="primary" href="./theming.html">Read tokens</cui-button>
@@ -229,15 +229,15 @@
                   </cui-page-intro>
                   <cui-code language="html">
                     <script type="text/plain">
-<cui-page-intro>
-  <p slot="eyebrow">Theming</p>
-  <h1 slot="title">Composable design tokens.</h1>
-  <p>Lead copy with measure-capped width.</p>
-  <div slot="actions">
-    <cui-button variant="primary">Read</cui-button>
-  </div>
-</cui-page-intro>
-</script>
+                    <cui-page-intro>
+                      <p slot="eyebrow">Theming</p>
+                      <h1 slot="title">Composable design tokens.</h1>
+                      <p>Lead copy with measure-capped width.</p>
+                      <div slot="actions">
+                        <cui-button variant="primary">Read</cui-button>
+                      </div>
+                    </cui-page-intro>
+                    </script>
                   </cui-code>
                 </div>
               </section>
@@ -255,11 +255,11 @@
                   </cui-page-intro>
                   <cui-code language="html">
                     <script type="text/plain">
-<cui-page-intro variant="landing">
-  <h1 slot="title">Bigger display heading.</h1>
-  <p>Roomier content column.</p>
-</cui-page-intro>
-</script>
+                    <cui-page-intro variant="landing">
+                      <h1 slot="title">Bigger display heading.</h1>
+                      <p>Roomier content column.</p>
+                    </cui-page-intro>
+                    </script>
                   </cui-code>
                 </div>
               </section>
@@ -285,20 +285,20 @@
                   </cui-page-intro>
                   <cui-code language="html">
                     <script type="text/plain">
-<cui-page-intro variant="case">
-  <p slot="eyebrow">Case study</p>
-  <h1 slot="title">Project title.</h1>
-  <p>Lead summary.</p>
-  <p slot="meta">
-    <span>Sector — Logistics</span>
-    <span>Year — 2026</span>
-  </p>
-  <aside slot="aside">
-    <strong>Stack</strong>
-    <p>Combat UI · Vite · TypeScript</p>
-  </aside>
-</cui-page-intro>
-</script>
+                    <cui-page-intro variant="case">
+                      <p slot="eyebrow">Case study</p>
+                      <h1 slot="title">Project title.</h1>
+                      <p>Lead summary.</p>
+                      <p slot="meta">
+                        <span>Sector — Logistics</span>
+                        <span>Year — 2026</span>
+                      </p>
+                      <aside slot="aside">
+                        <strong>Stack</strong>
+                        <p>Combat UI · Vite · TypeScript</p>
+                      </aside>
+                    </cui-page-intro>
+                    </script>
                   </cui-code>
                 </div>
               </section>
@@ -316,11 +316,11 @@
                   </cui-page-intro>
                   <cui-code language="html">
                     <script type="text/plain">
-<cui-page-intro inverse>
-  <h1 slot="title">Inverse surface.</h1>
-  <p>Headline moment.</p>
-</cui-page-intro>
-</script>
+                    <cui-page-intro inverse>
+                      <h1 slot="title">Inverse surface.</h1>
+                      <p>Headline moment.</p>
+                    </cui-page-intro>
+                    </script>
                   </cui-code>
                 </div>
               </section>
@@ -334,11 +334,11 @@
                   </cui-page-intro>
                   <cui-code language="html">
                     <script type="text/plain">
-<cui-page-intro align="center">
-  <h1 slot="title">Centered title.</h1>
-  <p>Centered copy.</p>
-</cui-page-intro>
-</script>
+                    <cui-page-intro align="center">
+                      <h1 slot="title">Centered title.</h1>
+                      <p>Centered copy.</p>
+                    </cui-page-intro>
+                    </script>
                   </cui-code>
                 </div>
               </section>
@@ -737,8 +737,7 @@
                   <code>cui-scroll-stage</code> is a sticky 3D track that publishes its focus as CSS custom
                   properties: <code>--cui-stage-focus</code> (0 → 1, peaks when centered),
                   <code>--cui-stage-offset</code> (-1 → 1, signed distance from center after the hold band), and
-                  <code>--cui-stage-active</code> (0/1). Children animate with vanilla CSS by reading those values
-                  — the framework owns the mechanism, you own the choreography.
+                  <code>--cui-stage-active</code> (0/1). Children animate with vanilla CSS by reading those values.
                 </p>
                 <p>
                   Scroll through the three stages below. Each applies a different transform recipe to the same
@@ -757,10 +756,16 @@
                       <span class="docs-stage-meter-bar"></span>
                     </div>
                     <div class="docs-stage-card" data-effect="wheel">
-                      <cui-reveal delay="40ms"><p class="docs-stage-eyebrow">Stage 01 · effect="wheel" · tone="dawn"</p></cui-reveal>
-                      <cui-reveal delay="140ms"><h3 class="docs-stage-title">Z-translate + rotateY</h3></cui-reveal>
+                      <cui-reveal delay="40ms">
+                        <p class="docs-stage-eyebrow">Stage 01 · effect="wheel" · tone="dawn"</p>
+                      </cui-reveal>
+                      <cui-reveal delay="140ms">
+                        <h3 class="docs-stage-title">Z-translate + rotateY</h3>
+                      </cui-reveal>
                       <cui-reveal delay="240ms" distance="2rem">
-                        <p>This card reads <code>--cui-stage-focus</code> and <code>--cui-stage-offset</code> and turns them into a depth-and-rotation move. The stage element holds focus through the hold band so the panel can settle visually before scrolling on.</p>
+                        <p>This card reads <code>--cui-stage-focus</code> and <code>--cui-stage-offset</code> and turns
+                          them into a depth-and-rotation move. The stage element holds focus through the hold band so
+                          the panel can settle visually before scrolling on.</p>
                       </cui-reveal>
                       <cui-reveal delay="340ms" from="up" distance="1.25rem">
                         <pre class="docs-stage-code">transform:
@@ -779,10 +784,17 @@
                       <span class="docs-stage-meter-bar"></span>
                     </div>
                     <div class="docs-stage-card" data-effect="slide">
-                      <cui-reveal delay="40ms"><p class="docs-stage-eyebrow">Stage 02 · effect="slide" · tone="noon"</p></cui-reveal>
-                      <cui-reveal delay="140ms"><h3 class="docs-stage-title">Signed offset slide</h3></cui-reveal>
+                      <cui-reveal delay="40ms">
+                        <p class="docs-stage-eyebrow">Stage 02 · effect="slide" · tone="noon"</p>
+                      </cui-reveal>
+                      <cui-reveal delay="140ms">
+                        <h3 class="docs-stage-title">Signed offset slide</h3>
+                      </cui-reveal>
                       <cui-reveal delay="240ms" distance="2rem">
-                        <p>Same publisher, different recipe. Here the panel uses the signed <code>--cui-stage-offset</code> for a horizontal slide that flips direction either side of center. Notice how the page background tinted as this stage took focus.</p>
+                        <p>Same publisher, different recipe. Here the panel uses the signed
+                          <code>--cui-stage-offset</code> for a horizontal slide that flips direction either side of
+                          center. Notice how the page background tinted as this stage took focus.
+                        </p>
                       </cui-reveal>
                       <cui-reveal delay="340ms" from="up" distance="1.25rem">
                         <pre class="docs-stage-code">transform: translate3d(calc(var(--cui-stage-offset) * -40%), 0, 0);
@@ -800,10 +812,15 @@ opacity: calc(0.3 + var(--cui-stage-focus) * 0.7);</pre>
                       <span class="docs-stage-meter-bar"></span>
                     </div>
                     <div class="docs-stage-card" data-effect="scale">
-                      <cui-reveal delay="40ms"><p class="docs-stage-eyebrow">Stage 03 · effect="scale" · tone="dusk"</p></cui-reveal>
-                      <cui-reveal delay="140ms"><h3 class="docs-stage-title">Scale + blur</h3></cui-reveal>
+                      <cui-reveal delay="40ms">
+                        <p class="docs-stage-eyebrow">Stage 03 · effect="scale" · tone="dusk"</p>
+                      </cui-reveal>
+                      <cui-reveal delay="140ms">
+                        <h3 class="docs-stage-title">Scale + blur</h3>
+                      </cui-reveal>
                       <cui-reveal delay="240ms" distance="2rem">
-                        <p>One last recipe: a scale-up paired with a defocus blur that clears as focus approaches 1. None of these stages know about each other's transforms — they just expose state.</p>
+                        <p>One last recipe: a scale-up paired with a defocus blur that clears as focus approaches 1.
+                          None of these stages know about each other's transforms — they just expose state.</p>
                       </cui-reveal>
                       <cui-reveal delay="340ms" from="up" distance="1.25rem">
                         <pre class="docs-stage-code">transform: scale(calc(0.72 + var(--cui-stage-focus) * 0.28));
@@ -843,18 +860,48 @@ filter: blur(calc((1 - var(--cui-stage-focus)) * 8px));</pre>
 
               <table class="docs-token-table">
                 <thead>
-                  <tr><th>Attribute / variable</th><th>Purpose</th></tr>
+                  <tr>
+                    <th>Attribute / variable</th>
+                    <th>Purpose</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr><td><code>focus-bias</code> (-1..1)</td><td>Shift what counts as "centered" in viewport space.</td></tr>
-                  <tr><td><code>hold</code> (0..1)</td><td>Dwell band where focus stays at 1 before falling off.</td></tr>
-                  <tr><td><code>threshold</code> (0..1)</td><td>Focus level at which <code>--cui-stage-active</code> flips to 1.</td></tr>
-                  <tr><td><code>sticky-top</code></td><td>Top offset for the sticky inner track (match your navbar height).</td></tr>
-                  <tr><td><code>min-block-size</code></td><td>Scroll runway length. Longer = slower wheel.</td></tr>
-                  <tr><td><code>tone</code></td><td>Key routed to <code>&lt;html data-cui-tone&gt;</code> while this stage is most focused.</td></tr>
-                  <tr><td><code>--cui-stage-focus</code></td><td>Published 0..1. Peaks when stage is centered.</td></tr>
-                  <tr><td><code>--cui-stage-offset</code></td><td>Published -1..1. Signed distance from center after hold.</td></tr>
-                  <tr><td><code>--cui-stage-active</code></td><td>Published 0 or 1. Mirror of the <code>.is-active</code> class.</td></tr>
+                  <tr>
+                    <td><code>focus-bias</code> (-1..1)</td>
+                    <td>Shift what counts as "centered" in viewport space.</td>
+                  </tr>
+                  <tr>
+                    <td><code>hold</code> (0..1)</td>
+                    <td>Dwell band where focus stays at 1 before falling off.</td>
+                  </tr>
+                  <tr>
+                    <td><code>threshold</code> (0..1)</td>
+                    <td>Focus level at which <code>--cui-stage-active</code> flips to 1.</td>
+                  </tr>
+                  <tr>
+                    <td><code>sticky-top</code></td>
+                    <td>Top offset for the sticky inner track (match your navbar height).</td>
+                  </tr>
+                  <tr>
+                    <td><code>min-block-size</code></td>
+                    <td>Scroll runway length. Longer = slower wheel.</td>
+                  </tr>
+                  <tr>
+                    <td><code>tone</code></td>
+                    <td>Key routed to <code>&lt;html data-cui-tone&gt;</code> while this stage is most focused.</td>
+                  </tr>
+                  <tr>
+                    <td><code>--cui-stage-focus</code></td>
+                    <td>Published 0..1. Peaks when stage is centered.</td>
+                  </tr>
+                  <tr>
+                    <td><code>--cui-stage-offset</code></td>
+                    <td>Published -1..1. Signed distance from center after hold.</td>
+                  </tr>
+                  <tr>
+                    <td><code>--cui-stage-active</code></td>
+                    <td>Published 0 or 1. Mirror of the <code>.is-active</code> class.</td>
+                  </tr>
                 </tbody>
               </table>
             </section>
@@ -932,13 +979,29 @@ filter: blur(calc((1 - var(--cui-stage-focus)) * 8px));</pre>
 
               <table class="docs-token-table">
                 <thead>
-                  <tr><th>Attribute</th><th>Purpose</th></tr>
+                  <tr>
+                    <th>Attribute</th>
+                    <th>Purpose</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr><td><code>from</code></td><td><code>up</code> · <code>down</code> · <code>left</code> · <code>right</code> · <code>fade</code></td></tr>
-                  <tr><td><code>delay</code></td><td>Transition delay. Unitless numbers are treated as ms.</td></tr>
-                  <tr><td><code>distance</code></td><td>Travel magnitude. Unitless numbers are treated as px.</td></tr>
-                  <tr><td><code>threshold</code></td><td>Focus level at which the reveal starts. Defaults to 0.6.</td></tr>
+                  <tr>
+                    <td><code>from</code></td>
+                    <td><code>up</code> · <code>down</code> · <code>left</code> · <code>right</code> · <code>fade</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>delay</code></td>
+                    <td>Transition delay. Unitless numbers are treated as ms.</td>
+                  </tr>
+                  <tr>
+                    <td><code>distance</code></td>
+                    <td>Travel magnitude. Unitless numbers are treated as px.</td>
+                  </tr>
+                  <tr>
+                    <td><code>threshold</code></td>
+                    <td>Focus level at which the reveal starts. Defaults to 0.6.</td>
+                  </tr>
                 </tbody>
               </table>
             </section>
