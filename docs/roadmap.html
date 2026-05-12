@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Combat UI roadmap: priorities, completed work, and remaining items across foundations, sections, components, data visualization, navigation, motion, recruitment, SEO, and demos.">
+  <title>Roadmap · Combat UI</title>
+  <script>
+    try {
+      var t = localStorage.getItem("cui-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (_) { }
+  </script>
+  <script type="module" src="./index.ts"></script>
+  <link rel="stylesheet" href="./site.css">
+</head>
+
+<body class="cui-site">
+  <a class="cui-skip-link" href="#main">Skip to content</a>
+  <!--#include _partials/nav.html?current=roadmap-->
+
+  <main id="main" class="cui-page cui-stack">
+    <header class="cui-page-header">
+      <h1>Roadmap</h1>
+      <p>
+        This is the public roadmap for Combat UI. It includes a high-level overview of the major priorities and
+        initiatives for the project, along with specific items that are completed, in progress, or planned for
+        each area. The roadmap is intended to provide transparency into our development process and help users
+        understand what to expect from Combat UI in the coming months.
+      </p>
+    </header>
+
+    <section class="cui-section">
+      <div class="cui-container docs-doc-layout">
+        <aside class="docs-on-page" aria-label="Roadmap priorities">
+          <a class="cui-nav-link" href="#priority-1">P1 · Foundations</a>
+          <a class="cui-nav-link" href="#priority-2">P2 · Page sections</a>
+          <a class="cui-nav-link" href="#priority-3">P3 · Interactive components</a>
+          <a class="cui-nav-link" href="#priority-4">P4 · Data visualization</a>
+          <a class="cui-nav-link" href="#priority-5">P5 · Navigation</a>
+          <a class="cui-nav-link" href="#priority-6">P6 · Motion</a>
+          <a class="cui-nav-link" href="#priority-7">P7 · Recruitment</a>
+          <a class="cui-nav-link" href="#priority-8">P8 · SEO &amp; CMS</a>
+          <a class="cui-nav-link" href="#priority-9">P9 · Demo sites</a>
+        </aside>
+
+        <div class="cui-stack docs-roadmap">
+
+          <section id="priority-1" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 1</p>
+                <h2 class="docs-roadmap-title">Website Foundations</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="complete">7 / 7</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="done">Add <code>src/styles/website.css</code> and import it from
+                <code>src/index.css</code>.</li>
+              <li data-status="done">Add website-scale spacing tokens for compact, normal, spacious, and hero sections.
+              </li>
+              <li data-status="done">Add content width tokens for narrow prose, standard containers, wide containers,
+                and full-bleed sections.</li>
+              <li data-status="done">Add editorial typography tokens for display headings, lead text, eyebrow / kicker
+                text, captions, and metadata.</li>
+              <li data-status="done">Add foundational website classes: <code>cui-site</code>,
+                <code>cui-container</code>, <code>cui-container-narrow</code>, <code>cui-container-wide</code>,
+                <code>cui-flow</code>, and <code>cui-prose</code>.</li>
+              <li data-status="done">Add section variants: <code>cui-section</code>, <code>cui-section-muted</code>,
+                <code>cui-section-inverse</code>, and <code>cui-section-accent</code>.</li>
+              <li data-status="done">Add skip-link styles and document the expected landmark structure for SEO and
+                accessibility.</li>
+            </ul>
+          </section>
+
+          <section id="priority-2" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 2</p>
+                <h2 class="docs-roadmap-title">Design Page Sections</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="in-progress">4 / 7</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="done">Add hero patterns: <code>cui-hero</code>, <code>cui-hero-media</code>,
+                <code>cui-hero-split</code>, and <code>cui-hero-campaign</code>.</li>
+              <li data-status="done">Add page intro patterns for landing pages, case pages, vacancy pages, and campaign
+                pages.</li>
+              <li data-status="done">Add content grids: feature grid, case grid, card grid, logo strip, and stats grid.
+              </li>
+              <li data-status="done">Add quote and testimonial blocks.</li>
+              <li data-status="todo">
+                Add CTA sections: simple CTA, split CTA, full-bleed CTA, and sticky CTA.
+              </li>
+              <li data-status="todo">Add image / media blocks: full-bleed media, figure with caption, media card, and
+                overlay card.</li>
+              <li data-status="todo">Add visual rhythm examples for agency, recruitment, and campaign-style pages.</li>
+            </ul>
+          </section>
+
+          <section id="priority-3" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 3</p>
+                <h2 class="docs-roadmap-title">Interactive Components</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="in-progress">7 / 12</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="done">Add <code>cui-modal</code> over native <code>&lt;dialog&gt;</code> with
+                <code>data-cui-modal-target</code> triggers and <code>data-cui-modal-close</code> actions.</li>
+              <li data-status="done">Add <code>.cui-alert</code> light-DOM classes (variants, tones, dismiss).</li>
+              <li data-status="done">Add floating notifications: <code>cui-toast-region</code> + programmatic
+                <code>toast()</code> function with sugar variants and a handle API.</li>
+              <li data-status="done">Add <code>cui-field</code> and <code>cui-form</code> with native-validity-based
+                validation, async validators, server errors, and slot-based i18n (<code>error-&lt;key&gt;</code> slots +
+                <code>cui-field-invalid</code> event).</li>
+              <li data-status="done">Add <code>cui-tree</code> with drag-and-drop reordering, keyboard navigation, and a
+                cancelable context-menu hook.</li>
+              <li data-status="done">Add <code>cui-reveal</code> for content reveal driven by scroll stages.</li>
+              <li data-status="done">Add <code>cui-scroll-stage</code> sticky 3D track that publishes focus/offset as
+                CSS custom properties.</li>
+              <li data-status="todo">Add <code>cui-accordion</code> for FAQ and disclosure groups (single-open and
+                multi-open modes).</li>
+              <li data-status="todo">Add <code>cui-disclosure</code> for generic toggleable content (lightweight wrapper
+                around <code>&lt;details&gt;</code>).</li>
+              <li data-status="todo">Add <code>cui-tooltip</code> for inline contextual labels (positioning, focus /
+                hover triggers, keyboard ESC).</li>
+              <li data-status="todo">Add <code>cui-popover</code> for richer floating content (delegates positioning
+                anchor logic; pairs with tooltip).</li>
+              <li data-status="todo">Evaluate whether <code>cui-carousel</code> is necessary; add only if reference
+                demos need it.</li>
+            </ul>
+          </section>
+
+          <section id="priority-4" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 4</p>
+                <h2 class="docs-roadmap-title">Data Visualization</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="not-started">0 / 10</span>
+            </header>
+            <p class="docs-roadmap-priority-intro">
+              Marketing, agency, and case-study pages need to surface numbers; dashboards and
+              recruitment metrics build on the same primitives. Keep the two-tier API: CSS-only classes first,
+              optional custom-element upgrade for interactive / animated variants.
+            </p>
+            <ul class="docs-roadmap-list">
+              <li data-status="todo">Add data-viz tokens: <code>--cui-chart-track</code>, <code>--cui-chart-fill</code>,
+                <code>--cui-chart-accent-1..n</code>, sizing scale, grid color, label color, animation duration.</li>
+              <li data-status="todo">Add <code>.cui-badge</code> light-DOM class with
+                <code>data-variant="info|success|warning|danger|neutral"</code> and a <code>data-tone</code> mirror of
+                <code>.cui-alert</code> for filled / solid.</li>
+              <li data-status="todo">Add <code>.cui-progress</code> and <code>.cui-progress-bar</code> light-DOM classes
+                (linear, segmented, with optional label slot).</li>
+              <li data-status="todo">Add <code>.cui-meter</code> light-DOM class mirroring the native
+                <code>&lt;meter&gt;</code> thresholds (low / optimum / high) with shared accent tokens.</li>
+              <li data-status="todo">Add <code>cui-progress</code> component for animated, value-driven progress
+                (<code>value</code>, <code>max</code>, <code>indeterminate</code>).</li>
+              <li data-status="todo">Add <code>cui-sparkline</code> component — small inline SVG trend chart from a
+                <code>data-values="…"</code> attribute.</li>
+              <li data-status="todo">Add <code>cui-bar-chart</code> light-DOM block (HTML data rows → CSS bars; works
+                without JS, accessible by default).</li>
+              <li data-status="todo">Add <code>cui-ring-chart</code> / donut for single-value progress and multi-segment
+                ratios (CSS <code>conic-gradient</code> first; SVG fallback if needed).</li>
+              <li data-status="todo">Add big-number / delta block (<code>.cui-stat-delta</code> extension to
+                <code>cui-stat</code>) for "X% growth" call-outs.</li>
+              <li data-status="todo">Add comparison / before-after block (split image or two-column metric).</li>
+              <li data-status="todo">Document recommended JSON shapes so CMS content can drive each chart without JS.
+              </li>
+            </ul>
+          </section>
+
+          <section id="priority-5" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 5</p>
+                <h2 class="docs-roadmap-title">Navigation System</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="in-progress">3 / 10</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="done">Mobile responsive collapse panel via <code>expanded</code> attribute on
+                <code>cui-navbar</code>.</li>
+              <li data-status="done">Active-link styling via <code>aria-current="page"</code>.</li>
+              <li data-status="done">Click-outside and ESC close for nested dropdowns.</li>
+              <li data-status="todo">Extend <code>cui-navbar</code> with mega-menu support (multi-column dropdown panel
+                with section headings).</li>
+              <li data-status="todo">Add dropdown alignment options: start, center, end, and full-width.</li>
+              <li data-status="todo">Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the
+                modal primitive).</li>
+              <li data-status="todo">Add active-section styling pattern driven by scroll position (pair with
+                <code>cui-scroll-stage</code> or an <code>IntersectionObserver</code> helper).</li>
+              <li data-status="todo">Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End,
+                type-ahead).</li>
+              <li data-status="todo">Add navbar example variants for agency sites, recruitment sites, and campaign
+                landing pages.</li>
+              <li data-status="todo">Add sidebar navigation component (collapsible groups, active state, sticky
+                positioning).</li>
+            </ul>
+          </section>
+
+          <section id="priority-6" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 6</p>
+                <h2 class="docs-roadmap-title">Motion System</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="in-progress">3 / 7</span>
+            </header>
+            <p class="docs-roadmap-priority-intro">
+              Several components (reveal, scroll-stage, modal, toast, navbar, nav dropdowns) already include
+              reduced-motion guards. The remaining work is to unify ad-hoc transitions behind shared tokens and
+              audit coverage.
+            </p>
+            <ul class="docs-roadmap-list">
+              <li data-status="done"><code>cui-reveal</code> utility (entry animations driven by ancestor stage focus).
+              </li>
+              <li data-status="done"><code>cui-scroll-stage</code> publishes focus, offset, active state as CSS custom
+                properties.</li>
+              <li data-status="done">Reduced-motion guards in modal, toast, dialog backdrop, reveal, scroll-stage,
+                navbar, and nav dropdowns.</li>
+              <li data-status="todo">Add global motion tokens: <code>--cui-motion-duration-*</code>,
+                <code>--cui-motion-easing-*</code>, <code>--cui-motion-distance-*</code>,
+                <code>--cui-motion-stagger-*</code>.</li>
+              <li data-status="todo">Migrate existing ad-hoc transition durations / easings in component CSS to the
+                shared tokens.</li>
+              <li data-status="todo">Audit every motion-using component for a
+                <code>prefers-reduced-motion: reduce</code> fallback.</li>
+              <li data-status="todo">Add animation examples for dropdowns, heroes, cards, and section reveals tied to
+                the new tokens.</li>
+            </ul>
+          </section>
+
+          <section id="priority-7" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 7</p>
+                <h2 class="docs-roadmap-title">Recruitment Site Blocks</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="not-started">0 / 8</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="todo">Add <code>cui-vacancy-card</code>.</li>
+              <li data-status="todo">Add <code>cui-vacancy-list</code>.</li>
+              <li data-status="todo">Add team / category filter layout patterns.</li>
+              <li data-status="todo">Add working-at / story section patterns.</li>
+              <li data-status="todo">Add <code>cui-value-card</code> and values grid.</li>
+              <li data-status="todo">Add application CTA blocks (depends on Priority 2 CTA sections).</li>
+              <li data-status="todo">Add external job board CTA blocks.</li>
+              <li data-status="todo">Add location / contact cards.</li>
+            </ul>
+          </section>
+
+          <section id="priority-8" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 8</p>
+                <h2 class="docs-roadmap-title">SEO, Metadata, And CMS Friendliness</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="not-started">0 / 7</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="todo">Add examples for Organization JSON-LD.</li>
+              <li data-status="todo">Add examples for JobPosting JSON-LD.</li>
+              <li data-status="todo">Add examples for FAQPage JSON-LD.</li>
+              <li data-status="todo">Add Open Graph and Twitter card metadata examples.</li>
+              <li data-status="todo">Add sitemap and robots guidance.</li>
+              <li data-status="todo">Document Web Component SEO rules: light-DOM content, semantic slots, real URLs, and
+                server-rendered markup.</li>
+              <li data-status="todo">Keep class-based block APIs usable from CMS-generated HTML.</li>
+            </ul>
+          </section>
+
+          <section id="priority-9" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 9</p>
+                <h2 class="docs-roadmap-title">Demo Sites</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="not-started">0 / 6</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="todo">Create <code>examples/agency.html</code>.</li>
+              <li data-status="todo">Create <code>examples/recruitment.html</code>.</li>
+              <li data-status="todo">Create <code>examples/campaign.html</code>.</li>
+              <li data-status="todo">Create <code>examples/dashboard.html</code> to exercise the data-visualization
+                surface.</li>
+              <li data-status="todo">Use the demos to validate real website composition, responsive behavior,
+                accessibility, and SEO-friendly markup.</li>
+              <li data-status="todo">Compare demos against reference-site needs and feed missing patterns back into
+                earlier priorities.</li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="cui-section" data-spacing="compact">
+      <div class="cui-container cui-cluster docs-prevnext">
+        <cui-button href="./theming.html">Previous: Theming</cui-button>
+      </div>
+    </footer>
+  </main>
+</body>
+
+</html>

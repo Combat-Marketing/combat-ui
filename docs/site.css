@@ -788,4 +788,151 @@
     background: var(--cui-color-surface-muted, #edf0f4);
     outline: none;
   }
+
+  .docs-roadmap {
+    --cui-stack-gap: var(--cui-space-7, 3rem);
+  }
+
+  .docs-roadmap-priority {
+    display: grid;
+    gap: var(--cui-space-4, 1rem);
+  }
+
+  .docs-roadmap-priority-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--cui-space-3, 0.75rem);
+    padding-block-end: var(--cui-space-3, 0.75rem);
+    border-block-end: var(--cui-border-size, 1px) solid
+      var(--cui-color-border, #cfd6df);
+  }
+
+  .docs-roadmap-eyebrow {
+    margin: 0 0 var(--cui-space-1, 0.25rem) 0;
+    font-size: var(--cui-font-size-1, 0.9375rem);
+    font-weight: var(--cui-font-weight-strong, 680);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cui-color-muted, #5d6675);
+  }
+
+  .docs-roadmap-title {
+    margin: 0;
+    font-size: var(--cui-font-size-3, 1.5rem);
+    line-height: 1.2;
+  }
+
+  .docs-roadmap-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cui-space-2, 0.5rem);
+    padding: var(--cui-space-1, 0.25rem) var(--cui-space-3, 0.75rem);
+    border-radius: 999px;
+    font-size: var(--cui-font-size-1, 0.9375rem);
+    font-weight: var(--cui-font-weight-strong, 680);
+    font-variant-numeric: tabular-nums;
+    background: color-mix(in oklch, currentColor 10%, transparent);
+    color: var(--cui-color-muted, #5d6675);
+  }
+
+  .docs-roadmap-status[data-state="complete"] {
+    background: color-mix(
+      in oklch,
+      var(--cui-color-success, oklch(60% 0.16 145deg)) 18%,
+      transparent
+    );
+    color: var(--cui-color-success, oklch(60% 0.16 145deg));
+  }
+
+  .docs-roadmap-status[data-state="in-progress"] {
+    background: color-mix(
+      in oklch,
+      var(--cui-color-info, oklch(58% 0.14 230deg)) 18%,
+      transparent
+    );
+    color: var(--cui-color-info, oklch(58% 0.14 230deg));
+  }
+
+  .docs-roadmap-status[data-state="not-started"] {
+    background: color-mix(in oklch, currentColor 8%, transparent);
+    color: var(--cui-color-muted, #5d6675);
+  }
+
+  .docs-roadmap-priority-intro {
+    margin: 0;
+    color: var(--cui-color-muted, #5d6675);
+    font-style: italic;
+    max-inline-size: var(--cui-measure, 64ch);
+  }
+
+  .docs-roadmap-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .docs-roadmap-list > li {
+    position: relative;
+    padding-block: var(--cui-space-2, 0.5rem);
+    padding-inline-start: 1.75rem;
+    border-block-end: var(--cui-border-size, 1px) solid
+      color-mix(in oklch, var(--cui-color-border, #cfd6df) 50%, transparent);
+    line-height: var(--cui-line-height, 1.55);
+  }
+
+  .docs-roadmap-list > li:last-child {
+    border-block-end: 0;
+  }
+
+  .docs-roadmap-list > li::before {
+    content: "○";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: var(--cui-space-2, 0.5rem);
+    inline-size: 1.25rem;
+    color: var(--cui-color-muted, #5d6675);
+    font-size: 1rem;
+    line-height: var(--cui-line-height, 1.55);
+    text-align: start;
+  }
+
+  .docs-roadmap-list > li[data-status="done"] {
+    color: var(--cui-color-muted, #5d6675);
+  }
+
+  .docs-roadmap-list > li[data-status="done"]::before {
+    content: "✓";
+    color: var(--cui-color-success, oklch(60% 0.16 145deg));
+    font-weight: var(--cui-font-weight-strong, 680);
+  }
+
+  .docs-roadmap-list code {
+    color: inherit;
+    font-family: var(--cui-code-font, SFMono-Regular, consolas, monospace);
+    font-size: 0.9em;
+    padding: 0.05em 0.3em;
+    background: color-mix(in oklch, currentColor 8%, transparent);
+    border-radius: var(--cui-radius-1, 0.25rem);
+  }
+
+  @media (width >= 56rem) {
+    .docs-roadmap-list {
+      column-count: 2;
+      column-gap: var(--cui-space-5, 1.5rem);
+    }
+
+    .docs-roadmap-list > li {
+      break-inside: avoid;
+    }
+  }
+
+  .docs-roadmap-note {
+    display: block;
+    margin-block-start: var(--cui-space-1, 0.25rem);
+    font-size: var(--cui-font-size-1, 0.9375rem);
+    font-style: italic;
+    color: var(--cui-color-muted, #5d6675);
+  }
 }
