@@ -15,6 +15,7 @@ const docsPages = [
   "forms",
   "layouts",
   "theming",
+  "roadmap",
 ];
 
 function docsIncludes(): Plugin {
