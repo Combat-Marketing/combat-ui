@@ -202,8 +202,29 @@ a.cui-person:focus-visible {
   --cui-org-link-size: var(--cui-space-5, 1.5rem);
   --cui-org-line-width: 2px;
   --cui-org-line-color: var(--cui-color-border, #cfd6df);
-  --cui-org-line-style: solid;
   --cui-org-card-min-inline-size: 14rem;
+  --cui-org-dash: 6 6;
+
+  /*
+   * Connector SVGs (used as mask images, see below). Each renders one of the
+   * four shapes needed to compose a tree: T-piece, ┐, ┌, and |. The same
+   * geometry is drawn vertically (default) and horizontally for the
+   * left-to-right layout. `vector-effect='non-scaling-stroke'` keeps stroke
+   * width consistent even though `preserveAspectRatio='none'` stretches the
+   * path to fill the mask box.
+   *
+   * Override these custom properties to swap in your own SVG (curved
+   * connectors, dotted variants, brand-coloured strokes — the chart never
+   * touches them again).
+   */
+  --cui-org-v-middle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 1 L 100 1 M 50 1 L 50 100' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-first: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 100 1 L 50 1 L 50 100' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-last: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 1 L 50 1 L 50 100' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-only: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 50 0 L 50 100' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --cui-org-h-middle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 0 L 1 100 M 1 50 L 100 50' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-first: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 100 L 1 50 L 100 50' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-last: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 0 L 1 50 L 100 50' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-only: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 50 L 100 50' stroke='white' stroke-width='2' fill='none' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 
   display: flex;
   flex-direction: column;
@@ -249,47 +270,51 @@ a.cui-person:focus-visible {
   position: relative;
 }
 
+/*
+ * Parent down-link: the vertical (or horizontal) segment from the parent
+ * card to the bus line. Same SVG as the "only child" connector — both are
+ * straight lines along the chart axis.
+ */
 .cui-org-children::before {
   content: "";
   position: absolute;
   inset-block-start: 0;
-  inset-inline-start: 50%;
-  inline-size: var(--cui-org-line-width, 2px);
+  inset-inline: 0;
   block-size: var(--cui-org-link-size, 1.5rem);
   background: var(--cui-org-line-color, #cfd6df);
-  transform: translateX(-50%);
+  mask: var(--cui-org-v-only) center / 100% 100% no-repeat;
+  -webkit-mask: var(--cui-org-v-only) center / 100% 100% no-repeat;
 }
 
+/*
+ * Child up-link: drawn above each child node. Combines the relevant bus
+ * segment (left half, right half, full, or none) with the vertical line
+ * down to the child. Selectors pick the right SVG per position.
+ */
 .cui-org-children > .cui-org-node::before {
   content: "";
   position: absolute;
   inset-block-start: calc(var(--cui-org-link-size) * -1);
-  inset-inline-start: 50%;
-  inline-size: var(--cui-org-line-width, 2px);
+  inset-inline: 0;
   block-size: var(--cui-org-link-size, 1.5rem);
   background: var(--cui-org-line-color, #cfd6df);
-  transform: translateX(-50%);
+  mask: var(--cui-org-v-middle) center / 100% 100% no-repeat;
+  -webkit-mask: var(--cui-org-v-middle) center / 100% 100% no-repeat;
 }
 
-.cui-org-children > .cui-org-node::after {
-  content: "";
-  position: absolute;
-  inset-block-start: calc(var(--cui-org-link-size) * -1);
-  inset-inline: 0;
-  block-size: var(--cui-org-line-width, 2px);
-  background: var(--cui-org-line-color, #cfd6df);
+.cui-org-children > .cui-org-node:first-child:not(:only-child)::before {
+  mask-image: var(--cui-org-v-first);
+  -webkit-mask-image: var(--cui-org-v-first);
 }
 
-.cui-org-children > .cui-org-node:first-child:not(:only-child)::after {
-  inset-inline-start: 50%;
+.cui-org-children > .cui-org-node:last-child:not(:only-child)::before {
+  mask-image: var(--cui-org-v-last);
+  -webkit-mask-image: var(--cui-org-v-last);
 }
 
-.cui-org-children > .cui-org-node:last-child:not(:only-child)::after {
-  inset-inline-end: 50%;
-}
-
-.cui-org-children > .cui-org-node:only-child::after {
-  display: none;
+.cui-org-children > .cui-org-node:only-child::before {
+  mask-image: var(--cui-org-v-only);
+  -webkit-mask-image: var(--cui-org-v-only);
 }
 
 .cui-org-chart[data-layout="horizontal"] {
@@ -313,70 +338,53 @@ a.cui-person:focus-visible {
 }
 
 .cui-org-chart[data-layout="horizontal"] .cui-org-children::before {
-  inset-block-start: 50%;
+  inset-block: 0;
   inset-inline-start: 0;
+  inset-inline-end: auto;
   inline-size: var(--cui-org-link-size, 1.5rem);
-  block-size: var(--cui-org-line-width, 2px);
-  transform: translateY(-50%);
+  block-size: 100%;
+  mask-image: var(--cui-org-h-only);
+  -webkit-mask-image: var(--cui-org-h-only);
 }
 
 .cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node::before {
-  inset-block-start: 50%;
-  inset-inline-start: calc(var(--cui-org-link-size) * -1);
-  inline-size: var(--cui-org-link-size, 1.5rem);
-  block-size: var(--cui-org-line-width, 2px);
-  transform: translateY(-50%);
-}
-
-.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node::after {
   inset-block: 0;
   inset-inline-start: calc(var(--cui-org-link-size) * -1);
   inset-inline-end: auto;
-  inline-size: var(--cui-org-line-width, 2px);
+  inline-size: var(--cui-org-link-size, 1.5rem);
   block-size: 100%;
+  mask-image: var(--cui-org-h-middle);
+  -webkit-mask-image: var(--cui-org-h-middle);
 }
 
-.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node:first-child:not(:only-child)::after {
-  inset-block-start: 50%;
-  inset-inline-start: calc(var(--cui-org-link-size) * -1);
+.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node:first-child:not(:only-child)::before {
+  mask-image: var(--cui-org-h-first);
+  -webkit-mask-image: var(--cui-org-h-first);
 }
 
-.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node:last-child:not(:only-child)::after {
-  inset-block-end: 50%;
-  inset-block-start: 0;
-  inset-inline-start: calc(var(--cui-org-link-size) * -1);
+.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node:last-child:not(:only-child)::before {
+  mask-image: var(--cui-org-h-last);
+  -webkit-mask-image: var(--cui-org-h-last);
 }
 
+.cui-org-chart[data-layout="horizontal"] .cui-org-children > .cui-org-node:only-child::before {
+  mask-image: var(--cui-org-h-only);
+  -webkit-mask-image: var(--cui-org-h-only);
+}
+
+/*
+ * Dashed variant. Swaps the connector SVG set for paths with stroke-dasharray.
+ * The dash pattern is encoded in the SVG; the chart pseudos are unchanged.
+ */
 .cui-org-chart[data-line="dashed"] {
-  --cui-org-line-style: dashed;
-}
-
-.cui-org-chart[data-line="dashed"] .cui-org-children::before,
-.cui-org-chart[data-line="dashed"] .cui-org-children > .cui-org-node::before {
-  background: none;
-  border-inline-start: var(--cui-org-line-width, 2px) dashed var(--cui-org-line-color, #cfd6df);
-  inline-size: 0;
-}
-
-.cui-org-chart[data-line="dashed"] .cui-org-children > .cui-org-node::after {
-  background: none;
-  border-block-start: var(--cui-org-line-width, 2px) dashed var(--cui-org-line-color, #cfd6df);
-  block-size: 0;
-}
-
-.cui-org-chart[data-layout="horizontal"][data-line="dashed"] .cui-org-children::before,
-.cui-org-chart[data-layout="horizontal"][data-line="dashed"] .cui-org-children > .cui-org-node::before {
-  background: none;
-  border-block-start: var(--cui-org-line-width, 2px) dashed var(--cui-org-line-color, #cfd6df);
-  border-inline-start: 0;
-  block-size: 0;
-}
-
-.cui-org-chart[data-layout="horizontal"][data-line="dashed"] .cui-org-children > .cui-org-node::after {
-  background: none;
-  border-inline-start: var(--cui-org-line-width, 2px) dashed var(--cui-org-line-color, #cfd6df);
-  border-block-start: 0;
-  inline-size: 0;
+  --cui-org-v-middle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 1 L 100 1 M 50 1 L 50 100' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-first: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 100 1 L 50 1 L 50 100' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-last: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 1 L 50 1 L 50 100' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-v-only: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 50 0 L 50 100' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --cui-org-h-middle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 0 L 1 100 M 1 50 L 100 50' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-first: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 100 L 1 50 L 100 50' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-last: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 1 0 L 1 50 L 100 50' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --cui-org-h-only: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M 0 50 L 100 50' stroke='white' stroke-width='2' stroke-dasharray='6 6' fill='none' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: no-preference) {
