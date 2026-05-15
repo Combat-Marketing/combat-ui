@@ -38,8 +38,8 @@
           <a class="cui-nav-link" href="#priority-1">P1 · Foundations</a>
           <a class="cui-nav-link" href="#priority-2">P2 · Page sections</a>
           <a class="cui-nav-link" href="#priority-3">P3 · Interactive components</a>
-          <a class="cui-nav-link" href="#priority-4">P4 · Data visualization</a>
-          <a class="cui-nav-link" href="#priority-5">P5 · Navigation</a>
+          <a class="cui-nav-link" href="#priority-4">P4 · Navigation</a>
+          <a class="cui-nav-link" href="#priority-5">P5 · Data visualization</a>
           <a class="cui-nav-link" href="#priority-6">P6 · Motion</a>
           <a class="cui-nav-link" href="#priority-7">P7 · Recruitment</a>
           <a class="cui-nav-link" href="#priority-8">P8 · SEO &amp; CMS</a>
@@ -156,6 +156,37 @@
             <header class="docs-roadmap-priority-header">
               <div>
                 <p class="docs-roadmap-eyebrow">Priority 4</p>
+                <h2 class="docs-roadmap-title">Navigation System</h2>
+              </div>
+              <span class="docs-roadmap-status" data-state="in-progress">3 / 10</span>
+            </header>
+            <ul class="docs-roadmap-list">
+              <li data-status="done">Mobile responsive collapse panel via <code>expanded</code> attribute on
+                <code>cui-navbar</code>.
+              </li>
+              <li data-status="done">Active-link styling via <code>aria-current="page"</code>.</li>
+              <li data-status="done">Click-outside and ESC close for nested dropdowns.</li>
+              <li data-status="todo">Extend <code>cui-navbar</code> with mega-menu support (multi-column dropdown panel
+                with section headings).</li>
+              <li data-status="todo">Add dropdown alignment options: start, center, end, and full-width.</li>
+              <li data-status="todo">Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the
+                modal primitive).</li>
+              <li data-status="todo">Add active-section styling pattern driven by scroll position (pair with
+                <code>cui-scroll-stage</code> or an <code>IntersectionObserver</code> helper).
+              </li>
+              <li data-status="todo">Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End,
+                type-ahead).</li>
+              <li data-status="todo">Add navbar example variants for agency sites, recruitment sites, and campaign
+                landing pages.</li>
+              <li data-status="todo">Add sidebar navigation component (collapsible groups, active state, sticky
+                positioning).</li>
+            </ul>
+          </section>
+
+          <section id="priority-5" class="docs-roadmap-priority">
+            <header class="docs-roadmap-priority-header">
+              <div>
+                <p class="docs-roadmap-eyebrow">Priority 5</p>
                 <h2 class="docs-roadmap-title">Data Visualization</h2>
               </div>
               <span class="docs-roadmap-status" data-state="not-started">0 / 10</span>
@@ -193,37 +224,6 @@
               <li data-status="todo">Add comparison / before-after block (split image or two-column metric).</li>
               <li data-status="todo">Document recommended JSON shapes so CMS content can drive each chart without JS.
               </li>
-            </ul>
-          </section>
-
-          <section id="priority-5" class="docs-roadmap-priority">
-            <header class="docs-roadmap-priority-header">
-              <div>
-                <p class="docs-roadmap-eyebrow">Priority 5</p>
-                <h2 class="docs-roadmap-title">Navigation System</h2>
-              </div>
-              <span class="docs-roadmap-status" data-state="in-progress">3 / 10</span>
-            </header>
-            <ul class="docs-roadmap-list">
-              <li data-status="done">Mobile responsive collapse panel via <code>expanded</code> attribute on
-                <code>cui-navbar</code>.
-              </li>
-              <li data-status="done">Active-link styling via <code>aria-current="page"</code>.</li>
-              <li data-status="done">Click-outside and ESC close for nested dropdowns.</li>
-              <li data-status="todo">Extend <code>cui-navbar</code> with mega-menu support (multi-column dropdown panel
-                with section headings).</li>
-              <li data-status="todo">Add dropdown alignment options: start, center, end, and full-width.</li>
-              <li data-status="todo">Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the
-                modal primitive).</li>
-              <li data-status="todo">Add active-section styling pattern driven by scroll position (pair with
-                <code>cui-scroll-stage</code> or an <code>IntersectionObserver</code> helper).
-              </li>
-              <li data-status="todo">Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End,
-                type-ahead).</li>
-              <li data-status="todo">Add navbar example variants for agency sites, recruitment sites, and campaign
-                landing pages.</li>
-              <li data-status="todo">Add sidebar navigation component (collapsible groups, active state, sticky
-                positioning).</li>
             </ul>
           </section>
 
