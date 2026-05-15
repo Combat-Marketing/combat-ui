@@ -16,12 +16,12 @@
   "license": "MIT",
   "authors": [
     {
-      "name":"Christiaan van Dam",
-      "email":"chris@combat.nl" 
+      "name": "Christiaan van Dam",
+      "email": "chris@combat.nl"
     },
     {
-      "name":"Jessica Benedictus",
-      "email":"jessica@combat.nl"
+      "name": "Jessica Benedictus",
+      "email": "jessica@combat.nl"
     }
   ],
   "type": "module",
@@ -57,9 +57,11 @@
     "baseline 2025 with downstream"
   ],
   "devDependencies": {
-    "@types/node": "24.3.0",
     "@html-eslint/eslint-plugin": "0.60.0",
     "@html-eslint/parser": "0.60.0",
+    "@types/leaflet": "^1.9.21",
+    "@types/leaflet.markercluster": "^1.5.6",
+    "@types/node": "24.3.0",
     "eslint": "10.3.0",
     "eslint-plugin-baseline-js": "0.6.2",
     "eslint-plugin-compat": "7.0.2",
@@ -70,5 +72,9 @@
     "typescript": "6.0.3",
     "vite": "8.0.10",
     "vite-plugin-dts": "5.0.0"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3"
   }
 }
