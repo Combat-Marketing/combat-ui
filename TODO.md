@@ -23,7 +23,12 @@ validation work (SEO docs, demo sites).
 - [x] Add quote and testimonial blocks.
 - [x] Add CTA sections: simple CTA, split CTA, full-bleed CTA, and sticky CTA.
 - [x] Add image/media blocks: full-bleed media, figure with caption, media card, and overlay card.
-- [ ] Add visual rhythm examples for agency, recruitment, and campaign-style pages.
+- [ ] Add team / people blocks: person card, team grid, leadership grid, and org chart.
+- [ ] Add blog / news blocks: article card, article list, and category filter.
+- [ ] Add event blocks: event card, event list, and calendar view.
+- [ ] Add contact blocks: contact card, location card, and contact form.
+- [ ] Add generic utility sections: split content, alternating media and text, and sidebar layout.
+- [ ] Add a todo list component, with status indicators and actions (todo, in-progress, done, maybe configurable?).
 
 ## Priority 3: Interactive Components
 
@@ -50,12 +55,9 @@ validation work (SEO docs, demo sites).
 - [ ] Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the modal primitive).
 - [ ] Add active-section styling pattern driven by scroll position (pair with `cui-scroll-stage` or an `IntersectionObserver` helper).
 - [ ] Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End, type-ahead).
-- [ ] Add navbar example variants for agency sites, recruitment sites, and campaign landing pages.
 - [ ] Add sidebar navigation component (collapsible groups, active state, sticky positioning).
 
 ## Priority 5: Data Visualization
-
-_New priority. Marketing, agency, and case-study pages need to surface numbers; dashboards and recruitment metrics build on the same primitives. Keep the two-tier API: CSS-only classes first, optional custom-element upgrade for interactive / animated variants._
 
 - [ ] Add data-viz tokens: `--cui-chart-track`, `--cui-chart-fill`, `--cui-chart-accent-1..n`, sizing scale, grid color, label color, animation duration.
 - [ ] Add `.cui-badge` light-DOM class with `data-variant="info|success|warning|danger|neutral"` and a `data-tone` mirror of `.cui-alert` for filled / solid.
