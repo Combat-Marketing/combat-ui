@@ -1,0 +1,291 @@
+:host {
+  /* Frame */
+  --cui-map-block-size: 28rem;
+  --cui-map-radius: var(--cui-radius-2, 0.5rem);
+  --cui-map-border-size: var(--cui-border-size, 1px);
+  --cui-map-border-color: var(--cui-color-border, #cfd6df);
+  --cui-map-surface: var(--cui-color-surface-muted, #edf0f4);
+
+  /* Tile filter — falls back to `none`; tokens.css sets the dark-mode value globally */
+  --cui-map-tile-filter: none;
+
+  /* Markers */
+  --cui-map-marker-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+
+  /* Regions (GeoJSON paths) */
+  --cui-map-region-fill: oklch(57% 0.18 246deg / 18%);
+  --cui-map-region-fill-hover: oklch(57% 0.18 246deg / 28%);
+  --cui-map-region-stroke: oklch(57% 0.18 246deg / 80%);
+  --cui-map-region-stroke-width: 2;
+
+  /* Popup */
+  --cui-map-popup-bg: var(--cui-color-surface-raised, #fff);
+  --cui-map-popup-color: var(--cui-color, #1b1f27);
+  --cui-map-popup-radius: var(--cui-radius-2, 0.5rem);
+  --cui-map-popup-shadow: var(--cui-shadow-2, 0 12px 28px hsl(220deg 25% 10% / 14%));
+  --cui-map-popup-padding: var(--cui-space-4, 1rem);
+
+  /* Controls (zoom, attribution, tooltips) */
+  --cui-map-control-bg: var(--cui-color-surface-raised, #fff);
+  --cui-map-control-color: var(--cui-color, #1b1f27);
+  --cui-map-control-border: var(--cui-color-border, #cfd6df);
+  --cui-map-control-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
+  --cui-map-attribution-bg: var(--cui-color-surface, #f7f8fa);
+  --cui-map-attribution-color: var(--cui-color-muted, #5d6675);
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+/* --- Layout ----------------------------------------------------------- */
+
+.map {
+  display: grid;
+  gap: var(--cui-space-3, 0.75rem);
+  inline-size: 100%;
+}
+
+.canvas {
+  position: relative;
+  inline-size: 100%;
+  block-size: var(--cui-map-block-size);
+  border: var(--cui-map-border-size) solid var(--cui-map-border-color);
+  border-radius: var(--cui-map-radius);
+  background: var(--cui-map-surface);
+  overflow: hidden;
+}
+
+.canvas .leaflet-tile-pane {
+  filter: var(--cui-map-tile-filter);
+}
+
+/* Fallback list: shown until Leaflet mounts, then hidden */
+.fallback {
+  display: grid;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+:host([mounted]) .fallback {
+  display: none;
+}
+
+::slotted([slot="title"]) {
+  margin: 0;
+}
+
+::slotted([slot="legend"]) {
+  margin: 0;
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-text-caption-size, var(--cui-font-size-caption, 0.875rem));
+}
+
+/* --- Markers ---------------------------------------------------------- */
+
+/*
+ * Leaflet positions the marker wrapper via inline transform. The wrapper
+ * itself has no chrome — the inner <svg> (default or slotted) draws the pin
+ * and inherits color via `currentColor`, so authors that supply their own
+ * <template slot="marker-icon"> just need fill="currentColor" on their paths.
+ */
+.cui-map-marker {
+  background: transparent;
+  border: 0;
+  color: var(--cui-map-marker-color);
+}
+
+.cui-map-marker--default {
+  /*
+   * Pixel-locked because map.ts passes iconSize: [28, 37], iconAnchor: [14, 37]
+   * so the pin's visual tip aligns with the lat/lng. If you change one, change
+   * both. To customise size, slot a <template slot="marker-icon"> instead.
+   */
+  inline-size: 28px;
+  block-size: 37px;
+}
+
+.cui-map-marker svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  filter: drop-shadow(0 1px 2px hsl(220deg 25% 10% / 35%));
+}
+
+/* --- Regions ---------------------------------------------------------- */
+
+.cui-map-region {
+  fill: var(--cui-map-region-fill);
+  stroke: var(--cui-map-region-stroke);
+  stroke-width: var(--cui-map-region-stroke-width);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cui-map-region {
+    transition: fill 160ms ease, stroke 160ms ease;
+  }
+}
+
+.cui-map-region:hover,
+.cui-map-region:focus-visible {
+  fill: var(--cui-map-region-fill-hover);
+  outline: none;
+}
+
+/* --- Popup ------------------------------------------------------------ */
+
+.leaflet-popup-content-wrapper {
+  background: var(--cui-map-popup-bg);
+  color: var(--cui-map-popup-color);
+  border-radius: var(--cui-map-popup-radius);
+  box-shadow: var(--cui-map-popup-shadow);
+  padding: 0;
+}
+
+.leaflet-popup-content {
+  margin: var(--cui-map-popup-padding);
+  font: inherit;
+  line-height: var(--cui-line-height, 1.55);
+}
+
+.leaflet-popup-tip {
+  background: var(--cui-map-popup-bg);
+  box-shadow: var(--cui-map-popup-shadow);
+}
+
+.leaflet-popup-close-button {
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  padding: var(--cui-space-2, 0.5rem);
+}
+
+.leaflet-popup-close-button:hover,
+.leaflet-popup-close-button:focus-visible {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  background: transparent;
+}
+
+/* Cloned article content inside the popup */
+.cui-map-popup-content {
+  display: grid;
+  gap: var(--cui-space-2, 0.5rem);
+}
+
+.cui-map-popup-content > :where(h1, h2, h3, h4, h5, h6, p) {
+  margin: 0;
+}
+
+.cui-map-popup-content > :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--cui-map-popup-color);
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: var(--cui-line-height-tight, 1.2);
+}
+
+.cui-map-popup-content > :where(p) {
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-0, 1rem);
+}
+
+.cui-map-popup-content :where(a) {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.cui-map-popup-content :where(a):hover,
+.cui-map-popup-content :where(a):focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* --- Tooltip (region labels) ----------------------------------------- */
+
+.leaflet-tooltip {
+  background: var(--cui-map-control-bg);
+  color: var(--cui-map-control-color);
+  border: var(--cui-map-border-size) solid var(--cui-map-border-color);
+  border-radius: var(--cui-radius-1, 0.25rem);
+  box-shadow: var(--cui-map-control-shadow);
+  font: inherit;
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  padding: var(--cui-space-2, 0.5rem) var(--cui-space-3, 0.75rem);
+}
+
+.leaflet-tooltip-left::before  { border-left-color:   var(--cui-map-control-bg); }
+.leaflet-tooltip-right::before { border-right-color:  var(--cui-map-control-bg); }
+.leaflet-tooltip-top::before   { border-top-color:    var(--cui-map-control-bg); }
+.leaflet-tooltip-bottom::before{ border-bottom-color: var(--cui-map-control-bg); }
+
+/* --- Zoom control ---------------------------------------------------- */
+
+.leaflet-control-zoom {
+  border: var(--cui-map-border-size) solid var(--cui-map-control-border);
+  border-radius: var(--cui-map-radius);
+  box-shadow: var(--cui-map-control-shadow);
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: var(--cui-map-control-bg);
+  color: var(--cui-map-control-color);
+  border-color: var(--cui-map-control-border);
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+.leaflet-control-zoom a:hover,
+.leaflet-control-zoom a:focus-visible {
+  background: var(--cui-color-surface-muted, #edf0f4);
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+.leaflet-control-zoom a.leaflet-disabled {
+  background: var(--cui-color-surface-muted, #edf0f4);
+  color: var(--cui-color-muted, #5d6675);
+  cursor: not-allowed;
+}
+
+/* --- Attribution ----------------------------------------------------- */
+
+.leaflet-control-attribution {
+  background: var(--cui-map-attribution-bg);
+  color: var(--cui-map-attribution-color);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  padding: var(--cui-space-1, 0.25rem) var(--cui-space-2, 0.5rem);
+  border-radius: var(--cui-radius-1, 0.25rem) 0 0 0;
+}
+
+.leaflet-control-attribution a {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+/* --- Marker cluster -------------------------------------------------- */
+
+.marker-cluster {
+  background: transparent;
+}
+
+.marker-cluster div {
+  background: var(--cui-map-marker-color);
+  color: var(--cui-color-on-accent, #fff);
+  border: 2px solid var(--cui-map-popup-bg);
+  font-weight: var(--cui-font-weight-strong, 680);
+  box-shadow: var(--cui-map-control-shadow);
+}
+
+.marker-cluster span {
+  line-height: 28px;
+}
+
+/* --- Reduced motion -------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .leaflet-zoom-anim *,
+  .leaflet-fade-anim *,
+  .leaflet-pan-anim *,
+  .leaflet-zoom-animated {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
