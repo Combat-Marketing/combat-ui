@@ -22,7 +22,7 @@
   <main id="main" class="cui-page cui-stack">
     <header class="cui-page-header">
       <h1>Page sections</h1>
-      <p>Composable, slot-based blocks for the moments every marketing or editorial page needs: a hero, a page intro, a call to action, content grids, media blocks, and team / people blocks. Each is a custom element with a CSS-class fallback so it works from CMS-generated HTML.</p>
+      <p>Composable, slot-based blocks for the moments every marketing or editorial page needs: a hero, a page intro, a call to action, content grids, media blocks, team / people blocks, and a map. Each is a custom element with a CSS-class fallback so it works from CMS-generated HTML.</p>
     </header>
 
     <section class="cui-section">
@@ -34,6 +34,7 @@
           <a class="cui-nav-link" href="#content-grids">Content grids</a>
           <a class="cui-nav-link" href="#media-blocks">Media blocks</a>
           <a class="cui-nav-link" href="#team-blocks">Team &amp; people</a>
+          <a class="cui-nav-link" href="#map">Map</a>
         </aside>
 
         <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-7, 3rem);">
@@ -2246,6 +2247,59 @@
                   </div>
                 </details>
               </cui-disclosure>
+            </section>
+
+            <section id="map" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+              <div class="cui-prose">
+                <h2>Map</h2>
+                <p>
+                  <code>cui-map</code> renders an interactive map with markers and GeoJSON regions authored as
+                  semantic light-DOM children. Leaflet is dynamically imported when the map scrolls into view,
+                  so the dependency stays off the first-paint budget and never blocks pages that don't actually
+                  use a map. See the full <a href="./map.html">component reference</a> for tile-provider
+                  configuration, custom marker icons, clustering, and the JavaScript API.
+                </p>
+              </div>
+
+              <div class="docs-preview">
+                <div class="docs-preview-frame">
+                  <cui-map center="50,6" zoom="4" fit-bounds aria-label="Office locations preview">
+                    <h3 slot="title">Office locations</h3>
+                    <article class="cui-map-point" data-lat="52.379" data-lng="4.900">
+                      <h4>City placeholder · NL</h4>
+                      <p class="cui-map-point-address">Address placeholder, City</p>
+                    </article>
+                    <article class="cui-map-point" data-lat="51.5074" data-lng="-0.1278">
+                      <h4>City placeholder · UK</h4>
+                      <p class="cui-map-point-address">Address placeholder, City</p>
+                    </article>
+                    <article class="cui-map-point" data-lat="48.8566" data-lng="2.3522">
+                      <h4>City placeholder · FR</h4>
+                      <p class="cui-map-point-address">Address placeholder, City</p>
+                    </article>
+                    <script type="application/geo+json" class="cui-map-region"
+                      data-label="Coverage placeholder">
+                      {"type":"Polygon","coordinates":[[[-2,46],[10,46],[10,55],[-2,55],[-2,46]]]}
+                    </script>
+                  </cui-map>
+                </div>
+              </div>
+
+              <cui-code language="html">
+                <script type="text/html">
+                  <cui-map center="50,6" zoom="4" fit-bounds aria-label="Office locations">
+                    <h3 slot="title">Office locations</h3>
+                    <article class="cui-map-point" data-lat="52.379" data-lng="4.900">
+                      <h4>City placeholder</h4>
+                      <p class="cui-map-point-address">Address placeholder</p>
+                    </article>
+                    <script type="application/geo+json" class="cui-map-region"
+                      data-label="Coverage placeholder">
+                      {"type":"Polygon","coordinates":[[…]]}
+                    <\/script>
+                  </cui-map>
+                </script>
+              </cui-code>
             </section>
         </div>
       </div>

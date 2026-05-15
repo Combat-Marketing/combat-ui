@@ -27,21 +27,34 @@ import {
   toast,
 } from "./components/toast";
 import { CuiTree, defineCuiTree } from "./components/tree";
+import { CuiMap, defineCuiMap } from "./components/map";
 import "./index.css";
 
 export type { CuiDisclosureToggleDetail } from "./components/disclosure";
 export type {
-  CuiFieldControl, CuiFieldInvalidDetail, CuiFieldValidator, CuiFieldValidDetail
+  CuiFieldControl,
+  CuiFieldInvalidDetail,
+  CuiFieldValidator,
+  CuiFieldValidDetail,
 } from "./components/field";
 export type {
-  CuiFormErrorDetail, CuiFormSubmitDetail, CuiFormSubmitHandler
+  CuiFormErrorDetail,
+  CuiFormSubmitDetail,
+  CuiFormSubmitHandler,
 } from "./components/form";
 export type { CuiModalCloseDetail } from "./components/modal";
 export type {
-  CuiToastHandle, CuiToastOptions, CuiToastPlacement, CuiToastTone, CuiToastVariant
+  CuiToastHandle,
+  CuiToastOptions,
+  CuiToastPlacement,
+  CuiToastTone,
+  CuiToastVariant,
 } from "./components/toast";
 export type {
-  CuiTreeContextDetail, CuiTreeDropDetail, CuiTreeDropPosition, CuiTreeItemDetail
+  CuiTreeContextDetail,
+  CuiTreeDropDetail,
+  CuiTreeDropPosition,
+  CuiTreeItemDetail,
 } from "./components/tree";
 export {
   attachCuiParallax,
@@ -51,9 +64,48 @@ export {
   type ParallaxRegistration,
   type ScrollStageHandle,
   type ScrollStageOptions,
-  type ScrollStageState
+  type ScrollStageState,
 } from "./internal/scroll-coordinator";
-export { CuiButton, CuiCode, CuiCta, CuiDisclosure, CuiField, CuiForm, CuiHero, CuiModal, CuiNavbar, CuiPageIntro, CuiReveal, CuiScrollStage, CuiTabs, CuiThemeToggle, CuiToastRegion, CuiTree, defineCuiButton, defineCuiCode, defineCuiCta, defineCuiDisclosure, defineCuiField, defineCuiForm, defineCuiHero, defineCuiModal, defineCuiNavbar, defineCuiPageIntro, defineCuiReveal, defineCuiScrollStage, defineCuiTabs, defineCuiThemeToggle, defineCuiToastRegion, defineCuiTree, getTheme, setTheme, toast, type Theme };
+export {
+  CuiButton,
+  CuiCode,
+  CuiCta,
+  CuiDisclosure,
+  CuiField,
+  CuiForm,
+  CuiHero,
+  CuiModal,
+  CuiNavbar,
+  CuiPageIntro,
+  CuiReveal,
+  CuiScrollStage,
+  CuiTabs,
+  CuiThemeToggle,
+  CuiToastRegion,
+  CuiTree,
+  CuiMap,
+  defineCuiButton,
+  defineCuiCode,
+  defineCuiCta,
+  defineCuiDisclosure,
+  defineCuiField,
+  defineCuiForm,
+  defineCuiHero,
+  defineCuiModal,
+  defineCuiNavbar,
+  defineCuiPageIntro,
+  defineCuiReveal,
+  defineCuiScrollStage,
+  defineCuiTabs,
+  defineCuiThemeToggle,
+  defineCuiToastRegion,
+  defineCuiTree,
+  defineCuiMap,
+  getTheme,
+  setTheme,
+  toast,
+  type Theme,
+};
 
 export function defineCombatUi(
   registry: CustomElementRegistry = customElements,
@@ -74,6 +126,7 @@ export function defineCombatUi(
   defineCuiToastRegion(registry);
   defineCuiCta(registry);
   defineCuiDisclosure(registry);
+  defineCuiMap(registry);
 }
 
 defineCombatUi();

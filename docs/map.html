@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="cui-map: Leaflet-backed map with semantic light-DOM markers, GeoJSON regions, clustering, and SEO-friendly fallback.">
+  <title>Map · Combat UI</title>
+  <script>
+    try {
+      var t = localStorage.getItem("cui-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (_) { }
+  </script>
+  <script type="module" src="./index.ts"></script>
+  <link rel="stylesheet" href="./site.css">
+</head>
+
+<body class="cui-site">
+  <a class="cui-skip-link" href="#main">Skip to content</a>
+  <!--#include _partials/nav.html?current=map-->
+  <main id="main" class="cui-page cui-stack">
+    <header class="cui-page-header">
+      <h1>Map</h1>
+      <p>
+        <code>cui-map</code> is a Leaflet-backed map that reads place data from its light-DOM children. Search
+        engines and screen readers see the addresses, regions, and links before any JavaScript loads. Leaflet
+        itself is dynamically imported when the map scrolls into view, keeping it off the first-paint budget.
+        Bring your own tile provider via <code>tile-url</code> and <code>tile-attribution</code>.
+      </p>
+    </header>
+
+    <section class="cui-section">
+      <div class="cui-container docs-doc-layout">
+        <aside class="docs-on-page" aria-label="On this page">
+          <a class="cui-nav-link" href="#points">Points</a>
+          <a class="cui-nav-link" href="#regions">Regions</a>
+          <a class="cui-nav-link" href="#clustering">Clustering</a>
+          <a class="cui-nav-link" href="#custom-icons">Custom icons</a>
+          <a class="cui-nav-link" href="#tile-providers">Tile providers</a>
+          <a class="cui-nav-link" href="#seo">SEO &amp; JSON-LD</a>
+          <a class="cui-nav-link" href="#api">API reference</a>
+        </aside>
+
+        <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-7, 3rem);">
+
+          <section id="points" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Points</h2>
+              <p>
+                Each location is an <code>&lt;article class="cui-map-point"&gt;</code> with
+                <code>data-lat</code> / <code>data-lng</code>. Its inner heading, paragraphs, and links survive
+                into the marker popup — the popup content is a clone of the article, so anything in light DOM
+                renders both in the fallback list and in the popup.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-map center="50,6" zoom="4" fit-bounds aria-label="Office locations">
+                  <h3 slot="title">Office locations</h3>
+                  <article class="cui-map-point" data-lat="52.379" data-lng="4.900">
+                    <h4>City placeholder · NL</h4>
+                    <p class="cui-map-point-address">Address placeholder, 1012 AB City</p>
+                    <p>Open Mon–Fri, 09:00–17:00.</p>
+                    <a href="https://example.com">Directions</a>
+                  </article>
+                  <article class="cui-map-point" data-lat="51.5074" data-lng="-0.1278">
+                    <h4>City placeholder · UK</h4>
+                    <p class="cui-map-point-address">Address placeholder, EC1A 1BB City</p>
+                  </article>
+                  <article class="cui-map-point" data-lat="48.8566" data-lng="2.3522">
+                    <h4>City placeholder · FR</h4>
+                    <p class="cui-map-point-address">Address placeholder, 75001 City</p>
+                  </article>
+                </cui-map>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-map center="50,6" zoom="4" fit-bounds aria-label="Office locations">
+                  <h3 slot="title">Office locations</h3>
+                  <article class="cui-map-point" data-lat="52.379" data-lng="4.900">
+                    <h4>City placeholder · NL</h4>
+                    <p class="cui-map-point-address">Address placeholder</p>
+                    <a href="https://example.com">Directions</a>
+                  </article>
+                  <!-- repeat per location -->
+                </cui-map>
+              </script>
+            </cui-code>
+          </section>
+
+          <section id="regions" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Regions</h2>
+              <p>
+                Regions are authored as inline GeoJSON inside
+                <code>&lt;script type="application/geo+json" class="cui-map-region"&gt;</code>. The script tag
+                is inert without JS but parseable to search engines. Add <code>data-label</code> for hover
+                tooltips and <code>data-color</code> for a per-region class hook.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-map center="50,10" zoom="3" aria-label="Coverage regions">
+                  <h3 slot="title">Coverage</h3>
+                  <script type="application/geo+json" class="cui-map-region"
+                    data-label="EU coverage" data-color="accent">
+                    {"type":"Polygon","coordinates":[[[-9,36],[30,36],[30,60],[-9,60],[-9,36]]]}
+                  </script>
+                </cui-map>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-map center="50,10" zoom="3" aria-label="Coverage regions">
+                  <h3 slot="title">Coverage</h3>
+                  <script type="application/geo+json" class="cui-map-region"
+                    data-label="EU coverage" data-color="accent">
+                    {"type":"Polygon","coordinates":[[…]]}
+                  <\/script>
+                </cui-map>
+              </script>
+            </cui-code>
+
+            <p class="cui-caption">
+              GeoJSON content can be a bare <code>Geometry</code> or a wrapped <code>Feature</code>. Clicking a
+              region fires <code>cui-map-region-click</code> with the region's script element and the parsed
+              feature.
+            </p>
+          </section>
+
+          <section id="clustering" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Clustering</h2>
+              <p>
+                Add the <code>cluster</code> attribute to group nearby markers when zoomed out. The
+                <code>leaflet.markercluster</code> plugin is dynamic-imported only when the attribute is
+                present, so non-clustered maps don't pay for it.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-map center="52,5" zoom="5" cluster fit-bounds aria-label="Store locations">
+                  <h3 slot="title">Stores</h3>
+                  <article class="cui-map-point" data-lat="52.379" data-lng="4.900">
+                    <h4>Store 01</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="52.092" data-lng="5.104">
+                    <h4>Store 02</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="51.924" data-lng="4.478">
+                    <h4>Store 03</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="52.221" data-lng="6.893">
+                    <h4>Store 04</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="50.846" data-lng="4.352">
+                    <h4>Store 05</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="51.260" data-lng="4.402">
+                    <h4>Store 06</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="49.611" data-lng="6.131">
+                    <h4>Store 07</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="53.219" data-lng="6.566">
+                    <h4>Store 08</h4>
+                  </article>
+                </cui-map>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-map center="52,5" zoom="5" cluster fit-bounds aria-label="Stores">
+                  <article class="cui-map-point" data-lat="…" data-lng="…">…</article>
+                  <!-- markers cluster automatically; zoom in to spiderfy -->
+                </cui-map>
+              </script>
+            </cui-code>
+          </section>
+
+          <section id="custom-icons" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Custom icons</h2>
+              <p>
+                Slot one or more <code>&lt;template slot="marker-icon"&gt;</code> elements with
+                <code>data-category</code> to map them to points. Points with a matching
+                <code>data-category</code> use that template's HTML as their marker. SVG paths that use
+                <code>fill="currentColor"</code> inherit
+                <code>--cui-map-marker-color</code> automatically.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-map center="50,6" zoom="4" fit-bounds aria-label="Categorised markers">
+                  <template slot="marker-icon" data-category="office">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 21V9l9-6 9 6v12h-6v-7h-6v7H3z" />
+                    </svg>
+                  </template>
+                  <template slot="marker-icon" data-category="event">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2l3 7 7 .8-5.3 4.9 1.6 7L12 18l-6.3 3.7L7.3 14.7 2 9.8 9 9z" />
+                    </svg>
+                  </template>
+
+                  <article class="cui-map-point" data-lat="52.379" data-lng="4.900" data-category="office">
+                    <h4>Office placeholder</h4>
+                  </article>
+                  <article class="cui-map-point" data-lat="48.8566" data-lng="2.3522" data-category="event">
+                    <h4>Event placeholder</h4>
+                  </article>
+                </cui-map>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-map center="…" zoom="…">
+                  <template slot="marker-icon" data-category="office">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="…"/></svg>
+                  </template>
+                  <template slot="marker-icon" data-category="event">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="…"/></svg>
+                  </template>
+
+                  <article class="cui-map-point" data-lat="…" data-lng="…" data-category="office">…</article>
+                  <article class="cui-map-point" data-lat="…" data-lng="…" data-category="event">…</article>
+                </cui-map>
+              </script>
+            </cui-code>
+
+            <p class="cui-caption">
+              A template without <code>data-category</code> becomes the default for any point without a
+              matching category. Points without a slotted icon fall back to the built-in teardrop pin.
+            </p>
+          </section>
+
+          <section id="tile-providers" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Tile providers</h2>
+              <p>
+                <code>cui-map</code> is provider-agnostic. The default URL points at the raw OpenStreetMap
+                server, which is fine for low-traffic docs and demos but
+                <a href="https://operations.osmfoundation.org/policies/tiles/">not suitable for production</a>.
+                Pick one of the patterns below — or anything else with a Leaflet-compatible XYZ URL — and
+                always preserve the provider's required attribution.
+              </p>
+            </div>
+
+            <cui-tabs>
+              <button slot="tab" type="button">OpenStreetMap (default)</button>
+              <button slot="tab" type="button">CARTO</button>
+              <button slot="tab" type="button">Stadia Maps</button>
+              <button slot="tab" type="button">Mapbox</button>
+
+              <section slot="panel" class="docs-panel">
+                <cui-code language="html">
+                  <script type="text/html">
+                    <cui-map
+                      center="50,10" zoom="4"
+                      tile-url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      tile-attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'>
+                      …
+                    </cui-map>
+                  </script>
+                </cui-code>
+                <p class="cui-caption">
+                  Free, no key, strict usage policy. Fine for documentation, prototypes, and low-traffic
+                  marketing sites. Switch providers before you ship a production app.
+                </p>
+              </section>
+
+              <section slot="panel" class="docs-panel">
+                <cui-code language="html">
+                  <script type="text/html">
+                    <cui-map
+                      center="50,10" zoom="4"
+                      tile-url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                      tile-subdomains="abcd"
+                      tile-attribution='© <a href="https://www.openstreetmap.org/copyright">OSM</a> · © <a href="https://carto.com/attributions">CARTO</a>'>
+                      …
+                    </cui-map>
+                  </script>
+                </cui-code>
+                <p class="cui-caption">
+                  Free for non-commercial use. Swap <code>light_all</code> for <code>dark_all</code>,
+                  <code>voyager</code>, etc. See
+                  <a href="https://carto.com/help/building-maps/basemap-list/">the basemap list</a> for
+                  variants.
+                </p>
+              </section>
+
+              <section slot="panel" class="docs-panel">
+                <cui-code language="html">
+                  <script type="text/html">
+                    <cui-map
+                      center="50,10" zoom="4"
+                      tile-url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+                      tile-attribution='© <a href="https://stadiamaps.com/">Stadia Maps</a> · © <a href="https://stamen.com/">Stamen Design</a> · © <a href="https://openmaptiles.org/">OpenMapTiles</a> · © <a href="https://www.openstreetmap.org/copyright">OSM</a>'>
+                      …
+                    </cui-map>
+                  </script>
+                </cui-code>
+                <p class="cui-caption">
+                  Free tier up to a generous quota. API key required for production traffic — append
+                  <code>?api_key=…</code> to the URL template. See
+                  <a href="https://docs.stadiamaps.com/themes/">themes</a> for variants.
+                </p>
+              </section>
+
+              <section slot="panel" class="docs-panel">
+                <cui-code language="html">
+                  <script type="text/html">
+                    <cui-map
+                      center="50,10" zoom="4"
+                      tile-url="https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token=YOUR_TOKEN"
+                      tile-attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> · © <a href="https://www.openstreetmap.org/copyright">OSM</a> · <a href="https://www.mapbox.com/map-feedback/">Improve this map</a>'>
+                      …
+                    </cui-map>
+                  </script>
+                </cui-code>
+                <p class="cui-caption">
+                  Paid past the free tier. Replace <code>YOUR_TOKEN</code> with your public access token; raster
+                  styles include <code>light-v11</code>, <code>dark-v11</code>, <code>streets-v12</code>,
+                  <code>outdoors-v12</code>, <code>satellite-v9</code>.
+                </p>
+              </section>
+            </cui-tabs>
+          </section>
+
+          <section id="seo" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>SEO &amp; JSON-LD</h2>
+              <p>
+                The map block keeps content in semantic HTML, so search engines crawl it without executing
+                JavaScript. Pair it with structured data per page for richer results. The component does not
+                emit JSON-LD itself — author it once from the same source data that renders the cards.
+              </p>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Organization",
+                  "name": "Organisation placeholder",
+                  "location": [
+                    {
+                      "@type": "Place",
+                      "name": "Office placeholder",
+                      "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "Address placeholder",
+                        "postalCode": "1012 AB",
+                        "addressLocality": "City placeholder",
+                        "addressCountry": "NL"
+                      },
+                      "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": 52.379,
+                        "longitude": 4.900
+                      }
+                    }
+                  ]
+                }
+                <\/script>
+              </script>
+            </cui-code>
+
+            <p class="cui-caption">
+              For event locations use <code>Event</code> with <code>location.@type = "Place"</code>; for
+              stores use <code>LocalBusiness</code>. See
+              <a href="https://schema.org/Place">schema.org/Place</a> for the full vocabulary.
+            </p>
+          </section>
+
+          <section id="api" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>API reference</h2>
+            </div>
+
+            <cui-disclosure>
+              <details class="cui-disclosure" data-variant="ghost" open>
+                <summary>Attributes</summary>
+                <div class="cui-disclosure-body">
+                  <table class="docs-token-table">
+                    <thead>
+                      <tr>
+                        <th>Attribute</th>
+                        <th>Default · Purpose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>center</code></td>
+                        <td><code>"0,0"</code>. Comma-separated <code>lat,lng</code> for the initial view.</td>
+                      </tr>
+                      <tr>
+                        <td><code>zoom</code></td>
+                        <td><code>4</code>. Initial zoom level.</td>
+                      </tr>
+                      <tr>
+                        <td><code>min-zoom</code> · <code>max-zoom</code></td>
+                        <td>Optional bounds on user-controlled zoom.</td>
+                      </tr>
+                      <tr>
+                        <td><code>tile-url</code></td>
+                        <td>Default: OpenStreetMap. Leaflet-compatible XYZ URL template.</td>
+                      </tr>
+                      <tr>
+                        <td><code>tile-attribution</code></td>
+                        <td>HTML-safe attribution string. Always render the provider's required credit.</td>
+                      </tr>
+                      <tr>
+                        <td><code>tile-subdomains</code></td>
+                        <td><code>"abc"</code>. Used by the <code>{s}</code> placeholder in tile URLs.</td>
+                      </tr>
+                      <tr>
+                        <td><code>cluster</code></td>
+                        <td>Boolean. Loads <code>leaflet.markercluster</code> and groups nearby markers.</td>
+                      </tr>
+                      <tr>
+                        <td><code>fit-bounds</code></td>
+                        <td>Boolean — <code>true</code> by default when &gt; 1 point. Set
+                          <code>"false"</code> to keep the configured <code>center</code> / <code>zoom</code>;
+                          set <code>"true"</code> to force fit even with one marker.</td>
+                      </tr>
+                      <tr>
+                        <td><code>interactive</code></td>
+                        <td><code>"true"</code>. Setting <code>"false"</code> disables drag and the zoom
+                          control.</td>
+                      </tr>
+                      <tr>
+                        <td><code>scroll-wheel-zoom</code></td>
+                        <td><code>"true"</code>. Setting <code>"false"</code> keeps the page scrollable when
+                          the cursor is over the map.</td>
+                      </tr>
+                      <tr>
+                        <td><code>data-theme="dark"</code></td>
+                        <td>Forces dark tile filtering on a per-instance basis. Otherwise the global theme
+                          token <code>--cui-map-tile-filter</code> drives it.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </cui-disclosure>
+
+            <cui-disclosure>
+              <details class="cui-disclosure" data-variant="ghost">
+                <summary>Slots and child markup</summary>
+                <div class="cui-disclosure-body">
+                  <table class="docs-token-table">
+                    <thead>
+                      <tr>
+                        <th>Slot / element</th>
+                        <th>Purpose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>slot="title"</code></td>
+                        <td>Heading rendered above the canvas. Stays in light DOM for SEO.</td>
+                      </tr>
+                      <tr>
+                        <td><code>slot="legend"</code></td>
+                        <td>Optional legend rendered between the canvas and the fallback list.</td>
+                      </tr>
+                      <tr>
+                        <td><code>slot="marker-icon"</code></td>
+                        <td>One or more <code>&lt;template&gt;</code> elements. Each may carry
+                          <code>data-category</code>. Used as marker HTML for any point with a matching
+                          category.</td>
+                      </tr>
+                      <tr>
+                        <td><code>.cui-map-point</code></td>
+                        <td>An <code>&lt;article&gt;</code> with required <code>data-lat</code> /
+                          <code>data-lng</code>, optional <code>data-category</code>. Cloned into the marker
+                          popup.</td>
+                      </tr>
+                      <tr>
+                        <td><code>.cui-map-region</code></td>
+                        <td><code>&lt;script type="application/geo+json"&gt;</code> containing a Feature or
+                          Geometry. Optional <code>data-label</code> for hover tooltip and
+                          <code>data-color</code> for a per-region class hook
+                          (<code>.cui-map-region--&lt;color&gt;</code>).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </cui-disclosure>
+
+            <cui-disclosure>
+              <details class="cui-disclosure" data-variant="ghost">
+                <summary>Properties and methods</summary>
+                <div class="cui-disclosure-body">
+                  <table class="docs-token-table">
+                    <thead>
+                      <tr>
+                        <th>API</th>
+                        <th>Purpose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>map.leafletMap</code></td>
+                        <td>Reference to the underlying Leaflet <code>L.Map</code>. <code>null</code> until
+                          the element enters the viewport and mounts.</td>
+                      </tr>
+                      <tr>
+                        <td><code>map.isReady</code></td>
+                        <td>Boolean — has Leaflet finished mounting?</td>
+                      </tr>
+                      <tr>
+                        <td><code>map.clustered</code> · <code>map.interactive</code> ·
+                          <code>map.scrollWheelZoom</code></td>
+                        <td>Boolean getters reflecting their attributes.</td>
+                      </tr>
+                      <tr>
+                        <td><code>map.refresh()</code></td>
+                        <td>Re-read children and rebuild markers + regions. Call after dynamic content
+                          updates.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </cui-disclosure>
+
+            <cui-disclosure>
+              <details class="cui-disclosure" data-variant="ghost">
+                <summary>Events</summary>
+                <div class="cui-disclosure-body">
+                  <table class="docs-token-table">
+                    <thead>
+                      <tr>
+                        <th>Event</th>
+                        <th>Detail · Behavior</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>cui-map-ready</code></td>
+                        <td><code>{ map }</code>. Fired after Leaflet mounts. Use this to attach custom
+                          layers, controls, or panes.</td>
+                      </tr>
+                      <tr>
+                        <td><code>cui-map-point-click</code></td>
+                        <td><code>{ point, lat, lng }</code>. Fired when a marker is clicked.
+                          <code>point</code> is the original light-DOM <code>&lt;article&gt;</code>.</td>
+                      </tr>
+                      <tr>
+                        <td><code>cui-map-region-click</code></td>
+                        <td><code>{ region, feature }</code>. Fired when a region polygon is clicked.
+                          <code>region</code> is the original <code>&lt;script&gt;</code> element.</td>
+                      </tr>
+                      <tr>
+                        <td><code>cui-map-bounds-change</code></td>
+                        <td><code>{ bounds, zoom }</code>. Fires on the trailing edge of pan and zoom.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </cui-disclosure>
+
+            <cui-disclosure>
+              <details class="cui-disclosure" data-variant="ghost">
+                <summary>CSS custom properties</summary>
+                <div class="cui-disclosure-body">
+                  <table class="docs-token-table">
+                    <thead>
+                      <tr>
+                        <th>Variable</th>
+                        <th>Default</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>--cui-map-block-size</code></td>
+                        <td><code>28rem</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-radius</code></td>
+                        <td><code>--cui-radius-2</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-border-color</code></td>
+                        <td><code>--cui-color-border</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-surface</code></td>
+                        <td><code>--cui-color-surface-muted</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-tile-filter</code></td>
+                        <td><code>none</code> · inherits dark value from <code>tokens.css</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-marker-color</code></td>
+                        <td><code>--cui-color-accent</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-region-fill</code></td>
+                        <td>Accent at 18% alpha</td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-region-fill-hover</code></td>
+                        <td>Accent at 28% alpha</td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-region-stroke</code></td>
+                        <td>Accent at 80% alpha</td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-region-stroke-width</code></td>
+                        <td><code>2</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-popup-bg</code></td>
+                        <td><code>--cui-color-surface-raised</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-popup-color</code></td>
+                        <td><code>--cui-color</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-popup-radius</code></td>
+                        <td><code>--cui-radius-2</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-popup-shadow</code></td>
+                        <td><code>--cui-shadow-2</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-popup-padding</code></td>
+                        <td><code>--cui-space-4</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-control-bg</code></td>
+                        <td><code>--cui-color-surface-raised</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-control-border</code></td>
+                        <td><code>--cui-color-border</code></td>
+                      </tr>
+                      <tr>
+                        <td><code>--cui-map-attribution-bg</code></td>
+                        <td><code>--cui-color-surface</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </cui-disclosure>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="cui-section" data-spacing="compact">
+      <div class="cui-container cui-cluster docs-prevnext">
+        <cui-button href="./overlays.html">Previous: Overlays</cui-button>
+        <cui-button href="./forms.html">Next: Forms</cui-button>
+      </div>
+    </footer>
+  </main>
+</body>
+
+</html>
