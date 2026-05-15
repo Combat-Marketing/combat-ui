@@ -44,6 +44,7 @@ validation work (SEO docs, demo sites).
 - [ ] Add `cui-tooltip` for inline contextual labels (positioning, focus / hover triggers, keyboard ESC).
 - [ ] Add `cui-popover` for richer floating content (delegates positioning anchor logic; pairs with tooltip).
 - [ ] Add `cui-carousel` for nice animated image/content rotations, highly configurable, multiple images/animations.
+- [ ] Add `cui-map` for an interactive openstreetmaps map with interactive regions, points with configurable, seo friendly content.
 
 ## Priority 4: Navigation System
 
