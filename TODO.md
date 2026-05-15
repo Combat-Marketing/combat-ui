@@ -40,7 +40,20 @@ validation work (SEO docs, demo sites).
 - [ ] Add `cui-popover` for richer floating content (delegates positioning anchor logic; pairs with tooltip).
 - [ ] Evaluate whether `cui-carousel` is necessary; add only if reference demos need it.
 
-## Priority 4: Data Visualization
+## Priority 4: Navigation System
+
+- [x] Mobile responsive collapse panel via `expanded` attribute on `cui-navbar`.
+- [x] Active-link styling via `aria-current="page"`.
+- [x] Click-outside and ESC close for nested dropdowns.
+- [ ] Extend `cui-navbar` with mega-menu support (multi-column dropdown panel with section headings).
+- [ ] Add dropdown alignment options: start, center, end, and full-width.
+- [ ] Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the modal primitive).
+- [ ] Add active-section styling pattern driven by scroll position (pair with `cui-scroll-stage` or an `IntersectionObserver` helper).
+- [ ] Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End, type-ahead).
+- [ ] Add navbar example variants for agency sites, recruitment sites, and campaign landing pages.
+- [ ] Add sidebar navigation component (collapsible groups, active state, sticky positioning).
+
+## Priority 5: Data Visualization
 
 _New priority. Marketing, agency, and case-study pages need to surface numbers; dashboards and recruitment metrics build on the same primitives. Keep the two-tier API: CSS-only classes first, optional custom-element upgrade for interactive / animated variants._
 
@@ -55,19 +68,6 @@ _New priority. Marketing, agency, and case-study pages need to surface numbers; 
 - [ ] Add big-number / delta block (`.cui-stat-delta` extension to `cui-stat`) for "X% growth" call-outs.
 - [ ] Add comparison / before-after block (split image or two-column metric).
 - [ ] Document recommended JSON shapes so CMS content can drive each chart without JS.
-
-## Priority 5: Navigation System
-
-- [x] Mobile responsive collapse panel via `expanded` attribute on `cui-navbar`.
-- [x] Active-link styling via `aria-current="page"`.
-- [x] Click-outside and ESC close for nested dropdowns.
-- [ ] Extend `cui-navbar` with mega-menu support (multi-column dropdown panel with section headings).
-- [ ] Add dropdown alignment options: start, center, end, and full-width.
-- [ ] Add a true drawer mode for the mobile navbar (off-canvas, focus trap — leverage the modal primitive).
-- [ ] Add active-section styling pattern driven by scroll position (pair with `cui-scroll-stage` or an `IntersectionObserver` helper).
-- [ ] Improve nested-dropdown keyboard behavior (arrow-key item traversal, Home / End, type-ahead).
-- [ ] Add navbar example variants for agency sites, recruitment sites, and campaign landing pages.
-- [ ] Add sidebar navigation component (collapsible groups, active state, sticky positioning).
 
 ## Priority 6: Motion System
 
