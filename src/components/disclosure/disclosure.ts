@@ -32,6 +32,46 @@ function installTriggerListener(): void {
   });
 }
 
+/**
+ * Lightweight custom element that wraps a native `<details>` element so it can
+ * be opened, closed, or toggled by ID from anywhere on the page, and so its
+ * open state is observable as an attribute and a custom event.
+ *
+ * The `<details>` element stays in the light DOM, so it's contents remain
+ * searchable, indexable, and stylable from the host page.
+ *
+ * @element cui-disclosure
+ *
+ * @slot - A single `<details>` element with its `<summary>` and body. The 
+ *  element does not render its own UI - it only observes and controls the nested `<details>`.
+ * 
+ * @attr {boolean} open - Reflects the inner `<details>.open`. Set or remove
+ *  this attribute to open/close the disclosure; the attribute also updates
+ *  when the user toggles the disclosure by clicking the `<summary>` directly.
+ * 
+ * @fires {CustomEvent<CuiDisclosureToggleDetail>} cui-disclosure-toggle - 
+ *  Bubbles after the disclosure opens/closes. `detail.open` is the new state.
+ * 
+ * @example
+ * <!-- Standalone -->
+ * <cui-disclosure id="faq-shipping">
+ *   <details>
+ *     <summary>What are the shipping options?</summary>
+ *     <p>We offer standard, expedited, and overnight shipping options.</p>
+ *   </details>
+ * </cui-disclosure>
+ * 
+ * @example
+ * <!-- Controlled from a remote trigger anywhere on the page -->
+ * <button type="button" data-cui-disclosure-target="faq-shipping">
+ *   Toggle Shipping FAQ
+ * </button>
+ * <button type="button"
+ *         data-cui-disclosure-target="faq-shipping"
+ *         data-cui-disclosure-action="open">
+ *   Open shipping FAQ
+ * </button>
+ */
 export class CuiDisclosure extends CombatElement {
   static readonly tagName = "cui-disclosure";
   static override styles = [cssStyleSheet(disclosureCss)];
@@ -125,3 +165,4 @@ export function defineCuiDisclosure(
     registry.define(CuiDisclosure.tagName, CuiDisclosure);
   }
 }
+
