@@ -9,11 +9,15 @@
   display: grid;
   gap: 0;
   overflow: hidden;
-  border: var(--cui-border-size, 1px) solid var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
   border-radius: var(--cui-article-card-radius);
   background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
   color: var(--cui-color, #1b1f27);
-  box-shadow: var(--cui-content-card-shadow, var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%)));
+  box-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
 }
 
 .cui-article-card[hidden] {
@@ -63,8 +67,14 @@ a.cui-article-card-media {
 }
 
 .cui-article-card-category {
-  color: var(--cui-article-card-category-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-text-eyebrow-size, var(--cui-font-size-eyebrow, 0.875rem));
+  color: var(
+    --cui-article-card-category-color,
+    var(--cui-color-accent, oklch(57% 0.18 246deg))
+  );
+  font-size: var(
+    --cui-text-eyebrow-size,
+    var(--cui-font-size-eyebrow, 0.875rem)
+  );
   font-weight: var(--cui-font-weight-strong, 680);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -148,7 +158,8 @@ a.cui-article-card-media {
 }
 
 .cui-article-card[data-orient="row"] > .cui-article-card-media,
-.cui-article-card[data-orient="row"] > :where(img, picture, video, iframe, svg, a):first-child {
+.cui-article-card[data-orient="row"]
+  > :where(img, picture, video, iframe, svg, a):first-child {
   flex: 1 1 var(--cui-article-card-media-size, 18rem);
   min-inline-size: 0;
   min-block-size: var(--cui-article-card-media-min-block-size, 12rem);
@@ -174,7 +185,8 @@ a.cui-article-card-media {
 }
 
 .cui-article-card[data-variant="compact"] > .cui-article-card-media,
-.cui-article-card[data-variant="compact"] > :where(img, picture, video, iframe, svg, a):first-child {
+.cui-article-card[data-variant="compact"]
+  > :where(img, picture, video, iframe, svg, a):first-child {
   display: none;
 }
 
@@ -192,9 +204,14 @@ a.cui-article-card-media {
 .cui-article-grid {
   display: grid;
   align-items: stretch;
-  gap:
-    var(--cui-content-grid-row-gap, var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem)))
-    var(--cui-content-grid-column-gap, var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem)));
+  gap: var(
+      --cui-content-grid-row-gap,
+      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
+    )
+    var(
+      --cui-content-grid-column-gap,
+      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
+    );
   grid-template-columns: var(
     --cui-content-grid-columns,
     repeat(auto-fit, minmax(min(100%, var(--cui-article-grid-min, 18rem)), 1fr))
@@ -248,7 +265,8 @@ a.cui-article-card-media {
   --cui-content-card-shadow: none;
   --cui-article-card-radius: 0;
 
-  border-block-end: var(--cui-border-size-line, 1px) solid var(--cui-color-border, #cfd6df);
+  border-block-end: var(--cui-border-size-line, 1px) solid
+    var(--cui-color-border, #cfd6df);
   padding-block: var(--cui-space-4, 1rem);
 }
 
@@ -303,12 +321,18 @@ a.cui-article-card-media {
   font-size: var(--cui-font-size-neg-1, 0.875rem);
   font-weight: var(--cui-font-weight-strong, 680);
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .cui-article-filter-chip {
-    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
   }
 }
 
@@ -318,7 +342,8 @@ a.cui-article-card-media {
 }
 
 .cui-article-filter-chip:has(input:focus-visible) {
-  outline: var(--cui-focus-size, 2px) solid var(--cui-color-focus, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  outline: var(--cui-focus-size, 2px) solid
+    var(--cui-color-focus, var(--cui-color-accent, oklch(57% 0.18 246deg)));
   outline-offset: var(--cui-focus-offset, 2px);
 }
 

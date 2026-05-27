@@ -51,12 +51,14 @@
     "check": "npm run typecheck && npm run check:css && npm run check:html",
     "check:css": "stylelint \"src/**/*.css\" \"docs/**/*.css\" \"examples/**/*.css\"",
     "check:html": "eslint \"docs/**/*.html\" \"examples/**/*.html\"",
-    "clean": "rimraf dist dist-docs .tsbuildinfo"
+    "clean": "rimraf dist dist-docs .tsbuildinfo",
+    "manifest": "cem analyze --config custom-elements-manifest.config.mjs"
   },
   "browserslist": [
     "baseline 2025 with downstream"
   ],
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.11.0",
     "@html-eslint/eslint-plugin": "0.60.0",
     "@html-eslint/parser": "0.60.0",
     "@types/leaflet": "^1.9.21",
@@ -76,5 +78,6 @@
   "dependencies": {
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3"
-  }
+  },
+  "customElements": "dist/custom-elements.json"
 }
