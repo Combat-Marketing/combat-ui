@@ -1,3 +1,44 @@
+/**
+ * Tree node — a single `<li>` inside a hierarchical `cui-tree`.
+ * Holds a `.cui-tree-row` for the visible row and (when expanded)
+ * a nested `.cui-tree-children` list. Selection, expand/collapse,
+ * and drag-drop state are attribute-driven: `[aria-selected]`,
+ * `[aria-expanded]`, `[data-dragging]`, `[data-drop-position]`. The
+ * `cui-tree` web component manages those attributes; for SSR set
+ * them in markup.
+ *
+ * Indentation is `--cui-tree-indent × (--cui-tree-level - 1)`, so
+ * each child node must set its own `--cui-tree-level` (inline
+ * style, SSR-emitted attribute, or via the web component).
+ *
+ * @block cui-tree-item
+ * @summary Tree node with row, optional children, and attribute-driven state.
+ * @cssvar --cui-tree-indent — Per-level inline indent step. Defaults to 1.25rem.
+ * @cssvar --cui-tree-level — Current level number (1-based). Set per-item.
+ * @cssvar --cui-tree-row-padding — Row padding shorthand. Defaults to `0.25rem 0.5rem`.
+ * @cssvar --cui-tree-row-padding-inline — Inline-start padding added to the computed indent. Defaults to 0.5rem.
+ * @cssvar --cui-tree-row-radius — Row corner radius. Defaults to 0.25rem.
+ * @cssvar --cui-tree-row-hover — Hover row background. Defaults to an 8%-mix of currentColor.
+ * @cssvar --cui-tree-row-selected — Selected-row background. Defaults to a 14%-mix of currentColor.
+ * @cssvar --cui-tree-drop-line — Drop-indicator line color. Defaults to currentColor.
+ *
+ * @example
+ *   <cui-tree selectable draggable-items>
+ *     <ul>
+ *       <li class="cui-tree-item" aria-expanded="true" style="--cui-tree-level: 1">
+ *         <div class="cui-tree-row">
+ *           <button class="cui-tree-toggle" aria-label="Toggle"></button>
+ *           <span>Docs</span>
+ *         </div>
+ *         <ul class="cui-tree-children">
+ *           <li class="cui-tree-item" aria-selected="true" style="--cui-tree-level: 2">
+ *             <div class="cui-tree-row"><span>Intro</span></div>
+ *           </li>
+ *         </ul>
+ *       </li>
+ *     </ul>
+ *   </cui-tree>
+ */
 .cui-tree-item {
   --indent: calc(
     var(--cui-tree-indent, 1.25rem) * (var(--cui-tree-level, 1) - 1)
@@ -40,6 +81,16 @@
   outline-offset: -2px;
 }
 
+/**
+ * Expand/collapse caret inside a `.cui-tree-row`. A small button
+ * with a CSS-drawn chevron that rotates based on the parent
+ * `.cui-tree-item[aria-expanded]` value. Include on leaf nodes too
+ * (without `aria-expanded`) for vertical alignment across rows, or
+ * omit and let the row collapse — both work.
+ *
+ * @block cui-tree-toggle
+ * @summary Expand/collapse caret button inside a tree row.
+ */
 .cui-tree-toggle {
   display: inline-grid;
   place-items: center;
@@ -67,6 +118,16 @@
   transform: rotate(45deg);
 }
 
+/**
+ * Container for nested tree items beneath a `.cui-tree-item`.
+ * `display: none` by default; switches to `display: block` when
+ * the parent `.cui-tree-item` carries `[aria-expanded="true"]`.
+ * Toggling the attribute is enough to expand/collapse — no per-
+ * instance CSS or animation hooks needed.
+ *
+ * @block cui-tree-children
+ * @summary Nested children list; visibility follows `aria-expanded` on the parent.
+ */
 .cui-tree-children {
   display: none;
   padding: 0;
