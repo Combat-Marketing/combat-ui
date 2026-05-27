@@ -1,3 +1,17 @@
+/**
+ * Visually hides an element while keeping it announced by screen
+ * readers. Use for skip-link labels, off-screen instructions, and
+ * status text ("Showing X of Y") that you don't want on screen but
+ * do want in the accessibility tree.
+ *
+ * @block cui-visually-hidden
+ * @summary Screen-reader-only utility (visually hidden, still announced).
+ * @example
+ *   <button class="cui-button">
+ *     <span aria-hidden="true">⚙</span>
+ *     <span class="cui-visually-hidden">Settings</span>
+ *   </button>
+ */
 .cui-visually-hidden {
   position: absolute;
   overflow: hidden;
@@ -7,31 +21,105 @@
   white-space: nowrap;
 }
 
+/**
+ * Applies the secondary text color (`--cui-color-muted`). Use on
+ * inline supporting text — short captions, inline metadata, helper
+ * sentences — when no semantic class already covers it. Prefer the
+ * semantic option (`.cui-caption`, `.cui-metadata`,
+ * `.cui-alert-message`) where one exists.
+ *
+ * @block cui-text-muted
+ * @summary Sets foreground to `--cui-color-muted`.
+ */
 .cui-text-muted {
   color: var(--cui-color-muted, oklch(41.7% 0.045 264deg));
 }
 
+/**
+ * Enables `text-wrap: balance` so the renderer evens line lengths
+ * across wrapped text. Best for short headings and pull quotes;
+ * the browser implementation caps out around six lines. Don't apply
+ * to body paragraphs — the layout cost outweighs the visual win.
+ *
+ * @block cui-text-balance
+ * @summary Balances line breaks across wrapped text (headings, quotes).
+ */
 .cui-text-balance {
   text-wrap: balance;
 }
 
+/**
+ * Escapes a constrained ancestor and spans the full viewport's
+ * inline-size. Use sparingly on media inside `.cui-container` or
+ * `.cui-prose` — full-bleed images, hero bands, accent strips. The
+ * negative-margin trick assumes the element is a direct child of
+ * the container; don't nest deeper.
+ *
+ * @block cui-full-bleed
+ * @summary Breaks out of the parent container to span the viewport.
+ * @example
+ *   <article class="cui-prose">
+ *     <p>Lead paragraph inside the prose measure.</p>
+ *     <figure class="cui-full-bleed">
+ *       <img src="hero.jpg" alt="">
+ *     </figure>
+ *     <p>Back inside the prose measure.</p>
+ *   </article>
+ */
 .cui-full-bleed {
   inline-size: 100vi;
   margin-inline: calc(50% - 50vi);
 }
 
+/**
+ * Scales nested interactive controls (`.cui-button`, form controls,
+ * etc.) down to ~88% of their default size by setting
+ * `--cui-control-scale: 0.88`. Apply to a container to scope the
+ * change, or directly on a single control.
+ *
+ * @block cui-size-sm
+ * @summary Scales interactive controls to ~88% via `--cui-control-scale`.
+ */
+
 .cui-size-sm {
   --cui-control-scale: 0.88;
 }
 
+/**
+ * Scales nested interactive controls up to ~116% of their default
+ * size by setting `--cui-control-scale: 1.16`. Pair with
+ * `.cui-density-comfortable` for an intentionally oversized cluster
+ * (landing-page CTAs, onboarding screens).
+ *
+ * @block cui-size-lg
+ * @summary Scales interactive controls to ~116% via `--cui-control-scale`.
+ */
 .cui-size-lg {
   --cui-control-scale: 1.16;
 }
 
+/**
+ * Sets `--cui-density: 0`, collapsing the density component of
+ * `--cui-control-size`. Use on data-heavy surfaces (dashboards,
+ * admin tables) where padding wastes screen real estate. Combine
+ * with `.cui-size-sm` for the tightest possible UI.
+ *
+ * @block cui-density-compact
+ * @summary Sets `--cui-density: 0` for tight control sizing.
+ */
 .cui-density-compact {
   --cui-density: 0;
 }
 
+/**
+ * Sets `--cui-density: 1.25`, adding a touch-friendly margin to
+ * `--cui-control-size`. Use on touch-first surfaces (kiosks,
+ * mobile-only flows) or marketing pages where controls should read
+ * as inviting rather than utilitarian.
+ *
+ * @block cui-density-comfortable
+ * @summary Sets `--cui-density: 1.25` for touch-friendly control sizing.
+ */
 .cui-density-comfortable {
   --cui-density: 1.25;
 }

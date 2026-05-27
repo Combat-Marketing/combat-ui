@@ -1,3 +1,37 @@
+/**
+ * Light-DOM button block. Apply directly to a `<button>` or `<a>`
+ * element when the markup is already semantic; pair with the
+ * matching `cui-button` web component when you need disabled-state
+ * forwarding or anchor/button polymorphism with JS-controlled
+ * attributes. The class declares its own foreground / background /
+ * border tokens locally so per-instance overrides cascade cleanly
+ * (variants change the tokens; the underlying property rules stay
+ * the same).
+ *
+ * Hover applies a subtle 1px translate to reinforce the
+ * affordance; active resets it so the press feels grounded.
+ *
+ * @block cui-button
+ * @summary Light-DOM button block with primary variant.
+ * @variant primary — Filled accent button via `[data-variant="primary"]`.
+ *   Omit for the default subtle, neutral-surface style.
+ * @cssvar --cui-button-bg — Background fill. Defaults to
+ *   `--cui-color-surface-muted`; primary variant overrides to
+ *   `--cui-color-accent`. Hover mixes in 8% foreground.
+ * @cssvar --cui-button-border — Border color. Defaults to
+ *   `--cui-color-border`; primary variant overrides to
+ *   `--cui-color-accent`.
+ * @cssvar --cui-button-color — Foreground color. Defaults to
+ *   `--cui-color`; primary variant overrides to `--cui-color-on-accent`.
+ *
+ * @example
+ *   <button class="cui-button">Cancel</button>
+ *   <button class="cui-button" data-variant="primary">Save</button>
+ *
+ * @example
+ *   <!-- Anchor styled as a button -->
+ *   <a class="cui-button" href="/start" data-variant="primary">Get started</a>
+ */
 .cui-button {
   --cui-button-bg: var(--cui-color-surface-muted, #edf0f4);
   --cui-button-border: var(--cui-color-border, #cfd6df);
