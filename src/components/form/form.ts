@@ -17,6 +17,45 @@ export interface CuiFormErrorDetail {
   form: HTMLFormElement;
 }
 
+/**
+ * Coordinates submission and validation across child `cui-field` elements.
+ * Runs each field's async validators, blocks submit on failures, and
+ * surfaces submit / success / error events with typed details. Set a JS
+ * submit handler with `setSubmitHandler(fn)`.
+ *
+ * @element cui-form
+ *
+ * @slot - A native `<form>` element containing `cui-field`s and a submit
+ *   button. The form's `action` and `method` are honored when no JS handler
+ *   is attached.
+ *
+ * @fires {CustomEvent<CuiFormSubmitDetail>} cui-form-submit - Fires when the
+ *   form passes validation and is about to submit. `detail.formData` is the
+ *   `FormData` snapshot.
+ * @fires {CustomEvent<CuiFormSubmitDetail>} cui-form-success - Fires after a
+ *   JS submit handler resolves successfully.
+ * @fires {CustomEvent<CuiFormErrorDetail>} cui-form-error - Fires when a JS
+ *   submit handler rejects. `detail.error` is the thrown value.
+ * @fires {CustomEvent} cui-form-invalid - Fires when submission is blocked
+ *   because one or more fields failed validation.
+ *
+ * @example
+ * <cui-form id="signup">
+ *   <form action="/api/signup" method="post">
+ *     <cui-field required>
+ *       <label slot="label">Email</label>
+ *       <input type="email" name="email" required>
+ *     </cui-field>
+ *     <cui-button type="submit">Sign up</cui-button>
+ *   </form>
+ * </cui-form>
+ *
+ * @example
+ * // JS handler — replaces native submission
+ * document.getElementById('signup').setSubmitHandler(async ({ formData }) => {
+ *   await fetch('/api/signup', { method: 'POST', body: formData });
+ * });
+ */
 export class CuiForm extends CombatElement {
   static readonly tagName = "cui-form";
   static override styles = [cssStyleSheet(formCss)];
