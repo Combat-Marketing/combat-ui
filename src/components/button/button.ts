@@ -6,6 +6,22 @@ type ButtonType = "button" | "submit" | "reset";
 const booleanAttributes = ["disabled", "download"] as const;
 const stringAttributes = ["href", "target", "rel", "type"] as const;
 
+/**
+ * Renders a `<button>` or `<a>` with shared visual styling and disabled state
+ * handling. Choose anchor mode by setting the `href` attribute, and button mode by omitting it.
+ * 
+ * @element cui-button
+ * 
+ * @attr {boolean} disabled = Disables the underlying control. For anchor mode this also prevents navigation.
+ * @attr {string} href - When set, the button renders as an anchor (`<a>`) instead of a `<button>`. The value is applied to the anchor's `href` attribute.
+ * @attr {string} target - Anchor target (e.g. `_blank`). Only applies when `href` is set.
+ * @attr {string} rel - Anchor relationship. Only applies when `href` is set.
+ * @attr {"button" | "submit" | "reset"} type - Button type. Only applies when `href` is not set. Defaults to `"button"`.
+ * 
+ * @example
+ * <cui-button type="submit">Save</cui-button>
+ * <cui-button href="/docs" target="_blank" rel="noopener">Documentation</cui-button>
+ */
 export class CuiButton extends CombatElement {
   static readonly tagName = "cui-button";
   static override styles = [cssStyleSheet(buttonCss)];
