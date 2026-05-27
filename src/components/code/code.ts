@@ -36,6 +36,25 @@ const javascriptKeywords = new Set([
   "while",
 ]);
 
+/**
+ * Displays a code sample with a copy-to-clipboard button. Reads source from
+ * its text content, from an HTML comment child, or from a `<script type="…">`
+ * child — whichever is present — so example markup can stay valid HTML.
+ *
+ * @element cui-code
+ *
+ * @slot - The code to display. Can be raw text, an HTML comment containing
+ *   markup, or a `<script type="text/plain">` block (useful when the example
+ *   itself is HTML you don't want the browser to render).
+ *
+ * @attr {string} language - Source language hint (`text`, `html`, `css`,
+ *   `js`, …). Used as a CSS hook and in the copy-button label.
+ *
+ * @example
+ * <cui-code language="html">
+ *   <!-- <button class="cui-button">Click</button> -->
+ * </cui-code>
+ */
 export class CuiCode extends CombatElement {
   static override styles = [cssStyleSheet(styles)];
   static readonly tagName = "cui-code";
