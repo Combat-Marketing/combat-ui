@@ -20,6 +20,26 @@ const defaultAriaLabels: Record<Theme, string> = {
   dark: "Current theme: dark. Change theme.",
 };
 
+/**
+ * Button that cycles the page theme through `auto`, `light`, and `dark`. The
+ * choice is persisted in `localStorage` under `cui-theme` and read at boot
+ * (see the inline script in the docs `<head>`). Pairs with the exported
+ * `getTheme()` / `setTheme()` helpers for programmatic control.
+ *
+ * @element cui-theme-toggle
+ *
+ * @attr {string} label-auto - Visible label when in auto mode.
+ * @attr {string} label-light - Visible label when in light mode.
+ * @attr {string} label-dark - Visible label when in dark mode.
+ * @attr {string} aria-label-auto - Accessible name when in auto mode.
+ * @attr {string} aria-label-light - Accessible name when in light mode.
+ * @attr {string} aria-label-dark - Accessible name when in dark mode.
+ *
+ * @example
+ * <cui-theme-toggle
+ *   label-auto="Auto" label-light="Light" label-dark="Dark">
+ * </cui-theme-toggle>
+ */
 export class CuiThemeToggle extends CombatElement {
   static readonly tagName = "cui-theme-toggle";
 
