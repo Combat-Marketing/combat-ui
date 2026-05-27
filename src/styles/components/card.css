@@ -1,3 +1,20 @@
+/**
+ * Generic card primitive: bordered, lightly elevated, with default
+ * padding and a vertical stack of children. Use as a low-level
+ * building block when none of the typed cards
+ * (`.cui-feature-card`, `.cui-case-card`, `.cui-content-card`,
+ * `.cui-stat`) match the content. Headings and paragraphs at the
+ * top level get `margin: 0` so the grid gap controls vertical
+ * rhythm — no need for manual margin resets in card bodies.
+ *
+ * @block cui-card
+ * @summary Generic bordered + elevated card with stacked children.
+ * @example
+ *   <article class="cui-card">
+ *     <h3>Card title</h3>
+ *     <p>Card body copy that can wrap freely.</p>
+ *   </article>
+ */
 .cui-card {
   display: grid;
   gap: var(--cui-space-3, 0.75rem);
