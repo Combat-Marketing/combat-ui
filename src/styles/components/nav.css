@@ -1,9 +1,30 @@
+/**
+ * Vertical (mobile) → horizontal (≥48rem) navigation container.
+ * Holds `.cui-nav-link` items and optional `.cui-dropdown`s; the
+ * `cui-navbar` web component uses it as the default `slot="nav"`
+ * layout, but it also works standalone as a side rail or footer
+ * nav.
+ *
+ * @block cui-nav
+ * @summary Responsive nav container — vertical on mobile, horizontal at ≥48rem.
+ */
 .cui-nav {
   display: flex;
   flex-direction: column;
   gap: var(--cui-space-2, 0.5rem);
 }
 
+/**
+ * Nav link primitive. Default state is muted; `:hover` and
+ * `[aria-current="page"]` both apply the same emphasis treatment
+ * (full-strength color over a muted surface), and `aria-current`
+ * additionally bolds the text. Set `aria-current="page"` on the
+ * link matching the active page — the same attribute the docs
+ * site sets via the `current` partial query parameter.
+ *
+ * @block cui-nav-link
+ * @summary Nav link with hover and `[aria-current="page"]` emphasis states.
+ */
 .cui-nav-link {
   display: inline-flex;
   min-block-size: 2.25rem;
@@ -27,6 +48,33 @@
   font-weight: var(--cui-font-weight-strong, 680);
 }
 
+/**
+ * Dropdown container — a `.cui-dropdown-toggle` followed by a
+ * `.cui-dropdown-menu` sibling, both inside this wrapper. Set
+ * `[data-open]` on the dropdown (the `cui-navbar` web component
+ * or your own JS) to reveal the menu, rotate the chevron, and
+ * trigger the entry animation. Menus open below by default; on
+ * viewports ≥48rem they absolute-position relative to the
+ * wrapper, and nested menus flip to flyout to the inline-end side.
+ *
+ * Reduced-motion users get an instant open with no transform.
+ *
+ * @block cui-dropdown
+ * @summary Dropdown wrapper for a toggle + menu pair; `[data-open]` reveals.
+ * @cssvar --cui-dropdown-animation-duration — Menu open/close duration. Defaults to 180ms.
+ * @cssvar --cui-dropdown-animation-easing — Menu open/close easing. Defaults to `cubic-bezier(0.2, 0, 0, 1)`.
+ * @cssvar --cui-dropdown-animation-distance — Menu entry-translate distance. Defaults to 0.25rem.
+ * @cssvar --cui-dropdown-min-size — Menu min-inline-size. Defaults to 12rem.
+ *
+ * @example
+ *   <div class="cui-dropdown">
+ *     <button class="cui-dropdown-toggle" aria-expanded="false">Resources</button>
+ *     <ul class="cui-dropdown-menu" hidden>
+ *       <li><a class="cui-dropdown-item" href="/docs">Docs</a></li>
+ *       <li><a class="cui-dropdown-item" href="/blog">Blog</a></li>
+ *     </ul>
+ *   </div>
+ */
 .cui-dropdown {
   --cui-dropdown-animation-duration: 180ms;
   --cui-dropdown-animation-easing: cubic-bezier(0.2, 0, 0, 1);
@@ -36,6 +84,17 @@
   position: relative;
 }
 
+/**
+ * Toggle button inside `.cui-dropdown`. A bare button with a
+ * CSS-drawn chevron that rotates 180° when the parent dropdown
+ * has `[data-open]`. The button itself doesn't manage open state
+ * — the `cui-navbar` web component (or your JS) toggles
+ * `[data-open]` on the parent `.cui-dropdown` and `aria-expanded`
+ * on this button in response to clicks.
+ *
+ * @block cui-dropdown-toggle
+ * @summary Toggle button with rotating chevron inside `.cui-dropdown`.
+ */
 .cui-dropdown-toggle {
   inline-size: 100%;
   border: 0;
@@ -58,6 +117,18 @@
   transform: rotate(225deg) translateY(-0.12rem);
 }
 
+/**
+ * Flyout menu inside `.cui-dropdown`. Hidden by default (zero
+ * opacity, translated down, `display: none` via `[hidden]` for
+ * accessibility); the parent's `[data-open]` reveals it with a
+ * shared fade-and-slide. Use `<ul>` semantics with
+ * `.cui-dropdown-item` children and optional `.cui-dropdown-divider`
+ * separators. Nested menus open to the inline-end on viewports
+ * ≥48rem.
+ *
+ * @block cui-dropdown-menu
+ * @summary Flyout list inside `.cui-dropdown`; reveal via parent `[data-open]`.
+ */
 .cui-dropdown-menu {
   display: grid;
   min-inline-size: var(--cui-dropdown-min-size, 12rem);
@@ -92,6 +163,15 @@
   }
 }
 
+/**
+ * Item inside `.cui-dropdown-menu`. Sized to be touch-comfortable
+ * (2.25rem min-height) with the same hover treatment as
+ * `.cui-nav-link`. Use `<a>` for navigation items; use `<button>`
+ * if you want an action that doesn't change the URL.
+ *
+ * @block cui-dropdown-item
+ * @summary Menu item with hover and `[aria-current="page"]` states.
+ */
 .cui-dropdown-item {
   display: flex;
   min-block-size: 2.25rem;
@@ -110,6 +190,14 @@
   background: var(--cui-color-surface-muted, #edf0f4);
 }
 
+/**
+ * Visual separator between groups of items in a dropdown menu.
+ * Render as `<hr class="cui-dropdown-divider">` between
+ * `.cui-dropdown-item`s.
+ *
+ * @block cui-dropdown-divider
+ * @summary Horizontal separator between dropdown item groups.
+ */
 .cui-dropdown-divider {
   block-size: var(--cui-border-size, 1px);
   border: 0;

@@ -1,3 +1,37 @@
+/**
+ * Shared base styling for native form controls — applies to
+ * `.cui-input` (on `<input>`), `.cui-select` (on `<select>`), and
+ * `.cui-textarea` (on `<textarea>`). Same border, padding, focus
+ * ring, and disabled/read-only/invalid states for all three; the
+ * `:where()` keeps specificity at zero so individual rules can
+ * override without escalation.
+ *
+ * Each class also gets element-specific tweaks: `.cui-textarea`
+ * adds `min-block-size: 6rem` and `resize: vertical`; `.cui-select`
+ * paints a custom chevron and removes the native arrow via
+ * `appearance: none`. Invalid state is driven by `:user-invalid`
+ * (native validation) plus `cui-field[data-invalid] :where(…)`
+ * (when wrapped in a `cui-field` web component with server-side
+ * errors).
+ *
+ * @block cui-input
+ * @summary Shared base for `.cui-input` / `.cui-select` / `.cui-textarea`.
+ * @cssvar --cui-input-bg — Background. Defaults to `--cui-color-surface-raised`.
+ * @cssvar --cui-input-border — Border color. Defaults to `--cui-color-border`.
+ * @cssvar --cui-input-color — Foreground. Defaults to `--cui-color`.
+ * @cssvar --cui-input-placeholder — Placeholder color. Defaults to `--cui-color-muted`.
+ * @cssvar --cui-input-radius — Corner radius. Defaults to `--cui-radius-control`.
+ * @cssvar --cui-input-padding-block — Vertical padding. Defaults to 0.625rem.
+ * @cssvar --cui-input-padding-inline — Horizontal padding. Defaults to 0.875rem.
+ *
+ * @example
+ *   <input class="cui-input" type="email" placeholder="you@example.com">
+ *   <select class="cui-select">
+ *     <option>One</option>
+ *     <option>Two</option>
+ *   </select>
+ *   <textarea class="cui-textarea" placeholder="Notes…"></textarea>
+ */
 :where(.cui-input, .cui-select, .cui-textarea) {
   --cui-input-bg: var(--cui-color-surface-raised, #fff);
   --cui-input-border: var(--cui-color-border, #cfd6df);
@@ -61,6 +95,22 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   border-color: var(--cui-color-danger, #b3261e);
 }
 
+/**
+ * Wrapping `<label>` for native checkbox or radio inputs — places
+ * the input and its visible label side-by-side with `--cui-space-2`
+ * between them. Uses `accent-color` to brand the native checkbox
+ * with `--cui-color-accent`. No bespoke styling on the input
+ * itself, so the experience matches platform conventions
+ * (including indeterminate, focus rings, and OS-level scaling).
+ *
+ * @block cui-check
+ * @summary Wrapping label for native checkbox / radio inputs.
+ * @example
+ *   <label class="cui-check">
+ *     <input type="checkbox" name="agree" value="yes">
+ *     <span>I agree to the terms</span>
+ *   </label>
+ */
 .cui-check {
   display: inline-flex;
   align-items: center;
@@ -76,6 +126,27 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   margin: 0;
 }
 
+/**
+ * Toggle switch — a styled wrapper around a visually-hidden
+ * checkbox plus a `.cui-switch-track`. The input itself is
+ * absolute-positioned and clipped (still focusable and announced
+ * by screen readers); the visual switch is the `.cui-switch-track`
+ * sibling whose appearance changes via `:checked` and
+ * `:focus-visible` on the input.
+ *
+ * @block cui-switch
+ * @summary Toggle switch wrapper around a hidden checkbox.
+ * @cssvar --cui-switch-bg — Track background when off. Defaults to `--cui-color-surface-muted`.
+ * @cssvar --cui-switch-bg-on — Track background when on. Defaults to `--cui-color-accent`.
+ * @cssvar --cui-switch-knob — Knob fill color. Defaults to `--cui-color-surface-raised`.
+ *
+ * @example
+ *   <label class="cui-switch">
+ *     <input type="checkbox" name="notifications">
+ *     <span class="cui-switch-track"></span>
+ *     <span>Email notifications</span>
+ *   </label>
+ */
 .cui-switch {
   --cui-switch-bg: var(--cui-color-surface-muted, #edf0f4);
   --cui-switch-bg-on: var(--cui-color-accent, #2563eb);
@@ -97,6 +168,17 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   white-space: nowrap;
 }
 
+/**
+ * Visual track and knob of a `.cui-switch`. A 2.5rem × 1.5rem pill
+ * with a 1.25rem circular knob (a `::after` pseudo-element) that
+ * translates inline-end-ward when the input sibling is `:checked`.
+ * Always paired with the parent `.cui-switch` label and an
+ * immediately-preceding `<input type="checkbox">` — standalone use
+ * is not supported.
+ *
+ * @block cui-switch-track
+ * @summary Pill-shaped track with sliding knob; child of `.cui-switch`.
+ */
 .cui-switch-track {
   position: relative;
   display: inline-block;
@@ -133,6 +215,24 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   outline-offset: 2px;
 }
 
+/**
+ * Resets the browser's default `<fieldset>` chrome (border,
+ * padding, margins) and replaces it with a stacked grid layout
+ * with `--cui-space-3` gap. Inner `<legend>` gets bold weight and
+ * `--cui-space-2` bottom margin. Use to group related form fields
+ * semantically without the default visual box.
+ *
+ * @block cui-fieldset
+ * @summary Reset `<fieldset>` with stacked grid layout for grouped fields.
+ * @example
+ *   <fieldset class="cui-fieldset">
+ *     <legend>Shipping address</legend>
+ *     <label class="cui-field-label">Street</label>
+ *     <input class="cui-input" name="street">
+ *     <label class="cui-field-label">City</label>
+ *     <input class="cui-input" name="city">
+ *   </fieldset>
+ */
 .cui-fieldset {
   border: 0;
   padding: 0;
@@ -146,6 +246,16 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   margin-block-end: var(--cui-space-2, 0.5rem);
 }
 
+/**
+ * Standalone field label — bold, full-width, with `--cui-space-1`
+ * bottom margin to gap from the control. Use on `<label>` elements
+ * paired with `.cui-input` / `.cui-select` / `.cui-textarea`.
+ * Inside the `cui-field` web component, the `label` slot already
+ * has this styling — use this class only outside the component.
+ *
+ * @block cui-field-label
+ * @summary Standalone bold field label (use outside `cui-field`).
+ */
 .cui-field-label {
   display: block;
   font-weight: var(--cui-font-weight-strong, 680);
@@ -153,6 +263,16 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   color: var(--cui-color, #1b1f27);
 }
 
+/**
+ * Helper text below a form control — muted, slightly larger than
+ * `.cui-field-error`, with a small top margin. Use for non-error
+ * guidance ("We never share your email", "Use at least 12
+ * characters"). For validation errors, use `.cui-field-error`
+ * instead.
+ *
+ * @block cui-field-help
+ * @summary Muted helper text below a form control.
+ */
 .cui-field-help {
   display: block;
   margin-block-start: var(--cui-space-1, 0.25rem);
@@ -160,6 +280,17 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
   color: var(--cui-color-muted, #5d6675);
 }
 
+/**
+ * Error message below a form control — same size as
+ * `.cui-field-help` but tinted with `--cui-color-danger`. Use for
+ * inline validation errors when not using the `cui-field` web
+ * component. Inside `cui-field`, the `error` and `error-<key>`
+ * slots are already styled — this class is for the standalone
+ * form pattern.
+ *
+ * @block cui-field-error
+ * @summary Inline error message in `--cui-color-danger`.
+ */
 .cui-field-error {
   display: block;
   margin-block-start: var(--cui-space-1, 0.25rem);

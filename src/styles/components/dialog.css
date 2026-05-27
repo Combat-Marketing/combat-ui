@@ -1,3 +1,59 @@
+/**
+ * Modal dialog block, built directly on the native `<dialog>`
+ * element. Backdrop dismiss, ESC handling, and focus management
+ * come from the platform; this class adds visual styling, a
+ * responsive content layout, four sizes, and a side-sheet variant.
+ * Pair with the `cui-modal` web component when you need remote-
+ * trigger control (`data-cui-modal-target`) or typed close events.
+ *
+ * The dialog max-inline-size is driven by
+ * `--cui-dialog-max-inline-size`, which `[data-size]` overrides.
+ * The `sheet-end` variant pins the dialog to the inline-end edge
+ * as a full-height drawer.
+ *
+ * @block cui-dialog
+ * @summary Native `<dialog>` styling with size + side-sheet variants.
+ * @variant sheet-end — Maps to `[data-variant]`. Pins the dialog to
+ *   the inline-end edge as a full-height sheet (drawer pattern).
+ * @variant sm | md | lg | full — Maps to `[data-size]`. Overrides
+ *   `--cui-dialog-max-inline-size`: 22rem / 32rem / 44rem / 100vi.
+ *   `full` also expands to full viewport block-size and drops the
+ *   corner radius.
+ * @cssvar --cui-dialog-bg — Background. Defaults to `--cui-color-surface-raised`.
+ * @cssvar --cui-dialog-color — Foreground. Defaults to `--cui-color`.
+ * @cssvar --cui-dialog-border — Border color. Defaults to `--cui-color-border`.
+ * @cssvar --cui-dialog-radius — Corner radius. Defaults to `--cui-radius-2`.
+ * @cssvar --cui-dialog-padding — Inner padding. Defaults to `--cui-space-5`.
+ * @cssvar --cui-dialog-max-inline-size — Max width. Defaults to 28rem; `[data-size]` overrides.
+ * @cssvar --cui-dialog-shadow — Drop shadow. Defaults to `0 16px 48px rgba(0,0,0,0.18)`.
+ * @cssvar --cui-dialog-backdrop — `::backdrop` background. Defaults to `rgba(0,0,0,0.4)`.
+ *
+ * @example
+ *   <!-- Open via JS: document.getElementById('confirm').showModal() -->
+ *   <dialog class="cui-dialog" id="confirm">
+ *     <div class="cui-dialog-header">
+ *       <h2 class="cui-dialog-title">Delete this item?</h2>
+ *       <button class="cui-dialog-close" aria-label="Close">×</button>
+ *     </div>
+ *     <div class="cui-dialog-body">
+ *       <p>This cannot be undone.</p>
+ *     </div>
+ *     <div class="cui-dialog-actions">
+ *       <button class="cui-button">Cancel</button>
+ *       <button class="cui-button" data-variant="primary">Delete</button>
+ *     </div>
+ *   </dialog>
+ *
+ * @example
+ *   <!-- Side-sheet drawer -->
+ *   <dialog class="cui-dialog" data-variant="sheet-end" data-size="lg">
+ *     <div class="cui-dialog-header">
+ *       <h2 class="cui-dialog-title">Edit profile</h2>
+ *       <button class="cui-dialog-close" aria-label="Close">×</button>
+ *     </div>
+ *     <div class="cui-dialog-body">…</div>
+ *   </dialog>
+ */
 .cui-dialog {
   --cui-dialog-bg: var(--cui-color-surface-raised, #fff);
   --cui-dialog-color: var(--cui-color, #1b1f27);
@@ -42,6 +98,15 @@
   border-radius: 0;
 }
 
+/**
+ * Top row of a `.cui-dialog`. A flex layout that places the title
+ * on the inline-start and the close button on the inline-end, with
+ * `--cui-space-3` between them and a matching bottom margin before
+ * the body content.
+ *
+ * @block cui-dialog-header
+ * @summary Top row of the dialog: title + close button.
+ */
 .cui-dialog-header {
   display: flex;
   align-items: start;
@@ -50,6 +115,15 @@
   margin-block-end: var(--cui-space-3, 0.75rem);
 }
 
+/**
+ * Dialog title — pre-sized at `--cui-font-size-3` (1.5–2rem fluid)
+ * with a tight line-height. Pick the heading element that matches
+ * the dialog's role in the document outline (most often `<h2>`
+ * because the page already has an `<h1>`).
+ *
+ * @block cui-dialog-title
+ * @summary Dialog title; sized at `--cui-font-size-3`.
+ */
 .cui-dialog-title {
   margin: 0;
   font-size: var(--cui-font-size-3, 1.5rem);
@@ -57,6 +131,17 @@
   line-height: 1.2;
 }
 
+/**
+ * Close button in the inline-end corner of `.cui-dialog-header`.
+ * A square (2rem × 2rem) bare button with `appearance: none`,
+ * styled for the standard close `×` glyph. Render as
+ * `<button type="button" aria-label="Close">×</button>` and wire
+ * the click to `dialog.close()` — or, with the `cui-modal` web
+ * component, add `data-cui-modal-close`.
+ *
+ * @block cui-dialog-close
+ * @summary Dismiss button (×) in the dialog header's inline-end corner.
+ */
 .cui-dialog-close {
   appearance: none;
   border: 0;
@@ -81,10 +166,28 @@
   outline-offset: 2px;
 }
 
+/**
+ * Content area between the dialog header and actions. Provides
+ * the bottom margin (`--cui-space-4`) that separates body content
+ * from the actions row.
+ *
+ * @block cui-dialog-body
+ * @summary Body content area between header and actions.
+ */
 .cui-dialog-body {
   margin-block-end: var(--cui-space-4, 1rem);
 }
 
+/**
+ * Action buttons row at the bottom of `.cui-dialog`. Flex row
+ * with `--cui-space-2` gap and `flex-end` justification — the
+ * destructive / primary action sits on the inline-end. Two or
+ * three buttons is the sweet spot; for more, consider a different
+ * pattern (sticky footer with overflow scroll, or `[data-size="lg"]`).
+ *
+ * @block cui-dialog-actions
+ * @summary Right-aligned flex row of action buttons.
+ */
 .cui-dialog-actions {
   display: flex;
   justify-content: flex-end;
