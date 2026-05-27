@@ -36,6 +36,43 @@ const VALIDITY_KEYS: (keyof ValidityState)[] = [
   "customError",
 ];
 
+/**
+ * Form-field wrapper that surfaces native `ValidityState` as user-visible
+ * messages, supports server-side errors via `setError()`, async validators
+ * via `addValidator()`, and i18n via slotted `error-<validityKey>` content.
+ * Designed to be a child of `cui-form`, but works standalone.
+ *
+ * @element cui-field
+ *
+ * @slot - The form control (`<input>`, `<select>`, `<textarea>`, or a custom
+ *   control matching `CuiFieldControl`).
+ * @slot label - The field label. Will be associated with the control via
+ *   `for=` / `aria-labelledby`.
+ * @slot help - Descriptive help text shown beneath the control.
+ * @slot error - Generic error message. Used when no `error-<key>` slot
+ *   matches the failing validity key.
+ * @slot error-{validityKey} - Validity-key-specific error message
+ *   (`error-valueMissing`, `error-typeMismatch`, `error-tooShort`, …). The
+ *   first matching slot wins.
+ *
+ * @attr {boolean} required - Mirrors the control's `required` attribute and
+ *   marks the field visually as required.
+ *
+ * @fires {CustomEvent<CuiFieldValidDetail>} cui-field-valid - Fires when the
+ *   field transitions to a valid state.
+ * @fires {CustomEvent<CuiFieldInvalidDetail>} cui-field-invalid - Fires when
+ *   validation fails. `detail.key` is the first failing `ValidityState` key;
+ *   `detail.params` carries control-derived values for message interpolation.
+ *
+ * @example
+ * <cui-field required>
+ *   <label slot="label">Email</label>
+ *   <input type="email" name="email" required>
+ *   <span slot="help">We never share your email.</span>
+ *   <span slot="error-valueMissing">Email is required.</span>
+ *   <span slot="error-typeMismatch">Enter a valid email address.</span>
+ * </cui-field>
+ */
 export class CuiField extends CombatElement {
   static readonly tagName = "cui-field";
   static override styles = [cssStyleSheet(fieldCss)];
