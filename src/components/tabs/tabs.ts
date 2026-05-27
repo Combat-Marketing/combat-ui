@@ -1,6 +1,25 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 import tabsCss from "./tabs.css?inline";
 
+/**
+ * Tabbed interface with ARIA `tablist`/`tab`/`tabpanel` roles and full
+ * keyboard support (Left/Right, Home/End). Tabs and panels are slotted so
+ * crawlers see all panel content regardless of which tab is active.
+ *
+ * @element cui-tabs
+ *
+ * @slot tab - One tab control per tab. Use `<button>` elements; the element
+ *   wires up `id`, `aria-controls`, and `aria-selected` automatically.
+ * @slot panel - One panel per tab, in the same order as the tab slots.
+ *
+ * @example
+ * <cui-tabs>
+ *   <button slot="tab">Overview</button>
+ *   <button slot="tab">Pricing</button>
+ *   <section slot="panel"><p>Overview content.</p></section>
+ *   <section slot="panel"><p>Pricing content.</p></section>
+ * </cui-tabs>
+ */
 export class CuiTabs extends CombatElement {
   static readonly tagName = "cui-tabs";
   static override styles = [cssStyleSheet(tabsCss)];
