@@ -43,6 +43,30 @@ const VARIANT_ICONS: Record<CuiToastVariant, string> = {
   danger: "✕",
 };
 
+/**
+ * Container for transient toast notifications. Usually created on demand by
+ * the exported `toast()` function — you only place this element yourself if
+ * you want to control placement or pre-render a region for SSR. Each region
+ * is identified by its `placement`; calls to `toast()` are routed to the
+ * region matching their requested placement, or a new region is created.
+ *
+ * @element cui-toast-region
+ *
+ * @slot - Toast elements. Normally populated by `toast()`; manual children
+ *   are allowed and remain in DOM until dismissed.
+ *
+ * @attr {"block-start-inline-start" | "block-start-inline-end" | "block-end-inline-start" | "block-end-inline-end" | "block-start-center" | "block-end-center"} placement -
+ *   Region anchor point. Default `block-end-inline-end` (bottom-right).
+ *
+ * @example
+ * // Imperative — preferred:
+ * import { toast } from '@combat-ui/core';
+ * toast.success('Saved.', { duration: 3000 });
+ *
+ * @example
+ * <!-- Declarative — only when you need a fixed placement region: -->
+ * <cui-toast-region placement="block-start-center"></cui-toast-region>
+ */
 export class CuiToastRegion extends CombatElement {
   static readonly tagName = "cui-toast-region";
   static override styles = [cssStyleSheet(toastCss)];
