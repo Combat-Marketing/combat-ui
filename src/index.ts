@@ -1,3 +1,7 @@
+import {
+  CuiArticleFilter,
+  defineCuiArticleFilter,
+} from "./components/article-filter";
 import { CuiButton, defineCuiButton } from "./components/button";
 import { CuiCode, defineCuiCode } from "./components/code";
 import { CuiCta, defineCuiCta } from "./components/cta";
@@ -30,6 +34,7 @@ import { CuiTree, defineCuiTree } from "./components/tree";
 import { CuiMap, defineCuiMap } from "./components/map";
 import "./index.css";
 
+export type { CuiArticleFilterChangeDetail } from "./components/article-filter";
 export type { CuiDisclosureToggleDetail } from "./components/disclosure";
 export type {
   CuiFieldControl,
@@ -67,6 +72,7 @@ export {
   type ScrollStageState,
 } from "./internal/scroll-coordinator";
 export {
+  CuiArticleFilter,
   CuiButton,
   CuiCode,
   CuiCta,
@@ -84,6 +90,7 @@ export {
   CuiToastRegion,
   CuiTree,
   CuiMap,
+  defineCuiArticleFilter,
   defineCuiButton,
   defineCuiCode,
   defineCuiCta,
@@ -127,6 +134,7 @@ export function defineCombatUi(
   defineCuiCta(registry);
   defineCuiDisclosure(registry);
   defineCuiMap(registry);
+  defineCuiArticleFilter(registry);
 }
 
 defineCombatUi();
