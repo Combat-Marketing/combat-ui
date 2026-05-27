@@ -1,3 +1,11 @@
+/**
+ * Media element inside a `cui-hero` — an `<img>` or `<video>` that
+ * fills its grid cell with `object-fit: cover`. Apply the class
+ * directly to the media element placed in the hero's `media` slot.
+ *
+ * @block cui-hero-media
+ * @summary Hero media element (image/video) with cover fit.
+ */
 .cui-hero-media {
   display: block;
   inline-size: 100%;
@@ -5,6 +13,15 @@
   object-fit: cover;
 }
 
+/**
+ * Actions row inside a `cui-hero`. A flex row of primary +
+ * secondary CTAs that wraps onto multiple lines when the hero is
+ * narrow. Place inside the hero's `actions` slot, with one or two
+ * `.cui-button` children.
+ *
+ * @block cui-hero-actions
+ * @summary Flex row of CTAs inside the hero; wraps on narrow viewports.
+ */
 .cui-hero-actions {
   display: flex;
   flex-wrap: wrap;

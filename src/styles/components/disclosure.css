@@ -1,3 +1,54 @@
+/**
+ * Disclosure block — a bordered card wrapping a native `<details>`
+ * (or a non-`<details>` container with a `.cui-disclosure-summary`
+ * child for cases where `<details>` semantics don't fit). Apply the
+ * class directly to `<details>` for the simplest case; pair with
+ * the `cui-disclosure` web component when you need remote-trigger
+ * control or attribute-driven open state. The custom CSS marker
+ * replaces the native triangle and rotates on `[open]`.
+ *
+ * Stack multiple disclosures inside `.cui-disclosure-group` for FAQ
+ * patterns. Combine `data-variant="ghost"` on each disclosure with
+ * `data-variant="stacked"` on the group for the borderless FAQ
+ * list.
+ *
+ * @block cui-disclosure
+ * @summary Bordered disclosure card with custom marker; wraps `<details>`.
+ * @variant ghost — `[data-variant="ghost"]`. Strips box chrome and
+ *   uses a bottom-border only; good for stacking inside `.cui-disclosure-group`.
+ * @tone subtle — `[data-tone="subtle"]`. Muted background fill
+ *   instead of the default raised surface.
+ * @cssvar --cui-disclosure-bg — Card background. Defaults to `--cui-color-surface-raised`.
+ * @cssvar --cui-disclosure-color — Foreground color. Defaults to `--cui-color`.
+ * @cssvar --cui-disclosure-border — Border color. Defaults to `--cui-color-border`.
+ * @cssvar --cui-disclosure-radius — Corner radius. Defaults to `--cui-radius-2`.
+ * @cssvar --cui-disclosure-padding-inline — Horizontal padding. Defaults to `--cui-space-4`.
+ * @cssvar --cui-disclosure-padding-block — Vertical padding. Defaults to `--cui-space-3`.
+ * @cssvar --cui-disclosure-summary-color — Summary text color. Defaults to `--cui-color`.
+ * @cssvar --cui-disclosure-marker-color — Chevron color. Defaults to `--cui-color-muted`.
+ * @cssvar --cui-disclosure-hover-bg — Summary hover background. Defaults to `--cui-color-surface-muted`.
+ *
+ * @example
+ *   <details class="cui-disclosure">
+ *     <summary>How long does shipping take?</summary>
+ *     <div class="cui-disclosure-body">
+ *       <p>Orders ship within two business days.</p>
+ *     </div>
+ *   </details>
+ *
+ * @example
+ *   <!-- Borderless FAQ list -->
+ *   <div class="cui-disclosure-group" data-variant="stacked">
+ *     <details class="cui-disclosure" data-variant="ghost">
+ *       <summary>Question one</summary>
+ *       <div class="cui-disclosure-body"><p>Answer one.</p></div>
+ *     </details>
+ *     <details class="cui-disclosure" data-variant="ghost">
+ *       <summary>Question two</summary>
+ *       <div class="cui-disclosure-body"><p>Answer two.</p></div>
+ *     </details>
+ *   </div>
+ */
 .cui-disclosure {
   --cui-disclosure-bg: var(--cui-color-surface-raised, #fff);
   --cui-disclosure-color: var(--cui-color, #1b1f27);
@@ -67,6 +118,15 @@
   outline-offset: -2px;
 }
 
+/**
+ * Small-caps kicker text above a disclosure summary or inside the
+ * body. Renders as muted, uppercase, slightly-tracked metadata.
+ * Use for a category label ("FAQ", "Shipping", "Account") above
+ * the question text.
+ *
+ * @block cui-disclosure-eyebrow
+ * @summary Muted uppercase kicker for disclosure metadata.
+ */
 .cui-disclosure-eyebrow {
   display: block;
   margin: 0;
@@ -77,6 +137,19 @@
   text-transform: uppercase;
 }
 
+/**
+ * Content area below the disclosure summary. Provides the bottom
+ * and horizontal padding to match the summary's inline padding,
+ * leaving the visual gap between summary and body up to the
+ * disclosure's own layout. Wrap the answer markup (paragraphs,
+ * lists, embedded media) here.
+ *
+ * Reduced-motion users get the body as soon as the disclosure
+ * opens; others see a 160ms ease-in fade-and-slide.
+ *
+ * @block cui-disclosure-body
+ * @summary Padded body area below the disclosure summary.
+ */
 .cui-disclosure-body {
   padding-block: 0 var(--cui-disclosure-padding-block, 0.75rem);
   padding-inline: var(--cui-disclosure-padding-inline, 1rem);
@@ -99,6 +172,32 @@
   --cui-disclosure-hover-bg: var(--cui-color-surface, #f7f8fa);
 }
 
+/**
+ * Vertical group of disclosures. Default spacing is `--cui-space-2`
+ * between cards; the `stacked` variant collapses gaps to zero,
+ * merges borders between siblings, and rounds only the first and
+ * last corners — the canonical FAQ-list look. Pair the stacked
+ * group with `data-variant="ghost"` on each disclosure for the
+ * cleanest borderless rendering.
+ *
+ * @block cui-disclosure-group
+ * @summary Stack of disclosures; `stacked` variant for borderless FAQ lists.
+ * @variant stacked — `[data-variant="stacked"]`. Removes gaps,
+ *   merges sibling borders, rounds only first/last corners.
+ *
+ * @example
+ *   <div class="cui-disclosure-group">
+ *     <details class="cui-disclosure">…</details>
+ *     <details class="cui-disclosure">…</details>
+ *   </div>
+ *
+ * @example
+ *   <!-- FAQ-list style -->
+ *   <div class="cui-disclosure-group" data-variant="stacked">
+ *     <details class="cui-disclosure" data-variant="ghost">…</details>
+ *     <details class="cui-disclosure" data-variant="ghost">…</details>
+ *   </div>
+ */
 .cui-disclosure-group {
   display: grid;
   gap: var(--cui-space-2, 0.5rem);

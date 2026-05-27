@@ -1,8 +1,37 @@
+/**
+ * Container for a tablist plus the panels it controls. A simple
+ * vertical stack with `--cui-space-4` between the tablist and the
+ * active panel. Pair with the matching `cui-tabs` web component for
+ * keyboard navigation, ARIA wiring, and panel visibility — without
+ * it the block only handles layout.
+ *
+ * @block cui-tabs
+ * @summary Vertical container layout for a tablist + panels.
+ * @example
+ *   <cui-tabs>
+ *     <div class="cui-tablist">
+ *       <button class="cui-tab" aria-selected="true">Overview</button>
+ *       <button class="cui-tab">Pricing</button>
+ *     </div>
+ *     <section>Overview content.</section>
+ *     <section>Pricing content.</section>
+ *   </cui-tabs>
+ */
 .cui-tabs {
   display: grid;
   gap: var(--cui-space-4, 1rem);
 }
 
+/**
+ * Horizontal row of `.cui-tab` controls with a bottom border that
+ * the active tab "punches" with the accent underline. Scrolls
+ * horizontally when tabs overflow the inline-size; `scrollbar-gutter:
+ * stable` keeps the tablist height steady regardless of whether the
+ * scrollbar is showing.
+ *
+ * @block cui-tablist
+ * @summary Horizontal strip of tab controls with overflow scroll.
+ */
 .cui-tablist {
   display: flex;
   overflow-x: auto;
@@ -10,6 +39,17 @@
   scrollbar-gutter: stable;
 }
 
+/**
+ * Single tab control inside `.cui-tablist`. Active state is driven
+ * by `[aria-selected="true"]`, not a class — set the attribute on
+ * the active tab to surface the accent underline, full-strength
+ * text color, and bolder weight. The `cui-tabs` web component
+ * manages the attribute for you; if you're not using it, mirror
+ * the same attribute toggle in your own JS.
+ *
+ * @block cui-tab
+ * @summary Tab control; active state via `[aria-selected="true"]`.
+ */
 .cui-tab {
   border: 0;
   border-block-end: 2px solid transparent;
