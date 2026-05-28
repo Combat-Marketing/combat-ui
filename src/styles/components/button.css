@@ -38,7 +38,7 @@
   --cui-button-color: var(--cui-color, #1b1f27);
 
   display: inline-flex;
-  min-block-size: var(--cui-size-control, 2.5rem);
+  min-block-size: var(--cui-control-size, 2.5rem);
   align-items: center;
   justify-content: center;
   gap: var(--cui-space-2, 0.5rem);

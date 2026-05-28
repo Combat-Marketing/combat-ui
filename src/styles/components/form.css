@@ -43,7 +43,7 @@
 
   display: block;
   inline-size: 100%;
-  min-block-size: var(--cui-size-control, 2.5rem);
+  min-block-size: var(--cui-control-size, 2.5rem);
   border: var(--cui-border-size, 1px) solid var(--cui-input-border);
   border-radius: var(--cui-input-radius);
   background: var(--cui-input-bg);
