@@ -79,7 +79,7 @@
 ::slotted([slot="legend"]) {
   margin: 0;
   color: var(--cui-color-muted, #5d6675);
-  font-size: var(--cui-text-caption-size, var(--cui-font-size-caption, 0.875rem));
+  font-size: var(--cui-font-size-caption, 0.875rem);
 }
 
 /* --- Markers ---------------------------------------------------------- */

@@ -149,7 +149,7 @@
 .cui-quote-meta,
 .cui-testimonial-role {
   color: var(--cui-quote-muted-color, var(--cui-color-muted, #5d6675));
-  font-size: var(--cui-text-metadata-size, 0.875rem);
+  font-size: var(--cui-font-size-metadata, 0.875rem);
 }
 
 /**
