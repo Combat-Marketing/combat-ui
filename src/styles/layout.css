@@ -1,3 +1,20 @@
+/**
+ * Standard page container. Caps content at 72rem with a 1rem gutter
+ * on either side and `--cui-space-6` padding at the top and bottom.
+ * Establishes a `container-typ: inline-size` context so
+ * child layouts can use container queries (e.g. `cui-sidebar`
+ * flips to two columns at >=48rem container width, not viewport).
+ * Use on the immediate child of `<body>` (or `<main>`) on most pages.
+ *
+ * @block cui-page
+ * @summary Page container; caps content at 72rem with a 1rem gutter.
+ *
+ * @example
+ *   <main class="cui-page">
+ *     <h1>Page title</h1>
+ *     <p>Content here.</p>
+ *   </main>
+ */
 .cui-page {
   container-type: inline-size;
   inline-size: min(100% - 2rem, 72rem);
@@ -5,6 +22,16 @@
   padding-block: var(--cui-space-6, 2rem);
 }
 
+/**
+ * Narrow page container — caps at 48rem. Use for editorial content
+ * (articles, vacancies, single-column long-form) where line lengths
+ * past 48rem hurt readability. Same gutter and padding as
+ * `.cui-page`, same `container-type: inline-size` for container
+ * queries.
+ *
+ * @block cui-page-narrow
+ * @summary Page container; caps content at 48rem.
+ */
 .cui-page-narrow {
   container-type: inline-size;
   inline-size: min(100% - 2rem, 48rem);
@@ -12,6 +39,16 @@
   padding-block: var(--cui-space-6, 2rem);
 }
 
+/**
+ * Wide page container — caps at 96rem. Use for dashboards,
+ * data-dense surfaces, or full-bleed marketing pages where the
+ * standard 72rem cap feels cramped. Same gutter and padding as
+ * `.cui-page`, same `container-type: inline-size` for container
+ * queries.
+ *
+ * @block cui-page-wide
+ * @summary Page container; caps content at 96rem.
+ */
 .cui-page-wide {
   container-type: inline-size;
   inline-size: min(100% - 2rem, 96rem);
@@ -19,12 +56,52 @@
   padding-block: var(--cui-space-6, 2rem);
 }
 
+/**
+ * Full-viewport background frame. Sets `min-block-size: 100vb`
+ * with the default surface color and foreground, so a page using
+ * this class never has the body background showing through during
+ * load. Pair with `.cui-shell` or `.cui-app` inside it for the
+ * actual layout.
+ *
+ * @block cui-frame
+ * @summary Full-viewport background frame; surface color + foreground default.
+ */
 .cui-frame {
   min-block-size: 100vb;
   background: var(--cui-color-surface, #f7f8fa);
   color: var(--cui-color, #1b1f27);
 }
 
+/**
+ * Three-row app shell — `header` / `body` / `footer`, sized so
+ * the body takes all available block-axis space. Renders as a
+ * `display: grid` with `grid-template-rows: auto minmax(0, 1fr)
+ * auto`, so the body collapses to fit content but doesn't push
+ * the footer off-screen on short pages.
+ *
+ * `[data-fill]` flips to full-block-size mode (used when the
+ * shell is itself inside another scrollable region) — the body
+ * becomes `overflow: auto` instead of letting the page scroll.
+ *
+ * @block cui-shell
+ * @summary Three-row app shell (header + body + footer).
+ * @variant fill — Presence of `[data-fill]`. Locks shell to
+ *   parent block-size and makes the body the scroll container.
+ *
+ * @example
+ *   <div class="cui-shell">
+ *     <header class="cui-shell-header">
+ *       <div class="cui-shell-bar">
+ *         <strong>Brand</strong>
+ *         <nav><!-- nav links --></nav>
+ *       </div>
+ *     </header>
+ *     <main class="cui-shell-body">…</main>
+ *     <footer class="cui-shell-footer">
+ *       <div class="cui-shell-bar">© 2026</div>
+ *     </footer>
+ *   </div>
+ */
 .cui-shell {
   display: grid;
   min-block-size: 100vb;
@@ -46,6 +123,16 @@
   background: var(--cui-color-surface-raised, #fff);
 }
 
+/**
+ * Header slot of `.cui-shell`. Sticky to the block-start of the
+ * shell with `z-index: 10`, raised surface background, hairline
+ * border on the block-end. Wrap a `.cui-shell-bar` inside for
+ * the standard inline layout (brand + actions). Shares its
+ * surface chrome with `.cui-shell-footer` via a combined rule.
+ *
+ * @block cui-shell-header
+ * @summary Sticky raised-surface header for `.cui-shell`.
+ */
 .cui-shell-header {
   position: sticky;
   z-index: 10;
@@ -53,10 +140,29 @@
   border-block-end: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
 }
 
+/**
+ * Footer slot of `.cui-shell`. Raised surface background with a
+ * hairline border on the block-start (mirror of the header).
+ * Wrap a `.cui-shell-bar` for inline layout. Not sticky — just
+ * sits at the block-end of the shell.
+ *
+ * @block cui-shell-footer
+ * @summary Raised-surface footer for `.cui-shell`.
+ */
 .cui-shell-footer {
   border-block-start: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
 }
 
+/**
+ * Inline bar inside `.cui-shell-header` or `.cui-shell-footer`.
+ * Flex row, `min-block-size` from `--cui-shell-bar-size` (4rem
+ * by default), space-between alignment, `--cui-space-4` gap.
+ * Use for the standard brand-on-the-start, actions-on-the-end
+ * pattern.
+ *
+ * @block cui-shell-bar
+ * @summary Inline flex bar (brand + actions) inside shell header/footer.
+ */
 .cui-shell-bar {
   display: flex;
   min-block-size: var(--cui-shell-bar-size, 4rem);
@@ -65,10 +171,48 @@
   gap: var(--cui-space-4, 1rem);
 }
 
+/**
+ * Body slot of `.cui-shell`. Sets `min-block-size: 0` so the
+ * body can shrink inside its grid row (preventing forced
+ * overflow). With `[data-fill]` on the shell, the body also
+ * becomes the scroll container.
+ *
+ * @block cui-shell-body
+ * @summary Body slot of `.cui-shell`; `min-block-size: 0` for scroll containment.
+ */
 .cui-shell-body {
   min-block-size: 0;
 }
 
+/**
+ * Two-row app layout — `header` / `body`, where the body is a
+ * grid that flips between single-column (mobile) and
+ * sidebar-plus-main (≥48rem) layouts. Designed for dashboards
+ * and admin surfaces with persistent navigation. Above 48rem
+ * the sidebar is `position: static` and inline; below 48rem
+ * it's `position: fixed` and toggles via `[data-sidebar="open"]`
+ * (or `[open]`) on the `.cui-app` root.
+ *
+ * @block cui-app
+ * @summary Two-row app layout (header + sidebar/main body) with mobile drawer.
+ *
+ * @example
+ *   <div class="cui-app">
+ *     <header class="cui-shell-header">
+ *       <div class="cui-shell-bar">
+ *         <button class="cui-app-sidebar-mobile" aria-label="Menu">☰</button>
+ *         <strong>Dashboard</strong>
+ *       </div>
+ *     </header>
+ *     <div class="cui-app-body">
+ *       <aside class="cui-app-sidebar">
+ *         <nav><!-- nav links --></nav>
+ *       </aside>
+ *       <main class="cui-app-main">…</main>
+ *       <div class="cui-app-sidebar-backdrop"></div>
+ *     </div>
+ *   </div>
+ */
 .cui-app {
   display: grid;
   min-block-size: 100vb;
@@ -76,12 +220,33 @@
   isolation: isolate;
 }
 
+/**
+ * Body grid inside `.cui-app`. Single column by default; switches
+ * to `auto minmax(0, 1fr)` (sidebar + main) at viewports ≥48rem.
+ * The grid template is the only thing that changes between
+ * mobile and desktop — sidebar/main visibility is controlled
+ * separately via the `.cui-app-sidebar` rules.
+ *
+ * @block cui-app-body
+ * @summary Body grid inside `.cui-app`; mobile single-column → ≥48rem two-column.
+ */
 .cui-app-body {
   display: grid;
   min-block-size: 0;
   grid-template-columns: minmax(0, 1fr);
 }
 
+/**
+ * Sidebar slot inside `.cui-app`. On mobile (<48rem), positioned
+ * `fixed` with a slide-in transform and toggles visibility via
+ * `[data-sidebar="open"]` (or `[open]`) on the `.cui-app` root.
+ * At ≥48rem, becomes `position: static` and inline in the
+ * `.cui-app-body` grid. Width comes from `--cui-app-sidebar-size`
+ * (16rem default).
+ *
+ * @block cui-app-sidebar
+ * @summary App sidebar; fixed drawer on mobile, inline column at ≥48rem.
+ */
 .cui-app-sidebar {
   position: fixed;
   z-index: 30;
@@ -102,6 +267,16 @@
   visibility: hidden;
 }
 
+/**
+ * Backdrop scrim behind `.cui-app-sidebar` on mobile. Hidden by
+ * default; shows when `.cui-app` has `[data-sidebar="open"]` (or
+ * `[open]`). At ≥48rem, hidden via `display: none !important`
+ * since the sidebar is no longer a drawer. Click the backdrop in
+ * your JS handler to close the drawer.
+ *
+ * @block cui-app-sidebar-backdrop
+ * @summary Scrim behind the mobile sidebar drawer.
+ */
 .cui-app-sidebar-backdrop {
   position: fixed;
   z-index: 20;
@@ -110,6 +285,16 @@
   background: hsl(220deg 25% 10% / 48%);
 }
 
+/**
+ * Toggle visibility marker for the mobile sidebar trigger
+ * (typically a hamburger button in the header). `display:
+ * revert` on mobile so it shows; `display: none !important` at
+ * ≥48rem so it disappears when the sidebar is inline. Apply to
+ * the trigger button itself.
+ *
+ * @block cui-app-sidebar-mobile
+ * @summary Visibility utility for the mobile sidebar trigger button.
+ */
 .cui-app-sidebar-mobile {
   display: revert;
 }
@@ -123,6 +308,16 @@
   display: block;
 }
 
+/**
+ * Main content area inside `.cui-app`. Sets `min-inline-size: 0`
+ * and `min-block-size: 0` so the column can shrink inside its
+ * grid cell (preventing forced overflow), and `overflow: auto`
+ * so long content scrolls within the main area rather than the
+ * page.
+ *
+ * @block cui-app-main
+ * @summary Scrollable main column inside `.cui-app`.
+ */
 .cui-app-main {
   min-inline-size: 0;
   min-block-size: 0;
@@ -153,6 +348,22 @@
   }
 }
 
+/**
+ * Page-header section — title + supporting paragraph above the
+ * page body. Heading and paragraph children get
+ * `max-inline-size: 68ch` and `margin: 0`, with headings sized
+ * at `--cui-font-size-3`. Use once near the top of a page,
+ * inside `.cui-page` or `.cui-page-narrow`.
+ *
+ * @block cui-page-header
+ * @summary Page title + lede block (heading sized at `--cui-font-size-3`).
+ *
+ * @example
+ *   <header class="cui-page-header">
+ *     <h1>Components</h1>
+ *     <p>Interactive primitives, grouped by what they do.</p>
+ *   </header>
+ */
 .cui-page-header {
   display: grid;
   gap: var(--cui-space-3, 0.75rem);
@@ -169,6 +380,16 @@
   line-height: var(--cui-line-height-tight, 1.2);
 }
 
+/**
+ * Single-column content measure for long-form text. Caps inline-
+ * size at `--cui-content-size` (68ch default) and applies
+ * vertical rhythm to direct heading / paragraph / list / quote /
+ * pre children. Use inside `.cui-page` when you want the
+ * default 72rem container but a narrower text column.
+ *
+ * @block cui-content
+ * @summary Optimal-measure single-column content (68ch).
+ */
 .cui-content {
   max-inline-size: var(--cui-content-size, 68ch);
 }
@@ -181,6 +402,15 @@
   line-height: var(--cui-line-height-tight, 1.2);
 }
 
+/**
+ * Centered single-item layout — `display: grid` with `place-items:
+ * center` and `min-block-size: 100vb` so the only child sits at
+ * the visual center of the viewport. Use for sign-in pages, 404
+ * screens, and other single-purpose surfaces.
+ *
+ * @block cui-center
+ * @summary Centered viewport-sized layout for a single child.
+ */
 .cui-center {
   display: grid;
   min-block-size: var(--cui-center-size, 100vb);
@@ -188,23 +418,86 @@
   padding: var(--cui-space-4, 1rem);
 }
 
+/**
+ * Three-row cover layout — `header` / `main` / `footer` where
+ * the main row is vertically centered. Renders as `display:
+ * grid` with `grid-template-rows: auto minmax(0, 1fr) auto`,
+ * sized to `--cui-cover-size` (100vb default). Use for
+ * landing-page heroes that should fill the viewport.
+ *
+ * @block cui-cover
+ * @summary Three-row layout: header / centered main / footer.
+ *
+ * @example
+ *   <section class="cui-cover">
+ *     <nav>Top bar</nav>
+ *     <div class="cui-cover-main">
+ *       <h1>Centered hero copy</h1>
+ *     </div>
+ *     <footer>Bottom bar</footer>
+ *   </section>
+ */
 .cui-cover {
   display: grid;
   min-block-size: var(--cui-cover-size, 100vb);
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
+/**
+ * Main row inside `.cui-cover` — vertically centers its content
+ * via `align-content: center`. Apply to the middle child of
+ * `.cui-cover`; header and footer siblings don't need a class.
+ *
+ * @block cui-cover-main
+ * @summary Vertically centered main row inside `.cui-cover`.
+ */
 .cui-cover-main {
   display: grid;
   align-content: center;
   padding-block: var(--cui-space-6, 2rem);
 }
 
+/**
+ * Stack primitive — vertical (block-axis) layout with a
+ * configurable gap between every direct child. Use for any
+ * sequence of block-level content (forms, article paragraphs,
+ * card stacks). Override `--cui-stack-gap` per instance via
+ * inline style or per-scope via a parent rule.
+ *
+ * @block cui-stack
+ * @summary Block-axis stack with `--cui-stack-gap` between children.
+ * @cssvar --cui-stack-gap — Gap between children. Defaults to `--cui-space-4`.
+ *
+ * @example
+ *   <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-6)">
+ *     <h2>Section</h2>
+ *     <p>First paragraph.</p>
+ *     <p>Second paragraph.</p>
+ *   </div>
+ */
 .cui-stack {
   display: grid;
   gap: var(--cui-stack-gap, var(--cui-space-4, 1rem));
 }
 
+/**
+ * Cluster primitive — flex-wrap row of items with a configurable
+ * gap and align/justify axes. Use for tags, chip rows, button
+ * groups, breadcrumbs — any inline list where items should wrap
+ * naturally onto multiple rows.
+ *
+ * @block cui-cluster
+ * @summary Flex-wrap row with `--cui-cluster-*` controls.
+ * @cssvar --cui-cluster-align — `align-items`. Defaults to `center`.
+ * @cssvar --cui-cluster-justify — `justify-content`. Defaults to `flex-start`.
+ * @cssvar --cui-cluster-gap — Gap. Defaults to `--cui-space-3`.
+ *
+ * @example
+ *   <ul class="cui-cluster">
+ *     <li><a class="cui-button" href="/docs">Docs</a></li>
+ *     <li><a class="cui-button" href="/blog">Blog</a></li>
+ *   </ul>
+ */
 .cui-cluster {
   display: flex;
   flex-wrap: wrap;
@@ -213,12 +506,39 @@
   gap: var(--cui-cluster-gap, var(--cui-space-3, 0.75rem));
 }
 
+/**
+ * Auto-fit grid primitive — columns of at least `--cui-grid-min`
+ * (16rem default) that fill the available inline-size. Use as a
+ * lightweight alternative to the typed `.cui-card-grid` /
+ * `.cui-feature-grid` / `.cui-case-grid` family when you don't
+ * need their per-type column-min defaults or
+ * `[data-gap]` / `[data-columns]` axes.
+ *
+ * @block cui-grid
+ * @summary Auto-fit grid; columns of at least `--cui-grid-min`.
+ * @cssvar --cui-grid-min — Minimum column width. Defaults to 16rem.
+ * @cssvar --cui-grid-gap — Gap between cells. Defaults to `--cui-space-4`.
+ */
 .cui-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--cui-grid-min, 16rem)), 1fr));
   gap: var(--cui-grid-gap, var(--cui-space-4, 1rem));
 }
 
+/**
+ * Switcher primitive — flips between row and column layouts at
+ * the `--cui-switcher-threshold` container width using the
+ * Every-Layout flex-basis trick. Each child gets `flex-basis:
+ * calc((threshold - 100%) * 999)`, which evaluates to a huge
+ * positive when the container is narrower than the threshold
+ * (forcing wrap to column) and a huge negative when wider
+ * (allowing inline layout).
+ *
+ * @block cui-switcher
+ * @summary Row-or-column layout that switches at the configured threshold.
+ * @cssvar --cui-switcher-gap — Gap between children. Defaults to `--cui-space-4`.
+ * @cssvar --cui-switcher-threshold — Container width at which the layout flips. Defaults to 40rem.
+ */
 .cui-switcher {
   display: flex;
   flex-wrap: wrap;
@@ -230,6 +550,25 @@
   flex-grow: 1;
 }
 
+/**
+ * Two-column split primitive — single column on mobile, two
+ * columns (with configurable proportions) at ≥48rem. Set
+ * `--cui-split-start` / `--cui-split-end` to control the
+ * column fractions (defaults to 1:1).
+ *
+ * @block cui-split
+ * @summary Single column on mobile → two-column split at ≥48rem.
+ * @cssvar --cui-split-gap — Gap between columns. Defaults to `--cui-space-6`.
+ * @cssvar --cui-split-start — Start-side column fraction. Defaults to `1fr`.
+ * @cssvar --cui-split-end — End-side column fraction. Defaults to `1fr`.
+ * @cssvar --cui-split-align — `align-items` on the grid. Defaults to `center`.
+ *
+ * @example
+ *   <div class="cui-split" style="--cui-split-start: 2fr; --cui-split-end: 1fr">
+ *     <article>Main content</article>
+ *     <aside>Side rail</aside>
+ *   </div>
+ */
 .cui-split {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -245,6 +584,26 @@
   }
 }
 
+/**
+ * Sidebar primitive — single column on narrow containers,
+ * sidebar + main on wider containers. Unlike `.cui-split`, this
+ * uses a **container query** (`@container (width >= 48rem)`)
+ * rather than a viewport query, so the layout flips based on the
+ * actual container size, not the viewport. Pair with a `.cui-page`
+ * / `.cui-page-wide` ancestor (which sets `container-type:
+ * inline-size`) to opt in to container queries.
+ *
+ * @block cui-sidebar
+ * @summary Sidebar + main layout driven by a container query, not a viewport query.
+ *
+ * @example
+ *   <main class="cui-page">
+ *     <div class="cui-sidebar">
+ *       <aside><!-- table of contents --></aside>
+ *       <article>…</article>
+ *     </div>
+ *   </main>
+ */
 .cui-sidebar {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -258,14 +617,20 @@
   }
 }
 
+/**
+ * Generic raised surface — the simplest possible card primitive.
+ * Background, border, corner radius, default shadow, default
+ * padding. Use as a lightweight box when none of the typed
+ * cards (`.cui-card`, `.cui-feature-card`, `.cui-content-card`,
+ * etc.) match the content.
+ *
+ * @block cui-surface
+ * @summary Bordered, elevated surface with default padding.
+ */
 .cui-surface {
   background: var(--cui-color-surface-raised, #fff);
   border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
   border-radius: var(--cui-radius-2, 0.5rem);
   box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
   padding: var(--cui-space-4, 1rem);
-}
-
-.cui-section {
-  padding-block: var(--cui-space-6, 2rem);
 }

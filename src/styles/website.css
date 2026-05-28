@@ -21,6 +21,16 @@
   --cui-container-size: var(--cui-container-wide, 96rem);
 }
 
+/**
+ * Section padding utility — applies `--cui-space-6` block-axis
+ * padding. The richer page-section primitive (with section-
+ * spacing tokens, muted/inverse/accent tones, hero variant) lives
+ * in `website.css`. Use this class only when you need the plain
+ * padding utility and nothing else.
+ *
+ * @block cui-section
+ * @summary Block-axis padding utility (`--cui-space-6` both sides).
+ */
 .cui-section {
   padding-block: var(--cui-section-space, clamp(4rem, 10vi, 8rem));
 }
