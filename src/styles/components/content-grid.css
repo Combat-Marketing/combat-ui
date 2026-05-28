@@ -261,14 +261,14 @@
  *
  * @block cui-feature-icon
  * @summary Tinted icon badge inside a feature card.
- * @cssvar --cui-feature-icon-size — Icon dimensions (square). Defaults to `--cui-size-control` then 2.5rem.
+ * @cssvar --cui-feature-icon-size — Icon dimensions (square). Defaults to `--cui-control-size` then 2.5rem.
  * @cssvar --cui-feature-icon-bg — Background tint. Defaults to `--cui-color-surface-muted`.
  * @cssvar --cui-feature-icon-color — Foreground / glyph color. Defaults to `--cui-color-accent`.
  */
 .cui-feature-icon {
   display: inline-grid;
-  inline-size: var(--cui-feature-icon-size, var(--cui-size-control, 2.5rem));
-  block-size: var(--cui-feature-icon-size, var(--cui-size-control, 2.5rem));
+  inline-size: var(--cui-feature-icon-size, var(--cui-control-size, 2.5rem));
+  block-size: var(--cui-feature-icon-size, var(--cui-control-size, 2.5rem));
   place-items: center;
   border-radius: var(--cui-radius-control, 0.25rem);
   background: var(--cui-feature-icon-bg, var(--cui-color-surface-muted, #edf0f4));
