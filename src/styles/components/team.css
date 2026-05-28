@@ -176,7 +176,7 @@ a.cui-person:focus-visible {
  */
 .cui-person-meta {
   color: var(--cui-person-meta-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-text-eyebrow-size, 0.875rem);
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
   font-weight: var(--cui-font-weight-strong, 680);
   letter-spacing: 0.08em;
   text-transform: uppercase;
