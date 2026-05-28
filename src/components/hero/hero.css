@@ -8,6 +8,7 @@
   --cui-hero-overlay: linear-gradient(90deg, hsl(220deg 24% 8% / 82%), hsl(220deg 24% 8% / 28%));
   --cui-hero-media-radius: var(--cui-radius-2, 0.5rem);
   --cui-hero-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
+  --cui-hero-container-size: var(--cui-container-wide, 96rem);
   --cui-hero-background-image: none;
   --cui-hero-background-position: center;
   --cui-hero-background-size: cover;
@@ -50,7 +51,7 @@
 .inner {
   z-index: 1;
   display: grid;
-  inline-size: min(100% - (var(--cui-container-gutter, 2rem) * 2), var(--cui-container-wide, 96rem));
+  inline-size: min(100% - (var(--cui-container-gutter, 2rem) * 2), var(--cui-hero-container-size, var(--cui-container-wide, 96rem)));
   margin-inline: auto;
   gap: var(--cui-hero-gap, 3rem);
 }
@@ -136,10 +137,7 @@
 :host([variant="text"]) {
   --cui-hero-min-block-size: auto;
   --cui-hero-padding-block: var(--cui-section-space, clamp(4rem, 10vi, 8rem));
-}
-
-:host([variant="text"]) .inner {
-  inline-size: min(100% - (var(--cui-container-gutter, 2rem) * 2), var(--cui-container, 72rem));
+  --cui-hero-container-size: var(--cui-container, 72rem);
 }
 
 :host([variant="text"]) .content {
@@ -175,6 +173,18 @@
 
 :host([variant="background"]) .background {
   display: block;
+}
+
+:host([content-width="narrow"]) {
+  --cui-hero-container-size: var(--cui-container-narrow, 48rem);
+}
+
+:host([content-width="default"]) {
+  --cui-hero-container-size: var(--cui-container, 72rem);
+}
+
+:host([content-width="wide"]) {
+  --cui-hero-container-size: var(--cui-container-wide, 96rem);
 }
 
 :host([variant="overlay"]) .media {

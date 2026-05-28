@@ -20,6 +20,12 @@ import heroCss from "./hero.css?inline";
  *   (`center`, `50% 30%`, …) for the background image.
  * @attr {string} background-size - CSS `background-size` value (`cover`,
  *   `contain`, …) for the background image.
+ * @attr {"narrow"|"default"|"wide"} content-width - Caps the inner content's
+ *   inline-size to one of the site container scales while the hero surface
+ *   (background, accent fill) stays full-bleed. Omit for the wide default
+ *   (`--cui-container-wide`); use `default` to align with the rest of the
+ *   site content (`--cui-container`); use `narrow` for editorial copy
+ *   (`--cui-container-narrow`).
  *
  * @example
  * <cui-hero background-src="/hero.jpg" background-position="center">

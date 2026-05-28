@@ -251,6 +251,14 @@
                   <td><code>align="start | center"</code></td>
                   <td>Horizontal alignment of the content column.</td>
                 </tr>
+                <tr>
+                  <td><code>content-width="narrow | default | wide"</code></td>
+                  <td>Caps the inner content's inline-size to a site container scale while the hero
+                    surface stays full-bleed. Omit for the wide default (96rem); use
+                    <code>default</code> to align with the rest of the site content (72rem), or
+                    <code>narrow</code> for editorial copy (48rem). Drives
+                    <code>--cui-hero-container-size</code>.</td>
+                </tr>
               </tbody>
             </table>
 
@@ -277,6 +285,10 @@
                 <tr>
                   <td><code>--cui-hero-content-size</code></td>
                   <td><code>42rem</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-hero-container-size</code></td>
+                  <td><code>--cui-container-wide</code> (96rem); switched by <code>content-width</code>.</td>
                 </tr>
                 <tr>
                   <td><code>--cui-hero-media-size</code></td>
