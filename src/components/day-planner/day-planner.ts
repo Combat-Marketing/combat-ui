@@ -1,25 +1,12 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
+import { dateFromIso, startOfDay, toIso } from "../../internal/date-utils";
+import type { EventCardData } from "../../internal/event-cards";
 import dayPlannerCss from "./day-planner.css?inline";
-
-export interface CuiDayPlannerEvent {
-  /** Source `.cui-event-card` element. */
-  element: HTMLElement;
-  /** Start of the event (local time). */
-  start: Date;
-  /** End of the event (local time). */
-  end: Date;
-  /** Title text from `.cui-event-card-title`. */
-  title: string;
-  /** Status read from `data-status` on the card. */
-  status: string | null;
-  /** Anchor href from the title link, if any. */
-  href: string | null;
-}
 
 export interface CuiDayPlannerEventSelectDetail {
   iso: string;
   date: Date;
-  event: CuiDayPlannerEvent;
+  event: EventCardData;
 }
 
 export interface CuiDayPlannerSlotSelectDetail {
@@ -40,33 +27,12 @@ const DEFAULT_SLOT_MINUTES = 60;
 const DEFAULT_DURATION_MINUTES = 60;
 const NOW_LINE_INTERVAL_MS = 60_000;
 
-function toIso(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
-
-function startOfDay(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-function parseIsoDate(iso: string): Date | null {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
-  if (!match) return null;
-  const y = Number.parseInt(match[1]!, 10);
-  const m = Number.parseInt(match[2]!, 10);
-  const d = Number.parseInt(match[3]!, 10);
-  if (!Number.isFinite(y) || !Number.isFinite(m) || !Number.isFinite(d)) return null;
-  return new Date(y, m - 1, d);
-}
-
 function minutesFromMidnight(date: Date): number {
   return date.getHours() * 60 + date.getMinutes();
 }
 
 interface ParsedEvent {
-  source: CuiDayPlannerEvent;
+  source: EventCardData;
   startMin: number;
   endMin: number;
 }
@@ -199,7 +165,7 @@ export class CuiDayPlanner extends CombatElement {
   ];
 
   private viewDate: Date;
-  private events: CuiDayPlannerEvent[] = [];
+  private events: EventCardData[] = [];
   private board: HTMLElement | null = null;
   private labels: HTMLElement | null = null;
   private track: HTMLElement | null = null;
@@ -244,7 +210,7 @@ export class CuiDayPlanner extends CombatElement {
 
   /** Programmatically jump to a date (YYYY-MM-DD or Date). */
   goTo(target: string | Date): void {
-    const next = typeof target === "string" ? parseIsoDate(target) : startOfDay(target);
+    const next = typeof target === "string" ? dateFromIso(target) : startOfDay(target);
     if (!next) return;
     this.setAttribute("date", toIso(next));
     this.emitNavigate();
@@ -301,7 +267,7 @@ export class CuiDayPlanner extends CombatElement {
   private applyAttributes(): void {
     const dateAttr = this.getAttribute("date");
     if (dateAttr) {
-      const parsed = parseIsoDate(dateAttr);
+      const parsed = dateFromIso(dateAttr);
       if (parsed) this.viewDate = parsed;
     }
   }
@@ -335,7 +301,7 @@ export class CuiDayPlanner extends CombatElement {
 
   private collectEvents(): void {
     const cards = this.querySelectorAll<HTMLElement>(EVENT_CARD_SELECTOR);
-    const events: CuiDayPlannerEvent[] = [];
+    const events: EventCardData[] = [];
     for (const card of cards) {
       const time = card.querySelector<HTMLTimeElement>("time[datetime]");
       const startValue = time?.getAttribute("datetime");
@@ -427,7 +393,7 @@ export class CuiDayPlanner extends CombatElement {
       const startMin = Math.max(visibleStart, minutesFromMidnight(event.start));
       const endMin = Math.min(
         visibleEnd,
-        event.end.getDate() !== event.start.getDate()
+        event.end?.getDate() !== event.start.getDate()
           ? visibleEnd
           : minutesFromMidnight(event.end),
       );
