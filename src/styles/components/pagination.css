@@ -1,0 +1,259 @@
+/**
+ * Pagination — a navigation block for paging through a long list
+ * (search results, a blog index, a `/vacatures` overview). Built
+ * for **server-rendered, crawlable** paging: each page is a real
+ * `<a href>` so the control works without JS and search engines can
+ * follow it. Wrap the links in a `<nav aria-label="Paginering">`
+ * with an inner `.cui-pagination-list` `<ul>`; mark the current
+ * page with `aria-current="page"` and disabled prev / next with
+ * `aria-disabled="true"` (on a `<span>`) — there is no clickable
+ * target for an unavailable direction.
+ *
+ * Centered by default; `[data-align]` pins it start / end, and
+ * `[data-variant="compact"]` hides the numbered pages for a bare
+ * prev / next + status pager on small screens.
+ *
+ * @block cui-pagination
+ * @summary Navigation block for server-rendered, crawlable page links.
+ * @variant start | end — Maps to `[data-align]`. Aligns the row to
+ *   the inline start or end instead of centered.
+ * @variant compact — Maps to `[data-variant]`. Hides numbered page
+ *   items, leaving prev / next controls and the optional status
+ *   text — ideal for narrow viewports.
+ * @cssvar --cui-pagination-gap — Gap between items. Defaults to `--cui-space-1`.
+ * @cssvar --cui-pagination-size — Min target size for links. Defaults to 2.5rem.
+ *
+ * @example
+ *   <nav class="cui-pagination" aria-label="Paginering">
+ *     <ul class="cui-pagination-list">
+ *       <li class="cui-pagination-item">
+ *         <span class="cui-pagination-link" data-control="prev" aria-disabled="true">
+ *           <span aria-hidden="true">←</span> Vorige
+ *         </span>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" href="/vacatures" aria-current="page">1</a>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" href="/vacatures?page=2">2</a>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" href="/vacatures?page=3">3</a>
+ *       </li>
+ *       <li class="cui-pagination-item" aria-hidden="true">
+ *         <span class="cui-pagination-ellipsis">…</span>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" href="/vacatures?page=8">8</a>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" data-control="next" href="/vacatures?page=2">
+ *           Volgende <span aria-hidden="true">→</span>
+ *         </a>
+ *       </li>
+ *     </ul>
+ *   </nav>
+ *
+ * @example
+ *   <!-- Compact prev / next pager with page status -->
+ *   <nav class="cui-pagination" data-variant="compact" aria-label="Paginering">
+ *     <ul class="cui-pagination-list">
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" data-control="prev" href="/vacatures">
+ *           <span aria-hidden="true">←</span> Vorige
+ *         </a>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <span class="cui-pagination-status">Pagina 2 van 8</span>
+ *       </li>
+ *       <li class="cui-pagination-item">
+ *         <a class="cui-pagination-link" data-control="next" href="/vacatures?page=3">
+ *           Volgende <span aria-hidden="true">→</span>
+ *         </a>
+ *       </li>
+ *     </ul>
+ *   </nav>
+ */
+.cui-pagination {
+  --cui-pagination-gap: var(--cui-space-1, 0.25rem);
+  --cui-pagination-size: 2.5rem;
+
+  display: flex;
+  justify-content: center;
+}
+
+.cui-pagination[data-align="start"] {
+  justify-content: flex-start;
+}
+
+.cui-pagination[data-align="end"] {
+  justify-content: flex-end;
+}
+
+/**
+ * Item row inside `.cui-pagination`. A flex-wrap `<ul>` holding the
+ * page links, prev / next controls, ellipses, and optional status
+ * text. Strips list styling so the items sit in a single wrapping
+ * row.
+ *
+ * @block cui-pagination-list
+ * @summary Flex-wrap `<ul>` of pagination items.
+ */
+.cui-pagination-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cui-pagination-gap, var(--cui-space-1, 0.25rem));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/**
+ * A single `<li>` inside `.cui-pagination-list`. Layout-only
+ * wrapper — the visible target is the `.cui-pagination-link`,
+ * `.cui-pagination-ellipsis`, or `.cui-pagination-status` inside.
+ *
+ * @block cui-pagination-item
+ * @summary List-item wrapper around a pagination link / control.
+ */
+.cui-pagination-item {
+  display: flex;
+  margin: 0;
+}
+
+/**
+ * Page link / control inside `.cui-pagination-item`. Works as an
+ * `<a href>` for a navigable page or a `<span>` for the
+ * unavailable direction. Square-ish min target (`--cui-pagination-size`)
+ * for numbered pages; prev / next (`[data-control]`) grow to fit
+ * their label. `aria-current="page"` paints the active page in the
+ * accent fill; `aria-disabled="true"` / `:disabled` mutes and
+ * disables the control.
+ *
+ * @block cui-pagination-link
+ * @summary Page number or prev / next control; accent fill when current, muted when disabled.
+ * @variant prev | next — Maps to `[data-control]`. Widens the
+ *   target and pairs the label with a directional arrow.
+ */
+.cui-pagination-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cui-space-2, 0.5rem);
+  min-inline-size: var(--cui-pagination-size, 2.5rem);
+  min-block-size: var(--cui-pagination-size, 2.5rem);
+  padding-inline: var(--cui-space-3, 0.75rem);
+  border: var(--cui-border-size, 1px) solid transparent;
+  border-radius: var(--cui-radius-1, 0.25rem);
+  background: none;
+  color: var(--cui-color, #1b1f27);
+  font: inherit;
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cui-pagination-link {
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+}
+
+.cui-pagination-link:hover {
+  background: var(--cui-color-surface-muted, #edf0f4);
+  border-color: var(--cui-color-border, #cfd6df);
+}
+
+.cui-pagination-link:focus-visible {
+  outline: var(--cui-focus-size, 2px) solid
+    var(--cui-color-focus, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  outline-offset: var(--cui-focus-offset, 2px);
+}
+
+/* Current page — accent fill, non-interactive. */
+.cui-pagination-link[aria-current="page"] {
+  background: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  border-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  color: var(--cui-color-on-accent, #fff);
+  cursor: default;
+}
+
+.cui-pagination-link[aria-current="page"]:hover {
+  background: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  border-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+/* Disabled direction — muted, non-interactive. */
+.cui-pagination-link[aria-disabled="true"],
+.cui-pagination-link:disabled {
+  color: var(--cui-color-muted, #5d6675);
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Prev / next grow to fit their label. */
+.cui-pagination-link[data-control] {
+  padding-inline: var(--cui-space-4, 1rem);
+}
+
+/**
+ * Ellipsis gap inside `.cui-pagination-item` — the "…" standing in
+ * for skipped page ranges. Decorative; put `aria-hidden="true"` on
+ * the wrapping item so screen readers skip it.
+ *
+ * @block cui-pagination-ellipsis
+ * @summary Decorative "…" gap for skipped page ranges.
+ */
+.cui-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cui-pagination-size, 2.5rem);
+  min-block-size: var(--cui-pagination-size, 2.5rem);
+  color: var(--cui-color-muted, #5d6675);
+  font-weight: var(--cui-font-weight-strong, 680);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/**
+ * Page-status text inside `.cui-pagination-item` — "Pagina 2 van
+ * 8". Muted, padded to align with the controls; the readable
+ * alternative to numbered pages in the `compact` variant.
+ *
+ * @block cui-pagination-status
+ * @summary Muted "Page X of Y" status text between prev / next.
+ */
+.cui-pagination-status {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--cui-space-3, 0.75rem);
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  white-space: nowrap;
+}
+
+/* Compact variant: hide numbered pages, keep prev / next + status. */
+.cui-pagination[data-variant="compact"] .cui-pagination-item:has(
+    > .cui-pagination-link:not([data-control])
+  ),
+.cui-pagination[data-variant="compact"] .cui-pagination-item:has(
+    > .cui-pagination-ellipsis
+  ) {
+  display: none;
+}
+
+.cui-pagination[data-variant="compact"] .cui-pagination-list {
+  flex: 1;
+  justify-content: space-between;
+}

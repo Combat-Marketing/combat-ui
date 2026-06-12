@@ -86,8 +86,8 @@ _Several components (reveal, scroll-stage, modal, toast, navbar, nav dropdowns) 
 
 ## Priority 7: Recruitment Site Blocks
 
-- [ ] Add `cui-vacancy-card`.
-- [ ] Add `cui-vacancy-list`.
+- [x] Add `cui-vacancy-card` (plus `cui-vacancy-grid`, `cui-vacancy-list`, `cui-vacancy-meta`, and a `cui-vacancy-detail` two-column layout with summary, apply, and contact blocks).
+- [x] Add `cui-vacancy-list`.
 - [ ] Add team / category filter layout patterns.
 - [ ] Add working-at / story section patterns.
 - [ ] Add `cui-value-card` and values grid.
