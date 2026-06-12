@@ -1,4 +1,5 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
+import { installRemoteTrigger } from "../../internal/remote-trigger";
 import modalCss from "./modal.css?inline";
 
 export interface CuiModalCloseDetail {
@@ -6,28 +7,6 @@ export interface CuiModalCloseDetail {
 }
 
 let triggerListenerInstalled = false;
-
-function installTriggerListener(): void {
-  if (triggerListenerInstalled) return;
-  triggerListenerInstalled = true;
-  document.addEventListener("click", (event) => {
-    const trigger = event
-      .composedPath()
-      .find(
-        (node): node is HTMLElement =>
-          node instanceof HTMLElement &&
-          node.hasAttribute("data-cui-modal-target"),
-      );
-    if (!trigger) return;
-    const id = trigger.getAttribute("data-cui-modal-target");
-    if (!id) return;
-    const modal = document.getElementById(id);
-    if (modal instanceof CuiModal) {
-      event.preventDefault();
-      modal.open();
-    }
-  });
-}
 
 /**
  * Modal dialog built over the native `<dialog>` element. Backdrop dismiss,
@@ -71,7 +50,11 @@ export class CuiModal extends CombatElement {
   connectedCallback(): void {
     this.renderTemplate(`<slot></slot>`);
     this.bindEvents();
-    installTriggerListener();
+    installRemoteTrigger("data-cui-modal-target", (modal, trigger) => {
+      if (modal instanceof CuiModal) {
+        modal.open();
+      }
+    });
     if (this.hasAttribute("open")) {
       this.open();
     }

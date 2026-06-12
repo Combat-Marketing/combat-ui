@@ -1,35 +1,9 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
+import { installRemoteTrigger } from "../../internal/remote-trigger";
 import disclosureCss from "./disclosure.css?inline";
 
 export interface CuiDisclosureToggleDetail {
   open: boolean;
-}
-
-let triggerListenerInstalled = false;
-
-function installTriggerListener(): void {
-  if (triggerListenerInstalled) return;
-  triggerListenerInstalled = true;
-  document.addEventListener("click", (event) => {
-    const trigger = event
-      .composedPath()
-      .find(
-        (node): node is HTMLElement =>
-          node instanceof HTMLElement &&
-          node.hasAttribute("data-cui-disclosure-target"),
-      );
-    if (!trigger) return;
-    const id = trigger.getAttribute("data-cui-disclosure-target");
-    if (!id) return;
-    const disclosure = document.getElementById(id);
-    if (disclosure instanceof CuiDisclosure) {
-      event.preventDefault();
-      const action = trigger.getAttribute("data-cui-disclosure-action");
-      if (action === "open") disclosure.open();
-      else if (action === "close") disclosure.close();
-      else disclosure.toggle();
-    }
-  });
 }
 
 /**
@@ -83,7 +57,14 @@ export class CuiDisclosure extends CombatElement {
   connectedCallback(): void {
     this.renderTemplate(`<slot></slot>`);
     this.bindDetails();
-    installTriggerListener();
+      installRemoteTrigger("data-cui-disclosure-target", (disclosure, trigger) => {
+        if (disclosure instanceof CuiDisclosure) {
+          const action = trigger.getAttribute("data-cui-disclosure-action");
+          if (action === "open") disclosure.open();
+          else if (action === "close") disclosure.close();
+          else disclosure.toggle();
+        }
+      });
   }
 
   disconnectedCallback(): void {
