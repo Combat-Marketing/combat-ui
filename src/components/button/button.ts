@@ -36,7 +36,7 @@ export class CuiButton extends CombatElement {
   }
 
   attributeChangedCallback(): void {
-    this.render();
+    // this.render();
     this.sync();
   }
 
@@ -142,15 +142,6 @@ export class CuiButton extends CombatElement {
 
   private get control(): HTMLButtonElement | HTMLAnchorElement | null {
     return this.shadowRoot?.querySelector(".control") ?? null;
-  }
-
-  private setNullableAttribute(name: string, value: string | null): void {
-    if (value === null || value === "") {
-      this.removeAttribute(name);
-      return;
-    }
-
-    this.setAttribute(name, value);
   }
 
   private syncOptionalAttribute(
