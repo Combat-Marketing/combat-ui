@@ -1,0 +1,973 @@
+/**
+ * Vacancy card — a single job opening summarised for a listing or
+ * grid. The default layout is a lean single column (eyebrow, title,
+ * tagline, meta pills, excerpt, actions) — enough for minimal
+ * "title + read more" boards. Add a first-child media element and
+ * `[data-orient="row"]` to pair a thumbnail beside the body for
+ * richer, image-led recruitment listings. The first-child media
+ * slot accepts `.cui-vacancy-card-media` or any bare `<img>` /
+ * `<picture>` / `<video>` / `<svg>` / `<a>`, so the class is
+ * optional when media is the first child.
+ *
+ * Carries optional `data-team`, `data-location`, `data-contract`,
+ * and `data-category` attributes so a filter or `cui-article-filter`
+ * can show / hide cards by facet, plus an optional `data-status`
+ * (`new`, `closing`, `closed`) that tones the corner pill.
+ *
+ * Use this directly in HTML or wire it to data from a CMS / ATS;
+ * keep the apply link a real `<a href>` so listings stay crawlable
+ * and work without JS.
+ *
+ * @block cui-vacancy-card
+ * @summary Job-opening card with title, tagline, meta pills, excerpt, actions.
+ * @variant row — Maps to `[data-orient]`. Media beside body;
+ *   collapses to stacked on narrow widths via flex-wrap.
+ * @variant featured | compact | flat | borderless — Maps to
+ *   `[data-variant]`. `featured` widens the media and scales the
+ *   title up. `compact` removes the media and excerpt and tightens
+ *   spacing — sidebars and dense lists. `flat` drops the shadow.
+ *   `borderless` drops shadow and border (use inside a list with
+ *   its own dividers).
+ * @variant new | closing | closed — Maps to `[data-status]`.
+ *   Controls the corner status pill tone; `closed` also dims the
+ *   card and mutes the title.
+ * @cssvar --cui-vacancy-card-radius — Card corner radius. Defaults to `--cui-radius-2`.
+ * @cssvar --cui-vacancy-card-padding — Body padding. Defaults to `--cui-space-5`.
+ * @cssvar --cui-vacancy-card-gap — Gap between body children. Defaults to `--cui-space-3`.
+ * @cssvar --cui-vacancy-card-media-ratio — Media aspect ratio. Defaults to `4 / 3`.
+ * @cssvar --cui-vacancy-card-media-size — Media flex-basis in row orient. Defaults to 14rem.
+ * @cssvar --cui-vacancy-card-title-size — Title font size. Defaults to `--cui-font-size-2`.
+ *
+ * @example
+ *   <!-- Minimal listing card (title + excerpt + apply) -->
+ *   <article class="cui-vacancy-card" data-team="veiligheid">
+ *     <div class="cui-vacancy-card-body">
+ *       <p class="cui-vacancy-card-eyebrow">Openbare Orde en Veiligheid</p>
+ *       <h3 class="cui-vacancy-card-title">
+ *         <a href="/vacatures/toezichthouder-westwijk">Toezichthouder Westwijk</a>
+ *       </h3>
+ *       <ul class="cui-vacancy-meta">
+ *         <li class="cui-vacancy-meta-item">32–36 uur</li>
+ *         <li class="cui-vacancy-meta-item">Vlaardingen</li>
+ *         <li class="cui-vacancy-meta-item">Schaal 5</li>
+ *       </ul>
+ *       <p class="cui-vacancy-card-excerpt">
+ *         Houd toezicht in de wijk, ga in gesprek met bewoners en draag bij aan
+ *         een veilige, leefbare Westwijk.
+ *       </p>
+ *       <div class="cui-vacancy-card-actions">
+ *         <a class="cui-button" href="/vacatures/toezichthouder-westwijk">Bekijk vacature</a>
+ *       </div>
+ *     </div>
+ *   </article>
+ *
+ * @example
+ *   <!-- Image-led row card with a "new" status pill -->
+ *   <article class="cui-vacancy-card" data-orient="row" data-status="new">
+ *     <a class="cui-vacancy-card-media" href="/vacatures/wijkboa">
+ *       <img src="/vacatures/wijkboa.jpg" alt="">
+ *     </a>
+ *     <div class="cui-vacancy-card-body">
+ *       <h3 class="cui-vacancy-card-title">
+ *         <a href="/vacatures/wijkboa">WijkBOA</a>
+ *       </h3>
+ *       <p class="cui-vacancy-card-tagline">Je kent de wijk en maakt het verschil.</p>
+ *       <ul class="cui-vacancy-meta">
+ *         <li class="cui-vacancy-meta-item">36 uur</li>
+ *         <li class="cui-vacancy-meta-item">Gemeente Vlaardingen</li>
+ *       </ul>
+ *       <div class="cui-vacancy-card-actions">
+ *         <a class="cui-button" href="/vacatures/wijkboa">Lees meer</a>
+ *       </div>
+ *     </div>
+ *     <span class="cui-vacancy-card-status">Nieuw</span>
+ *   </article>
+ */
+.cui-vacancy-card {
+  --cui-vacancy-card-radius: var(--cui-radius-2, 0.5rem);
+  --cui-vacancy-card-padding: var(--cui-space-5, 1.5rem);
+  --cui-vacancy-card-gap: var(--cui-space-3, 0.75rem);
+  --cui-vacancy-card-media-ratio: 4 / 3;
+  --cui-vacancy-card-media-size: 14rem;
+  --cui-vacancy-card-title-size: var(--cui-font-size-2, 1.5rem);
+
+  position: relative;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  border-radius: var(--cui-vacancy-card-radius);
+  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  color: var(--cui-color, #1b1f27);
+  box-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+}
+
+.cui-vacancy-card[hidden] {
+  display: none;
+}
+
+/**
+ * Media slot inside `.cui-vacancy-card`. The combined selector
+ * with `.cui-vacancy-card > :where(img, picture, video, svg, a):first-child`
+ * means a bare first-child media element gets the same styling
+ * without needing the class. On `<a>` wrappers the inner image
+ * scales 1.04× on hover (no-reduced-motion users only) to signal
+ * interactivity.
+ *
+ * @block cui-vacancy-card-media
+ * @summary Media wrapper inside a vacancy card (covers bare first-child media too).
+ */
+.cui-vacancy-card-media,
+.cui-vacancy-card > :where(img, picture, video, svg, a):first-child {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: var(--cui-vacancy-card-media-ratio, 4 / 3);
+  background: var(--cui-color-surface-muted, #edf0f4);
+  overflow: hidden;
+}
+
+.cui-vacancy-card-media > :where(img, picture, video, svg) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cui-vacancy-card-media > :where(img, picture > img) {
+    transition: transform 240ms ease;
+  }
+
+  a.cui-vacancy-card-media:hover > :where(img, picture > img),
+  a.cui-vacancy-card-media:focus-visible > :where(img, picture > img) {
+    transform: scale(1.04);
+  }
+}
+
+a.cui-vacancy-card-media {
+  text-decoration: none;
+}
+
+/**
+ * Content column of `.cui-vacancy-card`. A small grid that stacks
+ * eyebrow, title, tagline, meta, excerpt, and actions; direct
+ * heading and paragraph children get `margin: 0` so the grid gap
+ * controls rhythm. The actions row is pushed to the bottom so
+ * cards in a grid keep their CTAs aligned.
+ *
+ * @block cui-vacancy-card-body
+ * @summary Stacked content column inside a vacancy card.
+ */
+.cui-vacancy-card-body {
+  display: grid;
+  align-content: start;
+  gap: var(--cui-vacancy-card-gap, var(--cui-space-3, 0.75rem));
+  padding: var(--cui-vacancy-card-padding, var(--cui-space-5, 1.5rem));
+}
+
+.cui-vacancy-card-body > :where(h1, h2, h3, h4, h5, h6, p) {
+  margin: 0;
+}
+
+.cui-vacancy-card-body > .cui-vacancy-card-actions {
+  margin-block-start: auto;
+}
+
+/**
+ * Eyebrow inside `.cui-vacancy-card-body` — team, department, or
+ * job family. Small-caps, accent-tinted, with an embedded `<a>`
+ * that inherits the color and underlines on hover.
+ *
+ * @block cui-vacancy-card-eyebrow
+ * @summary Accent-tinted team / department label above the title.
+ * @cssvar --cui-vacancy-card-eyebrow-color — Eyebrow tint. Defaults to `--cui-color-accent`.
+ */
+.cui-vacancy-card-eyebrow {
+  color: var(
+    --cui-vacancy-card-eyebrow-color,
+    var(--cui-color-accent, oklch(57% 0.18 246deg))
+  );
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cui-vacancy-card-eyebrow a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cui-vacancy-card-eyebrow a:hover,
+.cui-vacancy-card-eyebrow a:focus-visible {
+  text-decoration: underline;
+}
+
+/**
+ * Vacancy title inside `.cui-vacancy-card-body`. Sized at
+ * `--cui-vacancy-card-title-size`, bold, tight line-height, with
+ * `text-wrap: balance` for even line lengths. Wrap the link as a
+ * child `<a>` so the whole title is clickable while the heading
+ * element keeps its outline role.
+ *
+ * @block cui-vacancy-card-title
+ * @summary Bold job title; link colors shift to accent on hover.
+ */
+.cui-vacancy-card-title {
+  font-size: var(--cui-vacancy-card-title-size, var(--cui-font-size-2, 1.5rem));
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: var(--cui-line-height-tight, 1.2);
+  text-wrap: balance;
+}
+
+.cui-vacancy-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cui-vacancy-card-title a:hover,
+.cui-vacancy-card-title a:focus-visible {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+/**
+ * Tagline inside `.cui-vacancy-card-body`. A short, slightly larger
+ * subtitle that sits between the title and the meta row — the
+ * "Je kent de wijk en maakt het verschil" line many recruitment
+ * sites pair with the role name. Muted, regular weight.
+ *
+ * @block cui-vacancy-card-tagline
+ * @summary Short subtitle beneath the job title.
+ */
+.cui-vacancy-card-tagline {
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  line-height: var(--cui-line-height-tight, 1.2);
+  text-wrap: balance;
+}
+
+/**
+ * Excerpt paragraph inside `.cui-vacancy-card-body`. Muted body
+ * text, default line-height — keep to two or three lines for grid
+ * cards; the full description belongs on the vacancy detail page.
+ *
+ * @block cui-vacancy-card-excerpt
+ * @summary Muted excerpt paragraph beneath the meta row.
+ */
+.cui-vacancy-card-excerpt {
+  color: var(--cui-color-muted, #5d6675);
+  line-height: var(--cui-line-height, 1.55);
+}
+
+/**
+ * Actions row inside `.cui-vacancy-card-body`. Flex-wrap row with
+ * `--cui-space-3` gap; pushed to the bottom of the body grid so
+ * CTAs line up across a row of cards. Place one or two
+ * `.cui-button`s here for "Bekijk vacature" / "Solliciteer".
+ *
+ * @block cui-vacancy-card-actions
+ * @summary Flex-wrap row of action buttons, bottom-aligned in the card.
+ */
+.cui-vacancy-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+  padding-block-start: var(--cui-space-1, 0.25rem);
+}
+
+/**
+ * Status pill inside `.cui-vacancy-card`. Absolutely positioned in
+ * the top-end corner; tone follows the card's `[data-status]`
+ * (`new`, `closing`, `closed`). Carry only the short status word
+ * inside — the surrounding card markup supplies the rest.
+ *
+ * @block cui-vacancy-card-status
+ * @summary Top-end status pill; tone follows the card's `[data-status]`.
+ */
+.cui-vacancy-card-status {
+  position: absolute;
+  inset-block-start: var(--cui-space-3, 0.75rem);
+  inset-inline-end: var(--cui-space-3, 0.75rem);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cui-space-1, 0.25rem);
+  padding: var(--cui-space-1, 0.25rem) var(--cui-space-3, 0.75rem);
+  border-radius: 999px;
+  background: var(--cui-color-surface-muted, #edf0f4);
+  color: var(--cui-color, #1b1f27);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Row orientation: media beside body, collapses on narrow widths via flex-wrap. */
+.cui-vacancy-card[data-orient="row"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.cui-vacancy-card[data-orient="row"] > .cui-vacancy-card-media,
+.cui-vacancy-card[data-orient="row"]
+  > :where(img, picture, video, svg, a):first-child {
+  flex: 1 1 var(--cui-vacancy-card-media-size, 14rem);
+  min-inline-size: 0;
+  min-block-size: var(--cui-vacancy-card-media-min-block-size, 11rem);
+  aspect-ratio: auto;
+}
+
+.cui-vacancy-card[data-orient="row"] > .cui-vacancy-card-body {
+  flex: 2 1 var(--cui-vacancy-card-body-min, 20rem);
+  min-inline-size: 0;
+}
+
+/* Featured: larger media, prominent title. */
+.cui-vacancy-card[data-variant="featured"] {
+  --cui-vacancy-card-media-ratio: 16 / 9;
+  --cui-vacancy-card-media-size: 20rem;
+  --cui-vacancy-card-title-size: var(--cui-font-size-3, 2rem);
+  --cui-vacancy-card-padding: var(--cui-space-6, 2rem);
+}
+
+/* Compact: no media, no excerpt, tighter spacing — sidebars and dense lists. */
+.cui-vacancy-card[data-variant="compact"] {
+  --cui-vacancy-card-title-size: var(--cui-font-size-1, 1.1875rem);
+  --cui-vacancy-card-padding: var(--cui-space-4, 1rem);
+  --cui-vacancy-card-gap: var(--cui-space-2, 0.5rem);
+}
+
+.cui-vacancy-card[data-variant="compact"] > .cui-vacancy-card-media,
+.cui-vacancy-card[data-variant="compact"]
+  > :where(img, picture, video, svg, a):first-child,
+.cui-vacancy-card[data-variant="compact"] .cui-vacancy-card-tagline,
+.cui-vacancy-card[data-variant="compact"] .cui-vacancy-card-excerpt {
+  display: none;
+}
+
+.cui-vacancy-card[data-variant="flat"] {
+  --cui-content-card-shadow: none;
+}
+
+.cui-vacancy-card[data-variant="borderless"] {
+  --cui-border-size: 0;
+  --cui-content-card-shadow: none;
+}
+
+/* Status tones. */
+.cui-vacancy-card[data-status="new"] > .cui-vacancy-card-status {
+  background: color-mix(
+    in oklab,
+    var(--cui-color-accent, oklch(57% 0.18 246deg)) 14%,
+    transparent
+  );
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+.cui-vacancy-card[data-status="closing"] > .cui-vacancy-card-status {
+  background: color-mix(
+    in oklab,
+    var(--cui-color-warning, oklch(72% 0.16 82deg)) 22%,
+    transparent
+  );
+  color: var(--cui-color, #1b1f27);
+}
+
+.cui-vacancy-card[data-status="closed"] {
+  opacity: 0.7;
+}
+
+.cui-vacancy-card[data-status="closed"] > .cui-vacancy-card-status {
+  background: var(--cui-color-surface-muted, #edf0f4);
+  color: var(--cui-color-muted, #5d6675);
+}
+
+.cui-vacancy-card[data-status="closed"] .cui-vacancy-card-title a {
+  color: var(--cui-color-muted, #5d6675);
+}
+
+/* --- Vacancy meta (shared pill row) --------------------------------- */
+
+/**
+ * Meta row — a flex-wrap `<ul>` of fact pills shared by the
+ * vacancy card and the detail header. Each `.cui-vacancy-meta-item`
+ * renders as a small rounded chip carrying one fact: hours,
+ * location, salary scale, contract type, education level. Strips
+ * list styling so the pills wrap naturally; gap follows
+ * `--cui-vacancy-meta-gap`.
+ *
+ * @block cui-vacancy-meta
+ * @summary Flex-wrap list of job-fact pills (hours, location, salary…).
+ * @variant plain — Maps to `[data-variant]`. Drops the chip
+ *   backgrounds and renders an inline `·`-separated metadata row
+ *   instead — closer to the article / event meta look.
+ * @cssvar --cui-vacancy-meta-gap — Gap between pills. Defaults to `--cui-space-2`.
+ *
+ * @example
+ *   <ul class="cui-vacancy-meta">
+ *     <li class="cui-vacancy-meta-item">32–36 uur</li>
+ *     <li class="cui-vacancy-meta-item">Vlaardingen</li>
+ *     <li class="cui-vacancy-meta-item">Schaal 5</li>
+ *     <li class="cui-vacancy-meta-item">Contract</li>
+ *   </ul>
+ */
+.cui-vacancy-meta {
+  --cui-vacancy-meta-gap: var(--cui-space-2, 0.5rem);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cui-vacancy-meta-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/**
+ * Single fact pill inside `.cui-vacancy-meta`. A muted rounded
+ * chip; place an optional inline icon before the label. Under the
+ * `plain` parent variant it loses its chip styling and joins an
+ * inline `·`-separated row instead.
+ *
+ * @block cui-vacancy-meta-item
+ * @summary Rounded fact chip inside a vacancy meta row.
+ */
+.cui-vacancy-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cui-space-2, 0.5rem);
+  margin: 0;
+  padding: var(--cui-space-1, 0.25rem) var(--cui-space-3, 0.75rem);
+  border-radius: 999px;
+  background: var(--cui-color-surface-muted, #edf0f4);
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  white-space: nowrap;
+}
+
+.cui-vacancy-meta-item > svg {
+  inline-size: 1em;
+  block-size: 1em;
+  flex: none;
+}
+
+/* Plain variant: inline metadata row with `·` separators, no chips. */
+.cui-vacancy-meta[data-variant="plain"] {
+  gap: var(--cui-space-2, 0.5rem) var(--cui-space-3, 0.75rem);
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+}
+
+.cui-vacancy-meta[data-variant="plain"] > .cui-vacancy-meta-item {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.cui-vacancy-meta[data-variant="plain"] > .cui-vacancy-meta-item + .cui-vacancy-meta-item::before {
+  content: "·";
+  margin-inline-end: var(--cui-space-3, 0.75rem);
+  color: var(--cui-color-border, #cfd6df);
+}
+
+/* --- Vacancy grid --------------------------------------------------- */
+
+/**
+ * Grid container for `.cui-vacancy-card`s. Auto-fits columns of at
+ * least `--cui-vacancy-grid-min` (20rem default). Gap and
+ * column-count follow the same `[data-gap]` / `[data-columns]`
+ * conventions as the article and event grid families.
+ *
+ * @block cui-vacancy-grid
+ * @summary Responsive grid of vacancy cards (20rem min).
+ * @variant compact | spacious — Maps to `[data-gap]`. Override
+ *   `--cui-content-grid-gap` to `--cui-space-3` or `--cui-space-7`.
+ * @variant 2 | 3 | 4 — Maps to `[data-columns]`. Pin to fixed
+ *   columns at viewports ≥48rem; below, falls back to auto-fit.
+ * @cssvar --cui-vacancy-grid-min — Minimum column width. Defaults to 20rem.
+ *
+ * @example
+ *   <div class="cui-vacancy-grid" data-columns="3">
+ *     <article class="cui-vacancy-card">…</article>
+ *     <article class="cui-vacancy-card">…</article>
+ *     <article class="cui-vacancy-card">…</article>
+ *   </div>
+ */
+.cui-vacancy-grid {
+  display: grid;
+  align-items: stretch;
+  gap: var(
+      --cui-content-grid-row-gap,
+      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
+    )
+    var(
+      --cui-content-grid-column-gap,
+      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
+    );
+  grid-template-columns: var(
+    --cui-content-grid-columns,
+    repeat(auto-fit, minmax(min(100%, var(--cui-vacancy-grid-min, 20rem)), 1fr))
+  );
+}
+
+.cui-vacancy-grid[data-gap="compact"] {
+  --cui-content-grid-gap: var(--cui-space-3, 0.75rem);
+}
+
+.cui-vacancy-grid[data-gap="spacious"] {
+  --cui-content-grid-gap: var(--cui-space-7, 3rem);
+}
+
+@media (width >= 48rem) {
+  .cui-vacancy-grid[data-columns="2"] {
+    --cui-content-grid-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cui-vacancy-grid[data-columns="3"] {
+    --cui-content-grid-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cui-vacancy-grid[data-columns="4"] {
+    --cui-content-grid-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* --- Vacancy list (single column) ----------------------------------- */
+
+/**
+ * Single-column list of `.cui-vacancy-card`s — the default shape
+ * for a `/vacatures` overview page. Pairs naturally with
+ * `[data-orient="row"]` cards for image-led boards, or plain
+ * stacked cards for minimal ones. The `stacked` variant collapses
+ * card chrome to hairline separators for a denser index look.
+ *
+ * @block cui-vacancy-list
+ * @summary Single-column list of vacancy cards; `stacked` variant for hairline indexes.
+ * @variant compact | spacious — Maps to `[data-gap]`. Override
+ *   `--cui-vacancy-list-gap` to `--cui-space-3` or `--cui-space-7`.
+ * @variant stacked — Maps to `[data-variant]`. Removes gap;
+ *   drops card chrome on each child and inserts hairline borders
+ *   between siblings.
+ * @cssvar --cui-vacancy-list-gap — Gap between cards. Defaults to `--cui-space-4`.
+ *
+ * @example
+ *   <div class="cui-vacancy-list">
+ *     <article class="cui-vacancy-card" data-orient="row">…</article>
+ *     <article class="cui-vacancy-card" data-orient="row">…</article>
+ *   </div>
+ */
+.cui-vacancy-list {
+  display: grid;
+  gap: var(--cui-vacancy-list-gap, var(--cui-space-4, 1rem));
+}
+
+.cui-vacancy-list[data-gap="compact"] {
+  --cui-vacancy-list-gap: var(--cui-space-3, 0.75rem);
+}
+
+.cui-vacancy-list[data-gap="spacious"] {
+  --cui-vacancy-list-gap: var(--cui-space-7, 3rem);
+}
+
+/* Stacked variant: hairline separators instead of cards. */
+.cui-vacancy-list[data-variant="stacked"] {
+  --cui-vacancy-list-gap: 0;
+}
+
+.cui-vacancy-list[data-variant="stacked"] > .cui-vacancy-card {
+  --cui-border-size: 0;
+  --cui-content-card-shadow: none;
+  --cui-vacancy-card-radius: 0;
+
+  border-block-end: var(--cui-border-size-line, 1px) solid
+    var(--cui-color-border, #cfd6df);
+  padding-block: var(--cui-space-4, 1rem);
+}
+
+.cui-vacancy-list[data-variant="stacked"] > .cui-vacancy-card:last-child {
+  border-block-end: 0;
+}
+
+/* --- Vacancy detail page -------------------------------------------- */
+
+/**
+ * Two-column layout for a single vacancy detail page: a wide main
+ * column for the narrative body and a narrower aside for the quick
+ * summary, apply CTA, and contact block. Like `.cui-sidebar`, the
+ * split is driven by a **container query** (>= 52rem), so it flips
+ * on the actual container width — pair it with a `.cui-page` /
+ * `.cui-page-wide` ancestor (which sets `container-type:
+ * inline-size`). Below the breakpoint it collapses to one column,
+ * the aside un-sticks, and flows after the body. Put the title
+ * block in a `.cui-vacancy-header` to span both columns.
+ *
+ * @block cui-vacancy-detail
+ * @summary Main + aside grid for a vacancy detail page; container-query driven, collapses to one column.
+ * @variant aside-start — Maps to `[data-aside]`. Places the aside
+ *   column before the main column on wide viewports.
+ * @cssvar --cui-vacancy-detail-gap — Column gap. Defaults to `--cui-space-7`.
+ * @cssvar --cui-vacancy-detail-aside-size — Aside column width. Defaults to 19rem.
+ * @cssvar --cui-vacancy-detail-collapse — Single-column breakpoint. Defaults to 52rem.
+ *
+ * @example
+ *   <div class="cui-vacancy-detail">
+ *     <header class="cui-vacancy-header">
+ *       <p class="cui-vacancy-eyebrow">Openbare Orde en Veiligheid</p>
+ *       <h1 class="cui-vacancy-title">Toezichthouder Westwijk</h1>
+ *       <p class="cui-vacancy-tagline">Houd toezicht en maak het verschil in de wijk.</p>
+ *       <ul class="cui-vacancy-meta">
+ *         <li class="cui-vacancy-meta-item">32–36 uur</li>
+ *         <li class="cui-vacancy-meta-item">Vlaardingen</li>
+ *         <li class="cui-vacancy-meta-item">Schaal 5</li>
+ *       </ul>
+ *     </header>
+ *     <div class="cui-vacancy-main cui-flow">
+ *       <section class="cui-vacancy-section">
+ *         <h2>Wat ga je doen?</h2>
+ *         <p>…</p>
+ *       </section>
+ *     </div>
+ *     <aside class="cui-vacancy-aside">
+ *       <h2 class="cui-vacancy-aside-title">Snel overzicht</h2>
+ *       <dl class="cui-vacancy-summary">
+ *         <dt>Salaris</dt><dd>Schaal 5</dd>
+ *         <dt>Uren per week</dt><dd>32–36</dd>
+ *         <dt>Opleidingsniveau</dt><dd>MBO</dd>
+ *       </dl>
+ *       <div class="cui-vacancy-apply">
+ *         <a class="cui-button" data-variant="primary" href="/solliciteer">Solliciteer</a>
+ *       </div>
+ *       <div class="cui-vacancy-contact">
+ *         <p class="cui-vacancy-contact-person">Danny van Haaften</p>
+ *         <p><a href="tel:+31102484000">010 248 4000</a></p>
+ *       </div>
+ *     </aside>
+ *   </div>
+ */
+.cui-vacancy-detail {
+  --cui-vacancy-detail-gap: var(--cui-space-7, 3rem);
+  --cui-vacancy-detail-aside-size: 19rem;
+  --cui-vacancy-detail-collapse: 52rem;
+
+  display: grid;
+  gap: var(--cui-space-6, 2rem) var(--cui-vacancy-detail-gap);
+}
+
+@container (width >= 52rem) {
+  .cui-vacancy-detail {
+    grid-template-columns: minmax(0, 1fr) var(--cui-vacancy-detail-aside-size);
+  }
+
+  .cui-vacancy-detail[data-aside="start"] {
+    grid-template-columns: var(--cui-vacancy-detail-aside-size) minmax(0, 1fr);
+  }
+
+  .cui-vacancy-detail[data-aside="start"] > .cui-vacancy-aside {
+    order: -1;
+  }
+}
+
+/**
+ * Header band of `.cui-vacancy-detail`. Spans both columns and
+ * stacks eyebrow, title, tagline, and a `.cui-vacancy-meta` pill
+ * row. A hairline rule beneath separates it from the body.
+ *
+ * @block cui-vacancy-header
+ * @summary Full-width title band atop the detail grid.
+ */
+.cui-vacancy-header {
+  display: grid;
+  gap: var(--cui-space-3, 0.75rem);
+  grid-column: 1 / -1;
+  padding-block-end: var(--cui-space-5, 1.5rem);
+  border-block-end: var(--cui-border-size-line, 1px) solid
+    var(--cui-color-border, #cfd6df);
+}
+
+.cui-vacancy-header > :where(h1, h2, p) {
+  margin: 0;
+}
+
+/**
+ * Eyebrow above the detail title — team, department, or job
+ * family. Accent-tinted small-caps, matching the card eyebrow.
+ *
+ * @block cui-vacancy-eyebrow
+ * @summary Accent-tinted team / department label above the detail title.
+ */
+.cui-vacancy-eyebrow {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/**
+ * Vacancy detail title. Display-scale heading with tight,
+ * balanced line wrapping.
+ *
+ * @block cui-vacancy-title
+ * @summary Display-scale job title on the detail page.
+ * @cssvar --cui-vacancy-title-size — Title font size. Defaults to `--cui-font-size-display`.
+ */
+.cui-vacancy-title {
+  font-size: var(--cui-vacancy-title-size, var(--cui-font-size-display, 2.75rem));
+  font-weight: var(--cui-font-weight-display, 760);
+  line-height: var(--cui-line-height-display, 1.05);
+  text-wrap: balance;
+}
+
+/**
+ * Lead tagline beneath the detail title. Larger muted text for the
+ * one-line role summary.
+ *
+ * @block cui-vacancy-tagline
+ * @summary Lead subtitle beneath the detail title.
+ */
+.cui-vacancy-tagline {
+  max-inline-size: 48ch;
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  line-height: var(--cui-line-height, 1.55);
+  text-wrap: balance;
+}
+
+/**
+ * Main narrative column of `.cui-vacancy-detail`. A thin wrapper —
+ * compose its rhythm with `.cui-flow` or `.cui-prose`, and group
+ * the body copy into `.cui-vacancy-section`s. Caps its measure for
+ * comfortable reading.
+ *
+ * @block cui-vacancy-main
+ * @summary Narrative body column of the detail grid.
+ */
+.cui-vacancy-main {
+  min-inline-size: 0;
+  max-inline-size: var(--cui-vacancy-main-measure, 68ch);
+}
+
+/**
+ * A titled content section inside `.cui-vacancy-main` — "Wat ga je
+ * doen?", "Wie ben jij?", "Wat bieden wij?". Gives its heading and
+ * body sensible rhythm and lists comfortable spacing, so the same
+ * markup renders cleanly whatever section titles a posting uses.
+ *
+ * @block cui-vacancy-section
+ * @summary Titled body section (heading + copy / list) on the detail page.
+ *
+ * @example
+ *   <section class="cui-vacancy-section">
+ *     <h2>Wat ga je doen?</h2>
+ *     <p>Je loopt dagelijks je ronde door de wijk…</p>
+ *     <ul>
+ *       <li>Toezicht op leefbaarheid en verkeersveiligheid</li>
+ *       <li>Aanspreekpunt voor bewoners en ondernemers</li>
+ *     </ul>
+ *   </section>
+ */
+.cui-vacancy-section > :where(h2, h3) {
+  margin-block: 0 var(--cui-space-3, 0.75rem);
+  font-size: var(--cui-font-size-2, 1.5rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: var(--cui-line-height-tight, 1.2);
+}
+
+.cui-vacancy-section > :where(p, ul, ol) {
+  margin-block: 0 var(--cui-space-3, 0.75rem);
+  line-height: var(--cui-line-height, 1.55);
+}
+
+.cui-vacancy-section > :where(p, ul, ol):last-child {
+  margin-block-end: 0;
+}
+
+.cui-vacancy-section > :where(ul, ol) {
+  padding-inline-start: var(--cui-space-5, 1.5rem);
+}
+
+/**
+ * Aside column of `.cui-vacancy-detail`. A bordered, raised card
+ * holding the quick summary, apply CTA, and contact block. Sticks
+ * to the top of the viewport on wide layouts so the apply button
+ * stays in reach while reading; un-sticks once the layout
+ * collapses to a single column.
+ *
+ * @block cui-vacancy-aside
+ * @summary Sticky summary / apply / contact card beside the body.
+ * @cssvar --cui-vacancy-aside-top — Sticky offset from the top. Defaults to `--cui-space-6`.
+ */
+.cui-vacancy-aside {
+  display: grid;
+  gap: var(--cui-space-5, 1.5rem);
+  align-content: start;
+  padding: var(--cui-space-5, 1.5rem);
+  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-radius: var(--cui-radius-2, 0.5rem);
+  background: var(--cui-color-surface, #f7f8fa);
+}
+
+@container (width >= 52rem) {
+  .cui-vacancy-aside {
+    position: sticky;
+    inset-block-start: var(--cui-vacancy-aside-top, var(--cui-space-6, 2rem));
+  }
+}
+
+.cui-vacancy-aside > :where(h2, h3, p) {
+  margin: 0;
+}
+
+/**
+ * Heading for the `.cui-vacancy-aside` — typically "Snel
+ * overzicht". Small eyebrow-style label.
+ *
+ * @block cui-vacancy-aside-title
+ * @summary Eyebrow-style heading for the summary aside.
+ */
+.cui-vacancy-aside-title {
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/**
+ * Quick-facts definition list inside `.cui-vacancy-aside` — the
+ * "Snel overzicht" of salary scale, field, education level, hours,
+ * duration, and work pattern. Renders as a two-column `<dl>`:
+ * muted `<dt>` labels and bold `<dd>` values, hairline-separated
+ * between pairs.
+ *
+ * @block cui-vacancy-summary
+ * @summary Two-column `<dl>` of quick job facts in the aside.
+ *
+ * @example
+ *   <dl class="cui-vacancy-summary">
+ *     <dt>Salaris</dt><dd>Schaal 5</dd>
+ *     <dt>Vakgebieden</dt><dd>Openbare Orde en Veiligheid</dd>
+ *     <dt>Opleidingsniveau</dt><dd>MBO</dd>
+ *     <dt>Uren per week</dt><dd>32–36</dd>
+ *     <dt>Duur</dt><dd>Contract</dd>
+ *     <dt>Werkuren</dt><dd>Fulltime · Parttime</dd>
+ *   </dl>
+ */
+.cui-vacancy-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  margin: 0;
+}
+
+.cui-vacancy-summary > dt {
+  grid-column: 1;
+  padding-block: var(--cui-space-2, 0.5rem);
+  padding-inline-end: var(--cui-space-4, 1rem);
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+}
+
+.cui-vacancy-summary > dd {
+  grid-column: 2;
+  margin: 0;
+  padding-block: var(--cui-space-2, 0.5rem);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  text-align: end;
+}
+
+/* Hairline between each dt/dd pair (skip the first row). */
+.cui-vacancy-summary > dt:not(:first-of-type),
+.cui-vacancy-summary > dd:not(:first-of-type) {
+  border-block-start: var(--cui-border-size-line, 1px) solid
+    var(--cui-color-border, #cfd6df);
+}
+
+/**
+ * Apply CTA block inside `.cui-vacancy-aside`. Stacks the primary
+ * apply button (stretched full-width) above optional helper text —
+ * a deadline reminder or "Solliciteer in 5 minuten" note.
+ *
+ * @block cui-vacancy-apply
+ * @summary Full-width apply button plus helper text in the aside.
+ *
+ * @example
+ *   <div class="cui-vacancy-apply">
+ *     <a class="cui-button" data-variant="primary" href="/solliciteer">Solliciteer</a>
+ *     <p class="cui-vacancy-apply-note">Reageren kan tot en met 30 juni.</p>
+ *   </div>
+ */
+.cui-vacancy-apply {
+  display: grid;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+.cui-vacancy-apply > :where(.cui-button, button) {
+  inline-size: 100%;
+}
+
+/**
+ * Deadline / helper note beneath the apply button. Muted, small,
+ * centered.
+ *
+ * @block cui-vacancy-apply-note
+ * @summary Muted helper note under the apply button.
+ */
+.cui-vacancy-apply-note {
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  text-align: center;
+}
+
+/**
+ * Contact block inside `.cui-vacancy-aside` — the recruiter or team
+ * lead to reach with questions. A hairline rule on top separates it
+ * from the apply CTA. Use `.cui-vacancy-contact-person` for each
+ * name and plain `<p>`s with `tel:` / `mailto:` links beneath.
+ *
+ * @block cui-vacancy-contact
+ * @summary Contact-person block (name + phone / email) in the aside.
+ *
+ * @example
+ *   <div class="cui-vacancy-contact">
+ *     <p class="cui-vacancy-aside-title">Vragen over deze vacature?</p>
+ *     <p class="cui-vacancy-contact-person">Danny van Haaften</p>
+ *     <p><a href="tel:+31102484000">010 248 4000</a></p>
+ *   </div>
+ */
+.cui-vacancy-contact {
+  display: grid;
+  gap: var(--cui-space-1, 0.25rem);
+  padding-block-start: var(--cui-space-5, 1.5rem);
+  border-block-start: var(--cui-border-size-line, 1px) solid
+    var(--cui-color-border, #cfd6df);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+}
+
+.cui-vacancy-contact > p {
+  margin: 0;
+}
+
+.cui-vacancy-contact a {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+/**
+ * Contact-person name inside `.cui-vacancy-contact`. Full-strength
+ * color, bold — stands out above the phone / email lines.
+ *
+ * @block cui-vacancy-contact-person
+ * @summary Bold contact name inside the contact block.
+ */
+.cui-vacancy-contact-person {
+  color: var(--cui-color, #1b1f27);
+  font-weight: var(--cui-font-weight-strong, 680);
+}
