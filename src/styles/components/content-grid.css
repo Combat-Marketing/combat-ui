@@ -56,6 +56,7 @@
  * @variant compact | spacious — Maps to `[data-gap]`.
  * @variant 2 | 3 | 4 — Maps to `[data-columns]`.
  * @cssvar --cui-feature-grid-min — Minimum column width. Defaults to 18rem.
+ * @cssvar --cui-feature-card-rows — Subgrid row span used to align each card's icon / heading / body across the row. Defaults to 3.
  */
 .cui-feature-grid {
   --cui-content-grid-min: var(--cui-feature-grid-min, 18rem);
@@ -64,6 +65,32 @@
     --cui-content-grid-columns,
     repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 18rem)), 1fr))
   );
+}
+
+/**
+ * Cross-card alignment for `.cui-feature-grid`. Feature cards already
+ * stretch to equal height (grid default), but with uneven content a
+ * longer heading in one card pushes its paragraph down while a shorter
+ * heading beside it does not — so headings and body copy drift out of
+ * line across the row. Subgrid fixes this: each card maps its three
+ * rows (icon, heading, body) onto shared parent tracks, so the tallest
+ * icon / heading / body in a row sets that row's height and every
+ * card's heading and paragraph start on the same line.
+ *
+ * Scoped to direct `.cui-feature-card` children with the canonical
+ * icon + heading + body structure; `--cui-feature-card-rows` (3 by
+ * default) tunes the span if a card adds rows (e.g. a trailing CTA).
+ * `row-gap` is re-asserted so the card keeps its own
+ * `--cui-content-card-gap` instead of inheriting the wider grid gap.
+ * Wrapped in `@supports` so browsers without subgrid keep the prior
+ * top-aligned behavior rather than reserving empty tracks.
+ */
+@supports (grid-template-rows: subgrid) {
+  .cui-feature-grid > .cui-feature-card {
+    grid-row: span var(--cui-feature-card-rows, 3);
+    grid-template-rows: subgrid;
+    row-gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
+  }
 }
 
 /**
