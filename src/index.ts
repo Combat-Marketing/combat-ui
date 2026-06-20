@@ -4,6 +4,7 @@ import {
 import { CuiButton } from "./components/button";
 import { CuiCalendar } from "./components/calendar";
 import { CuiCode } from "./components/code";
+import { CuiCookieBanner } from "./components/cookie-banner";
 import { CuiCta } from "./components/cta";
 import { CuiDayPlanner } from "./components/day-planner";
 import { CuiDisclosure } from "./components/disclosure";
@@ -34,6 +35,12 @@ import "./index.css";
 import { defineElement } from "./internal/base-element";
 
 export type { CuiArticleFilterChangeDetail } from "./components/article-filter";
+export type {
+  CuiCookieCategory,
+  CuiCookieConsent,
+  CuiCookieConsentChangeDetail,
+  CuiCookieConsentReason,
+} from "./components/cookie-banner";
 export type {
   EventCardData,
 } from "./internal/event-cards";
@@ -89,6 +96,7 @@ export {
   CuiButton,
   CuiCalendar,
   CuiCode,
+  CuiCookieBanner,
   CuiCta,
   CuiDayPlanner,
   CuiDisclosure,
@@ -118,7 +126,7 @@ export function defineCombatUi(
     CuiButton, CuiNavbar, CuiThemeToggle, CuiCode, CuiTabs, CuiHero,
     CuiPageIntro, CuiScrollStage, CuiReveal, CuiTree, CuiField, CuiForm,
     CuiModal, CuiToastRegion, CuiCta, CuiDisclosure, CuiMap,
-    CuiArticleFilter, CuiCalendar, CuiDayPlanner,
+    CuiArticleFilter, CuiCalendar, CuiDayPlanner, CuiCookieBanner,
   ] as const;
   for (const Element of allElements) {
     defineElement(Element, registry);
