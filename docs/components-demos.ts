@@ -6,6 +6,7 @@ import {
   type CuiTreeContextDetail,
   type CuiTreeDropDetail,
   type CuiModalCloseDetail,
+  type CuiCookieConsentChangeDetail,
 } from "../src/index";
 
 // Toast demos
@@ -153,6 +154,27 @@ import {
       } else {
         log.textContent = "Dismissed.";
       }
+    });
+  }
+}
+
+// Cookie banner demo
+{
+  const banner = document.getElementById("docs-cookie-banner");
+  const log = document.getElementById("docs-cookie-log");
+  if (banner && log) {
+    banner.addEventListener("cui-cookie-consent-change", (event) => {
+      const { consent, reason } = (
+        event as CustomEvent<CuiCookieConsentChangeDetail>
+      ).detail;
+      const granted = [
+        consent.analytics && "analytics",
+        consent.marketing && "marketing",
+      ].filter(Boolean);
+      log.textContent =
+        reason === "revoke"
+          ? "Consent revoked."
+          : `${reason}: necessary${granted.length ? `, ${granted.join(", ")}` : " only"}.`;
     });
   }
 }

@@ -1,0 +1,297 @@
+:host {
+  --cui-cookie-banner-bg: var(--cui-color-surface-raised, #fff);
+  --cui-cookie-banner-color: var(--cui-color, #1b1f27);
+  --cui-cookie-banner-border: var(--cui-color-border, #cfd6df);
+  --cui-cookie-banner-radius: var(--cui-radius-2, 0.5rem);
+  --cui-cookie-banner-shadow: var(--cui-shadow-2, 0 12px 28px rgb(0 0 0 / 14%));
+  --cui-cookie-banner-z-index: 1000;
+  --cui-cookie-banner-max-inline-size: 30rem;
+
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: var(--cui-cookie-banner-z-index);
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease,
+    visibility 300ms;
+}
+
+:host([open]) {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    transition: none;
+  }
+}
+
+.banner {
+  background: var(--cui-cookie-banner-bg);
+  color: var(--cui-cookie-banner-color);
+  box-shadow: var(--cui-cookie-banner-shadow);
+}
+
+@media (width >= 48rem) {
+  :host {
+    inset-block-end: var(--cui-space-5, 1.5rem);
+    inset-inline: var(--cui-space-5, 1.5rem) auto;
+    max-inline-size: var(--cui-cookie-banner-max-inline-size);
+  }
+
+  .banner {
+    border: var(--cui-border-size, 1px) solid var(--cui-cookie-banner-border);
+    border-radius: var(--cui-cookie-banner-radius);
+  }
+}
+
+.content {
+  padding: var(--cui-space-5, 1.5rem);
+}
+
+@media (width >= 48rem) {
+  .content {
+    padding: var(--cui-space-6, 2rem);
+  }
+}
+
+.title {
+  margin: 0 0 var(--cui-space-3, 0.75rem);
+  font-size: var(--cui-font-size-2, 1.25rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  line-height: var(--cui-line-height-tight, 1.2);
+}
+
+.text {
+  margin: 0;
+  font-size: var(--cui-font-size-0, 1rem);
+  line-height: var(--cui-line-height, 1.55);
+  color: var(--cui-color-muted, #5d6675);
+}
+
+/* Action rows -------------------------------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+  margin-block-start: var(--cui-space-5, 1.5rem);
+}
+
+/* Buttons — mirror the cui-button look using tokens, scoped to the shadow ---- */
+
+.btn {
+  --_-bg: var(--cui-color-surface-muted, oklch(97.3% 0.009 240deg));
+  --_-border: var(--cui-color-border, oklch(92.5% 0.009 240deg));
+  --_-color: var(--cui-color, oklch(24% 0.04 264deg));
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cui-space-2, 0.5rem);
+  min-block-size: var(--cui-control-size, 2.5rem);
+  border: var(--cui-border-size, 1px) solid var(--_-border);
+  border-radius: var(--cui-control-radius, 0.25rem);
+  background: var(--_-bg);
+  color: var(--_-color);
+  font: inherit;
+  font-weight: var(--cui-font-weight-strong, 680);
+  padding-block: 0.625rem;
+  padding-inline: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:hover {
+  --_-bg: color-mix(
+    in oklch,
+    var(--cui-color-surface-muted, #edf0f4),
+    var(--cui-color, #1b1f27) 8%
+  );
+
+  transform: translateY(-1px);
+}
+
+.btn:focus-visible {
+  outline: var(--cui-focus-size, 2px) solid var(--cui-color-focus, currentColor);
+  outline-offset: var(--cui-focus-offset, 2px);
+}
+
+.btn-primary {
+  --_-bg: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  --_-border: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  --_-color: var(--cui-color-on-accent, oklch(100% 0 0deg));
+}
+
+.btn-primary:hover {
+  --_-bg: color-mix(
+    in oklch,
+    var(--cui-color-accent, oklch(57% 0.18 246deg)),
+    black 8%
+  );
+  --_-border: color-mix(
+    in oklch,
+    var(--cui-color-accent, oklch(57% 0.18 246deg)),
+    black 8%
+  );
+}
+
+.btn-outline {
+  --_-bg: transparent;
+}
+
+.btn-link {
+  flex: 0 0 auto;
+  min-block-size: 0;
+  border: none;
+  background: none;
+  padding-block: 0.625rem;
+  padding-inline: 0;
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  transform: none;
+  color: color-mix(
+    in oklch,
+    var(--cui-color-accent, oklch(57% 0.18 246deg)),
+    black 12%
+  );
+}
+
+.actions .btn:not(.btn-link) {
+  flex: 1 1 auto;
+}
+
+@media (width < 48rem) {
+  .actions .btn:not(.btn-link) {
+    flex-basis: 100%;
+  }
+}
+
+/* Settings (category) view -------------------------------------------------- */
+
+.category {
+  padding-block: var(--cui-space-4, 1rem);
+  border-block-start: var(--cui-border-size, 1px) solid
+    var(--cui-color-border, oklch(92.5% 0.009 240deg));
+}
+
+.category:first-child {
+  padding-block-start: 0;
+  border-block-start: none;
+}
+
+.category-desc {
+  display: block;
+  margin-block-start: var(--cui-space-1, 0.25rem);
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  line-height: var(--cui-line-height, 1.55);
+  color: var(--cui-color-muted, #5d6675);
+}
+
+/* Switch — mirrors the .cui-switch pattern from form.css ------------------- */
+
+.switch {
+  --cui-switch-bg: var(--cui-color-surface-muted, #edf0f4);
+  --cui-switch-bg-on: var(--cui-color-accent, #2563eb);
+  --cui-switch-knob: var(--cui-color-surface-raised, #fff);
+
+  display: flex;
+  align-items: start;
+  gap: var(--cui-space-3, 0.75rem);
+  cursor: pointer;
+}
+
+.switch:has(input:disabled) {
+  cursor: not-allowed;
+}
+
+.switch input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.switch-track {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: 2.5rem;
+  block-size: 1.5rem;
+  margin-block-start: 2px;
+  border-radius: 999px;
+  background: var(--cui-switch-bg);
+  transition: background 160ms ease;
+}
+
+.switch-track::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  border-radius: 50%;
+  background: var(--cui-switch-knob);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 18%);
+  transition: transform 160ms ease;
+}
+
+.switch input:checked + .switch-track {
+  background: var(--cui-switch-bg-on);
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(1rem);
+}
+
+.switch input:disabled + .switch-track {
+  opacity: 0.6;
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: var(--cui-focus-size, 2px) solid var(--cui-color-focus, currentColor);
+  outline-offset: 2px;
+}
+
+.switch-text strong {
+  display: block;
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+/* Policy link -------------------------------------------------------------- */
+
+.policy {
+  margin-block: var(--cui-space-4, 1rem) 0;
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  text-align: center;
+}
+
+.policy a,
+::slotted(a) {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}

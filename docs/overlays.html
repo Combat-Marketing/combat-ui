@@ -31,6 +31,7 @@
           <a class="cui-nav-link" href="#modal">Modal</a>
           <a class="cui-nav-link" href="#disclosure">Disclosure</a>
           <a class="cui-nav-link" href="#notifications">Notifications</a>
+          <a class="cui-nav-link" href="#cookie-banner">Cookie banner</a>
         </aside>
 
         <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-7, 3rem);">
@@ -1042,6 +1043,226 @@
                   </tr>
                 </tbody>
               </table>
+                  </div>
+                </details>
+              </cui-disclosure>
+            </section>
+
+            <section id="cookie-banner" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+              <div class="cui-prose">
+                <h2>Cookie banner</h2>
+                <p>
+                  <code>cui-cookie-banner</code> is a fixed, bottom-anchored consent banner with an
+                  accept-all / necessary-only / granular-settings flow. It persists the choice in a cookie
+                  and is deliberately <strong>tracker-free</strong> — it manages consent and UI only and
+                  emits a typed <code>cui-cookie-consent-change</code> event so you load (or block) analytics
+                  and marketing scripts yourself.
+                </p>
+                <p>
+                  All copy comes from named slots with English defaults, so the banner is fully translatable.
+                  On connect it reads the stored cookie: with no choice yet it opens automatically (unless
+                  <code>manual</code> is set); with a stored choice it stays hidden and re-emits the consent
+                  with <code>reason: "restore"</code> so you can re-apply it on every page load.
+                </p>
+              </div>
+
+              <div class="docs-preview">
+                <div class="docs-preview-frame">
+                  <div class="cui-cluster" style="--cui-cluster-gap: var(--cui-space-3, 0.75rem);">
+                    <cui-button data-cui-cookie-banner-target="docs-cookie-banner">Open banner</cui-button>
+                    <cui-button data-cui-cookie-banner-target="docs-cookie-banner"
+                      data-cui-cookie-banner-action="revoke">Revoke &amp; reopen</cui-button>
+                  </div>
+
+                  <cui-cookie-banner manual id="docs-cookie-banner">
+                    <a slot="policy" href="./theming.html" target="_blank" rel="noopener">Read our cookie policy</a>
+                  </cui-cookie-banner>
+
+                  <p class="cui-caption docs-modal-log" id="docs-cookie-log" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <cui-code language="html">
+                <script type="text/html">
+                  <cui-cookie-banner>
+                    <a slot="policy" href="/privacy-policy">Read our cookie policy</a>
+                  </cui-cookie-banner>
+
+                  <!-- Re-open later from a footer link, anywhere on the page -->
+                  <button data-cui-cookie-banner-target="…">Cookie settings</button>
+                </script>
+              </cui-code>
+
+              <cui-code language="javascript">
+                <script type="text/plain">
+                  const banner = document.querySelector("cui-cookie-banner");
+
+                  banner.addEventListener("cui-cookie-consent-change", (event) => {
+                    const { consent, reason } = event.detail;
+                    // reason: "accept-all" | "decline-all" | "save" | "revoke" | "restore"
+                    if (consent.analytics) loadAnalytics();
+                    else blockAnalytics();
+                    if (consent.marketing) loadMarketing();
+                    else blockMarketing();
+                  });
+                </script>
+              </cui-code>
+
+              <cui-disclosure>
+                <details class="cui-disclosure" data-variant="ghost">
+                  <summary>API reference</summary>
+                  <div class="cui-disclosure-body">
+                    <table class="docs-token-table">
+                      <thead>
+                        <tr>
+                          <th>Attribute / property</th>
+                          <th>Purpose</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>open</code></td>
+                          <td>Reflects banner visibility. Set or remove to show/hide.</td>
+                        </tr>
+                        <tr>
+                          <td><code>manual</code></td>
+                          <td>Suppresses auto-open on connect even with no stored choice.</td>
+                        </tr>
+                        <tr>
+                          <td><code>categories</code></td>
+                          <td>Comma-separated optional categories to show (subset of
+                            <code>analytics,marketing</code>). Default shows both.</td>
+                        </tr>
+                        <tr>
+                          <td><code>cookie-name</code></td>
+                          <td>Name of the consent cookie. Default <code>cui-cookie-consent</code>.</td>
+                        </tr>
+                        <tr>
+                          <td><code>cookie-expiry</code></td>
+                          <td>Cookie lifetime in days. Default <code>365</code>.</td>
+                        </tr>
+                        <tr>
+                          <td><code>banner.acceptAll()</code> · <code>declineAll()</code> ·
+                            <code>savePreferences()</code></td>
+                          <td>Persist consent and close the banner.</td>
+                        </tr>
+                        <tr>
+                          <td><code>banner.show()</code> · <code>hide()</code> ·
+                            <code>showSettings()</code> · <code>revoke()</code></td>
+                          <td>Control visibility; <code>revoke()</code> clears the cookie and reopens.</td>
+                        </tr>
+                        <tr>
+                          <td><code>banner.consent</code> · <code>getConsent()</code></td>
+                          <td>Current stored consent, or <code>null</code> when undecided.</td>
+                        </tr>
+                        <tr>
+                          <td><code>banner.hasConsent(category)</code></td>
+                          <td>Boolean — whether a category is granted.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="docs-token-table">
+                      <thead>
+                        <tr>
+                          <th>Slot</th>
+                          <th>Default</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>title</code> · <code>description</code></td>
+                          <td>Banner heading and intro paragraph.</td>
+                        </tr>
+                        <tr>
+                          <td><code>accept-label</code> · <code>decline-label</code> ·
+                            <code>settings-label</code> · <code>save-label</code></td>
+                          <td>Button text.</td>
+                        </tr>
+                        <tr>
+                          <td><code>necessary-label</code> · <code>analytics-label</code> ·
+                            <code>marketing-label</code> (+ matching <code>-description</code>)</td>
+                          <td>Per-category copy.</td>
+                        </tr>
+                        <tr>
+                          <td><code>policy</code></td>
+                          <td>Cookie policy link.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="docs-token-table">
+                      <thead>
+                        <tr>
+                          <th>Markup attribute</th>
+                          <th>Purpose</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>data-cui-cookie-banner-target="&lt;id&gt;"</code></td>
+                          <td>On any clickable element. Opens the banner with that <code>id</code>.</td>
+                        </tr>
+                        <tr>
+                          <td><code>data-cui-cookie-banner-action="revoke"</code></td>
+                          <td>On a trigger. Revokes consent and reopens instead of just showing.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="docs-token-table">
+                      <thead>
+                        <tr>
+                          <th>Event</th>
+                          <th>Detail / behavior</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>cui-cookie-consent-change</code></td>
+                          <td><code>{ consent, reason }</code>. Fires on save, revoke, and restore.</td>
+                        </tr>
+                        <tr>
+                          <td><code>cui-cookie-banner-open</code> · <code>cui-cookie-banner-close</code></td>
+                          <td>Fire after the banner opens / closes.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="docs-token-table">
+                      <thead>
+                        <tr>
+                          <th>Variable</th>
+                          <th>Default</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>--cui-cookie-banner-bg</code></td>
+                          <td><code>--cui-color-surface-raised</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>--cui-cookie-banner-border</code></td>
+                          <td><code>--cui-color-border</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>--cui-cookie-banner-radius</code></td>
+                          <td><code>--cui-radius-2</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>--cui-cookie-banner-shadow</code></td>
+                          <td><code>--cui-shadow-2</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>--cui-cookie-banner-z-index</code></td>
+                          <td><code>1000</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>--cui-cookie-banner-max-inline-size</code></td>
+                          <td><code>30rem</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </details>
               </cui-disclosure>
