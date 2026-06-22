@@ -67,7 +67,8 @@ export class CuiThemeToggle extends CombatElement {
     document.addEventListener(themeChangeEvent, this.handleThemeChange);
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
+    super.disconnectedCallback();
     document.removeEventListener(themeChangeEvent, this.handleThemeChange);
   }
 

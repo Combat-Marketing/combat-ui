@@ -41,18 +41,12 @@ export class CuiArticleFilter extends CombatElement {
   static override readonly styles = [cssStyleSheet(articleFilterCss)];
   static observedAttributes = ["target"];
 
-  private abortController: AbortController | null = null;
 
   connectedCallback(): void {
     this.renderTemplate(`<slot></slot>`);
 
     this.bindEvents();
     this.applyFilter();
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(name: string): void {
@@ -75,9 +69,7 @@ export class CuiArticleFilter extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.addEventListener(
       "change",

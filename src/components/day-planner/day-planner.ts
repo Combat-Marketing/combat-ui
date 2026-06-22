@@ -148,7 +148,6 @@ export class CuiDayPlanner extends CombatElement {
   private titleEl: HTMLElement | null = null;
   private nowLineEl: HTMLElement | null = null;
   private slotObserver: MutationObserver | null = null;
-  private abortController: AbortController | null = null;
   private nowLineTimer: number | null = null;
 
   constructor() {
@@ -166,11 +165,10 @@ export class CuiDayPlanner extends CombatElement {
     this.startNowLineTimer();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.slotObserver?.disconnect();
     this.slotObserver = null;
-    this.abortController?.abort();
-    this.abortController = null;
     if (this.nowLineTimer !== null) {
       window.clearInterval(this.nowLineTimer);
       this.nowLineTimer = null;
@@ -425,9 +423,7 @@ export class CuiDayPlanner extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.shadowRoot?.addEventListener(
       "click",

@@ -96,7 +96,6 @@ export class CuiCookieBanner extends CombatElement {
   ];
   static observedAttributes = ["open", "categories"];
 
-  private abortController: AbortController | null = null;
   private consentState: CuiCookieConsent | null = null;
 
   connectedCallback(): void {
@@ -121,11 +120,6 @@ export class CuiCookieBanner extends CombatElement {
     } else if (!this.hasAttribute("open") && !this.hasAttribute("manual")) {
       this.show();
     }
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(
@@ -314,9 +308,7 @@ export class CuiCookieBanner extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.shadowRoot?.addEventListener(
       "click",

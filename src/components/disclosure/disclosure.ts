@@ -67,7 +67,8 @@ export class CuiDisclosure extends CombatElement {
       });
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.boundDetails?.removeEventListener("toggle", this.toggleHandler);
     this.boundDetails = null;
   }

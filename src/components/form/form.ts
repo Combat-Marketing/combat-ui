@@ -60,17 +60,11 @@ export class CuiForm extends CombatElement {
   static override tagName = "cui-form";
   static override styles = [cssStyleSheet(formCss)];
 
-  private abortController: AbortController | null = null;
   private submitHandler: CuiFormSubmitHandler | null = null;
 
   connectedCallback(): void {
     this.renderTemplate(`<slot></slot>`);
     this.bindEvents();
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   get busy(): boolean {
@@ -105,9 +99,7 @@ export class CuiForm extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
     this.addEventListener("submit", (e) => void this.handleSubmit(e), {
       signal,
     });
