@@ -39,11 +39,10 @@ validation work (SEO docs, demo sites).
 - [x] Add `cui-tree` with drag-and-drop reordering, keyboard navigation, and a cancelable context-menu hook.
 - [x] Add `cui-reveal` for content reveal driven by scroll stages.
 - [x] Add `cui-scroll-stage` sticky 3D track that publishes focus/offset as CSS custom properties.
-- [ ] Add `cui-accordion` for FAQ and disclosure groups (single-open and multi-open modes).
 - [x] Add `cui-disclosure` for generic togglable content (lightweight wrapper around `<details>`).
 - [ ] Add `cui-tooltip` for inline contextual labels (positioning, focus / hover triggers, keyboard ESC).
 - [ ] Add `cui-popover` for richer floating content (delegates positioning anchor logic; pairs with tooltip).
-- [ ] Add `cui-carousel` for nice animated image/content rotations, highly configurable, multiple images/animations.
+- [x] Add `cui-carousel` for nice animated image/content rotations, highly configurable, multiple images/animations.
 - [x] Add `cui-map` for an interactive openstreetmaps map with interactive regions, points with configurable, seo friendly content.
 
 ## Priority 4: Navigation System

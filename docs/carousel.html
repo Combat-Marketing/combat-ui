@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="cui-carousel: a flexible content carousel for media slides with overlaid content, plain content panels, fixed overlays, autoplay, and slide/fade transitions.">
+  <title>Carousel · Combat UI</title>
+  <script>
+    try {
+      var t = localStorage.getItem("cui-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (_) { }
+  </script>
+  <script type="module" src="./index.ts"></script>
+  <link rel="stylesheet" href="./site.css">
+</head>
+
+<body class="cui-site">
+  <a class="cui-skip-link" href="#main">Skip to content</a>
+  <!--#include _partials/nav.html?current=carousel-->
+  <main id="main" class="cui-page cui-stack">
+    <header class="cui-page-header">
+      <h1>Carousel</h1>
+      <p><code>cui-carousel</code> rotates through slotted slides — media with overlaid copy and buttons, or
+        plain content panels. A separate <code>fixed</code> slot pins chrome in place across every slide.
+        Slides live in light DOM so all of them stay crawlable, and the component layers on slide / fade
+        transitions, autoplay with a pause control, looping, keyboard navigation, and a
+        <code>prefers-reduced-motion</code> guard.</p>
+    </header>
+
+    <section class="cui-section">
+      <div class="cui-container docs-doc-layout">
+        <aside class="docs-on-page" aria-label="On this page">
+          <a class="cui-nav-link" href="#media">Media slides</a>
+          <a class="cui-nav-link" href="#content">Content slides</a>
+          <a class="cui-nav-link" href="#fixed">Fixed overlay</a>
+          <a class="cui-nav-link" href="#api">API reference</a>
+        </aside>
+
+        <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-7, 3rem);">
+
+          <section id="media" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Media slides with overlaid content</h2>
+              <p>
+                Each slide is any element you slot with <code>slot="slide"</code>. Compose media slides from
+                the existing <code>.cui-media-overlay</code> block — a background <code>&lt;img&gt;</code> or
+                <code>&lt;video&gt;</code> with overlaid eyebrow, title, copy, and <code>cui-button</code>s.
+                Add <code>autoplay</code> for a rotating hero; a pause control appears automatically and
+                autoplay halts on hover, focus, reduced-motion, and hidden tabs.
+              </p>
+            </div>
+
+            <cui-tabs>
+              <button slot="tab" type="button">Slide (autoplay)</button>
+              <button slot="tab" type="button">Fade</button>
+
+              <section slot="panel" class="docs-panel">
+                <div class="cui-stack">
+                  <div class="docs-preview">
+                    <div class="docs-preview-frame">
+                      <cui-carousel autoplay interval="6000" aria-label="Featured work">
+                        <section slot="slide" class="cui-media-overlay" data-align="start"
+                          style="--cui-media-bg: linear-gradient(135deg, oklch(55% 0.16 250deg), oklch(45% 0.16 285deg));">
+                          <div class="cui-media-overlay-body">
+                            <p class="cui-media-overlay-eyebrow">Case study</p>
+                            <h3 class="cui-media-overlay-title">Rebuilding the booking flow</h3>
+                            <p>A focused redesign that cut drop-off by 38% in six weeks.</p>
+                            <div class="cui-media-overlay-actions">
+                              <cui-button data-variant="primary" href="#media">Read the case</cui-button>
+                            </div>
+                          </div>
+                        </section>
+                        <section slot="slide" class="cui-media-overlay" data-align="start">
+                          <img src="./hero-image.svg" alt="Abstract Combat UI banner">
+                          <div class="cui-media-overlay-body">
+                            <p class="cui-media-overlay-eyebrow">Product</p>
+                            <h3 class="cui-media-overlay-title">A design system that ships</h3>
+                            <p>Baseline-modern web components with zero runtime dependencies.</p>
+                            <div class="cui-media-overlay-actions">
+                              <cui-button data-variant="primary" href="#media">Explore components</cui-button>
+                            </div>
+                          </div>
+                        </section>
+                        <section slot="slide" class="cui-media-overlay" data-align="start"
+                          style="--cui-media-bg: linear-gradient(135deg, oklch(52% 0.15 165deg), oklch(46% 0.13 200deg));">
+                          <div class="cui-media-overlay-body">
+                            <p class="cui-media-overlay-eyebrow">Careers</p>
+                            <h3 class="cui-media-overlay-title">Build the web with us</h3>
+                            <p>We're hiring engineers and designers who care about craft.</p>
+                            <div class="cui-media-overlay-actions">
+                              <cui-button data-variant="primary" href="#media">See openings</cui-button>
+                            </div>
+                          </div>
+                        </section>
+                      </cui-carousel>
+                    </div>
+                  </div>
+
+                  <cui-code language="html">
+                    <script type="text/html">
+                      <cui-carousel autoplay interval="6000" aria-label="Featured work">
+                        <section slot="slide" class="cui-media-overlay" data-align="start">
+                          <img src="/case.jpg" alt="">
+                          <div class="cui-media-overlay-body">
+                            <p class="cui-media-overlay-eyebrow">Case study</p>
+                            <h3 class="cui-media-overlay-title">Rebuilding the booking flow</h3>
+                            <p>A focused redesign that cut drop-off by 38%.</p>
+                            <div class="cui-media-overlay-actions">
+                              <cui-button data-variant="primary" href="/case">Read the case</cui-button>
+                            </div>
+                          </div>
+                        </section>
+                        <section slot="slide" class="cui-media-overlay">
+                          <img src="/product.jpg" alt="">
+                        </section>
+                      </cui-carousel>
+                    </script>
+                  </cui-code>
+                </div>
+              </section>
+
+              <section slot="panel" class="docs-panel">
+                <div class="cui-stack">
+                  <div class="docs-preview">
+                    <div class="docs-preview-frame">
+                      <cui-carousel transition="fade" aria-label="Gallery">
+                        <section slot="slide" class="cui-media-overlay" data-align="center"
+                          style="--cui-media-bg: linear-gradient(135deg, oklch(60% 0.17 25deg), oklch(50% 0.16 350deg));">
+                          <div class="cui-media-overlay-body">
+                            <h3 class="cui-media-overlay-title">Cross-fade</h3>
+                            <p>Slides dissolve into one another instead of sliding.</p>
+                          </div>
+                        </section>
+                        <section slot="slide" class="cui-media-overlay" data-align="center"
+                          style="--cui-media-bg: linear-gradient(135deg, oklch(58% 0.15 250deg), oklch(48% 0.16 210deg));">
+                          <div class="cui-media-overlay-body">
+                            <h3 class="cui-media-overlay-title">Same markup</h3>
+                            <p>Only the <code>transition</code> attribute changes.</p>
+                          </div>
+                        </section>
+                      </cui-carousel>
+                    </div>
+                  </div>
+
+                  <cui-code language="html">
+                    <script type="text/html">
+                      <cui-carousel transition="fade" aria-label="Gallery">
+                        <section slot="slide" class="cui-media-overlay">…</section>
+                        <section slot="slide" class="cui-media-overlay">…</section>
+                      </cui-carousel>
+                    </script>
+                  </cui-code>
+
+                  <p class="cui-caption">
+                    <code>transition</code> accepts <code>slide</code> (default), <code>fade</code>, or
+                    <code>none</code>. Under <code>prefers-reduced-motion: reduce</code> the change is always
+                    instant and autoplay never starts.
+                  </p>
+                </div>
+              </section>
+            </cui-tabs>
+          </section>
+
+          <section id="content" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Content slides</h2>
+              <p>
+                Slides aren't limited to media. Slot any markup — cards, quotes, stats — for a testimonial
+                rotator or a "what's new" strip. Set <code>loop="false"</code> to clamp at the ends; the
+                arrows disable instead of wrapping.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-carousel loop="false" pagination="false" aria-label="Testimonials"
+                  style="--cui-carousel-min-block-size: 16rem;">
+                  <blockquote slot="slide" class="cui-quote"
+                    style="display:grid;place-content:center;padding:var(--cui-space-6,2rem);text-align:center;">
+                    <p class="cui-quote-text">"Combat UI let us ship a marketing site in days, not weeks."</p>
+                    <footer class="cui-quote-attribution">— Sam R., Product Lead</footer>
+                  </blockquote>
+                  <blockquote slot="slide" class="cui-quote"
+                    style="display:grid;place-content:center;padding:var(--cui-space-6,2rem);text-align:center;">
+                    <p class="cui-quote-text">"The two-tier API means our CMS markup just works."</p>
+                    <footer class="cui-quote-attribution">— Dana K., Engineer</footer>
+                  </blockquote>
+                  <blockquote slot="slide" class="cui-quote"
+                    style="display:grid;place-content:center;padding:var(--cui-space-6,2rem);text-align:center;">
+                    <p class="cui-quote-text">"Accessible by default saved us an entire audit cycle."</p>
+                    <footer class="cui-quote-attribution">— Priya M., Designer</footer>
+                  </blockquote>
+                </cui-carousel>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-carousel loop="false" pagination="false" aria-label="Testimonials">
+                  <blockquote slot="slide" class="cui-quote">…</blockquote>
+                  <blockquote slot="slide" class="cui-quote">…</blockquote>
+                </cui-carousel>
+              </script>
+            </cui-code>
+          </section>
+
+          <section id="fixed" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>Fixed overlay &amp; remote controls</h2>
+              <p>
+                Content slotted into <code>slot="fixed"</code> sits above every slide and stays put while
+                slides change — perfect for a persistent CTA or brand mark. Position it with
+                <code>place-self</code>. Drive the carousel from anywhere with
+                <code>data-cui-carousel-prev</code>, <code>data-cui-carousel-next</code>, or
+                <code>data-cui-carousel-goto="&lt;i&gt;"</code> on any element, or via the JS API.
+              </p>
+            </div>
+
+            <div class="docs-preview">
+              <div class="docs-preview-frame">
+                <cui-carousel id="docs-carousel-fixed" controls="false" aria-label="Showcase">
+                  <section slot="slide" class="cui-media-overlay" data-align="start"
+                    style="--cui-media-bg: linear-gradient(135deg, oklch(55% 0.16 250deg), oklch(45% 0.16 285deg));">
+                    <div class="cui-media-overlay-body">
+                      <h3 class="cui-media-overlay-title">Slide one</h3>
+                    </div>
+                  </section>
+                  <section slot="slide" class="cui-media-overlay" data-align="start"
+                    style="--cui-media-bg: linear-gradient(135deg, oklch(52% 0.15 165deg), oklch(46% 0.13 200deg));">
+                    <div class="cui-media-overlay-body">
+                      <h3 class="cui-media-overlay-title">Slide two</h3>
+                    </div>
+                  </section>
+                  <section slot="slide" class="cui-media-overlay" data-align="start"
+                    style="--cui-media-bg: linear-gradient(135deg, oklch(60% 0.17 25deg), oklch(50% 0.16 350deg));">
+                    <div class="cui-media-overlay-body">
+                      <h3 class="cui-media-overlay-title">Slide three</h3>
+                    </div>
+                  </section>
+                  <a slot="fixed" class="cui-button" data-variant="primary" href="#fixed"
+                    style="place-self: end; margin: var(--cui-space-4, 1rem);">View all work</a>
+                </cui-carousel>
+
+                <div class="cui-cluster" style="--cui-cluster-gap: var(--cui-space-3, 0.75rem); margin-block-start: var(--cui-space-4, 1rem);">
+                  <cui-button data-cui-carousel-prev data-cui-carousel-target="docs-carousel-fixed">Previous</cui-button>
+                  <cui-button data-cui-carousel-next data-cui-carousel-target="docs-carousel-fixed">Next</cui-button>
+                  <cui-button data-cui-carousel-goto="0" data-cui-carousel-target="docs-carousel-fixed">First</cui-button>
+                </div>
+                <p class="cui-caption docs-modal-log" id="docs-carousel-log" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <cui-code language="html">
+              <script type="text/html">
+                <cui-carousel controls="false" aria-label="Showcase">
+                  <section slot="slide" class="cui-media-overlay">…</section>
+                  <section slot="slide" class="cui-media-overlay">…</section>
+                  <a slot="fixed" class="cui-button" href="/work"
+                     style="place-self: end; margin: 1rem">View all work</a>
+                </cui-carousel>
+              </script>
+            </cui-code>
+
+            <cui-code language="javascript">
+              <script type="text/plain">
+                const carousel = document.querySelector("cui-carousel");
+
+                carousel.next();          // advance (wraps when loop is on)
+                carousel.go(2);           // jump to a slide
+                carousel.play();          // start autoplay
+                carousel.pause();         // stop autoplay
+
+                carousel.addEventListener("cui-carousel-change", (event) => {
+                  console.log(event.detail.index, event.detail.previousIndex);
+                });
+              </script>
+            </cui-code>
+          </section>
+
+          <section id="api" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+            <div class="cui-prose">
+              <h2>API reference</h2>
+            </div>
+
+            <table class="docs-token-table">
+              <thead>
+                <tr>
+                  <th>Attribute / property</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>index</code></td>
+                  <td>Active slide index (zero-based). Reflected; set to navigate.</td>
+                </tr>
+                <tr>
+                  <td><code>autoplay</code></td>
+                  <td>Advance slides automatically. A pause control appears.</td>
+                </tr>
+                <tr>
+                  <td><code>interval</code></td>
+                  <td>Autoplay delay in ms. Default <code>5000</code> (min 1000).</td>
+                </tr>
+                <tr>
+                  <td><code>loop="false"</code></td>
+                  <td>Clamp at the ends instead of wrapping. Default loops.</td>
+                </tr>
+                <tr>
+                  <td><code>transition="slide | fade | none"</code></td>
+                  <td>Transition style. Default <code>slide</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>controls="false"</code></td>
+                  <td>Hide the previous / next arrows. Default shown.</td>
+                </tr>
+                <tr>
+                  <td><code>pagination="false"</code></td>
+                  <td>Hide the dot pagination. Default shown.</td>
+                </tr>
+                <tr>
+                  <td><code>pause-on-hover="false"</code></td>
+                  <td>Keep autoplay running on hover / focus. Default pauses.</td>
+                </tr>
+                <tr>
+                  <td><code>carousel.next()</code> · <code>prev()</code> · <code>go(i)</code></td>
+                  <td>Navigate programmatically.</td>
+                </tr>
+                <tr>
+                  <td><code>carousel.play()</code> · <code>pause()</code></td>
+                  <td>Start / stop autoplay.</td>
+                </tr>
+                <tr>
+                  <td><code>carousel.index</code> · <code>count</code> · <code>playing</code></td>
+                  <td>Current index, slide count, and autoplay state.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="docs-token-table">
+              <thead>
+                <tr>
+                  <th>Slot / markup attribute</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>slot="slide"</code></td>
+                  <td>One element per slide. Any content.</td>
+                </tr>
+                <tr>
+                  <td><code>slot="fixed"</code></td>
+                  <td>Overlay content pinned across every slide. Position with <code>place-self</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>data-cui-carousel-prev</code> · <code>-next</code></td>
+                  <td>On any element. Steps the carousel.</td>
+                </tr>
+                <tr>
+                  <td><code>data-cui-carousel-goto="&lt;i&gt;"</code></td>
+                  <td>On any element. Jumps to a slide index.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="docs-token-table">
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Detail / behavior</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>cui-carousel-change</code></td>
+                  <td><code>{ index, previousIndex, slide }</code>. Fires after the active slide changes.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="docs-token-table">
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>viewport</code> · <code>track</code></td>
+                  <td>Clipping region and the moving slide track.</td>
+                </tr>
+                <tr>
+                  <td><code>fixed</code></td>
+                  <td>The persistent overlay layer.</td>
+                </tr>
+                <tr>
+                  <td><code>controls</code> · <code>previous</code> · <code>next</code></td>
+                  <td>Arrow container and the two arrow buttons.</td>
+                </tr>
+                <tr>
+                  <td><code>pagination</code> · <code>dot</code></td>
+                  <td>Dot container and each dot.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="docs-token-table">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Default</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--cui-carousel-radius</code></td>
+                  <td><code>--cui-radius-2</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-carousel-min-block-size</code></td>
+                  <td><code>22rem</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-carousel-duration</code></td>
+                  <td><code>480ms</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-carousel-easing</code></td>
+                  <td><code>cubic-bezier(0.22, 0.61, 0.36, 1)</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-carousel-control-size</code></td>
+                  <td><code>--cui-control-size</code></td>
+                </tr>
+                <tr>
+                  <td><code>--cui-carousel-dot-active</code></td>
+                  <td><code>--cui-color-accent</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="cui-section" data-spacing="compact">
+      <div class="cui-container cui-cluster docs-prevnext">
+        <cui-button href="./overlays.html">Previous: Overlays</cui-button>
+        <cui-button href="./map.html">Next: Map</cui-button>
+      </div>
+    </footer>
+  </main>
+  <script type="module" src="./components-demos.ts"></script>
+</body>
+
+</html>
