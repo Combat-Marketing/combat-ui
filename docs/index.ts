@@ -1,3 +1,3 @@
 /// <reference types="vite/client" />
 
-import "../src/index";
+import "../src/auto";

@@ -31,6 +31,65 @@
       </p>
     </header>
 
+    <section class="cui-section" data-spacing="compact">
+      <div class="cui-container">
+        <div class="cui-prose">
+          <h2>Install</h2>
+          <p>
+            <code>cui-map</code> uses <a href="https://leafletjs.com/">Leaflet</a> as an optional peer
+            dependency, dynamically imported the first time a map appears — so pages without a map never
+            load it. Leaflet's CSS is bundled into the element's shadow DOM, so you never need an extra
+            <code>&lt;link&gt;</code> tag.
+          </p>
+          <h3>With a bundler</h3>
+          <p>
+            Install Leaflet alongside Combat UI (add <code>leaflet.markercluster</code> for the
+            <code>cluster</code> attribute) and your bundler resolves it like any other dependency:
+          </p>
+        </div>
+        <cui-code language="bash">
+          <script type="text/plain">
+          npm install leaflet leaflet.markercluster
+          </script>
+        </cui-code>
+
+        <div class="cui-prose">
+          <h3>Without a build step</h3>
+          <p>
+            <code>cui-map</code> loads Leaflet through the bare <code>"leaflet"</code> specifier, so in a
+            no-bundler setup you can resolve it straight from a CDN with an
+            <a href="https://developer.mozilla.org/docs/Web/HTML/Element/script/type/importmap">import map</a>
+            — no <code>npm install</code> required:
+          </p>
+        </div>
+        <cui-code language="html">
+<!--
+<script type="importmap">
+{
+  "imports": {
+    "leaflet": "https://esm.sh/leaflet@1.9.4",
+    "leaflet.markercluster": "https://esm.sh/leaflet.markercluster@1.5.3?external=leaflet"
+  }
+}
+</script>
+
+<script type="module">
+  import "combat-ui/auto";
+</script>
+-->
+        </cui-code>
+
+        <div class="cui-prose">
+          <p>
+            The <code>leaflet.markercluster</code> entry is only needed for the <code>cluster</code>
+            attribute. The <code>?external=leaflet</code> query keeps the plugin on the <em>same</em>
+            Leaflet instance the map uses, so clustering attaches correctly instead of patching a second
+            copy.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section class="cui-section">
       <div class="cui-container docs-doc-layout">
         <aside class="docs-on-page" aria-label="On this page">

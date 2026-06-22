@@ -32,7 +32,6 @@ import {
 } from "./components/toast";
 import { CuiTree } from "./components/tree";
 import { CuiMap } from "./components/map";
-import "./index.css";
 import { defineElement } from "./internal/base-element";
 
 export type { CuiArticleFilterChangeDetail } from "./components/article-filter";
@@ -136,5 +135,3 @@ export function defineCombatUi(
     defineElement(Element, registry);
   }
 }
-
-defineCombatUi();

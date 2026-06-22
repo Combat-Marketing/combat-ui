@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+import "../src/auto";
 import {
   toast,
   type CuiToastVariant,
