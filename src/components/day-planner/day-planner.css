@@ -14,6 +14,13 @@
   --cui-day-planner-radius: var(--cui-radius-2, 0.5rem);
   --cui-day-planner-label-inline-size: 4.5rem;
 
+  /* Map the shared planner-chrome hooks onto the day-planner's tokens. */
+  --_-nav-border: var(--cui-day-planner-border);
+  --_-nav-surface: var(--cui-day-planner-surface);
+  --_-nav-hover-surface: var(--cui-day-planner-muted-surface);
+  --_-nav-hover-border: var(--cui-day-planner-muted-text);
+  --_-nav-accent: var(--cui-day-planner-accent);
+
   display: block;
   color: var(--cui-day-planner-text);
 }
@@ -22,65 +29,7 @@
   display: none;
 }
 
-.frame {
-  display: grid;
-  gap: var(--cui-space-4, 1rem);
-}
-
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--cui-space-3, 0.75rem);
-}
-
-.title {
-  margin: 0;
-  font-size: var(--cui-font-size-2, 1.5rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  line-height: 1.2;
-}
-
-.nav {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--cui-space-2, 0.5rem);
-}
-
-.nav button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-inline-size: 2.25rem;
-  min-block-size: 2.25rem;
-  padding: var(--cui-space-1, 0.25rem) var(--cui-space-3, 0.75rem);
-  border: var(--cui-border-size, 1px) solid var(--cui-day-planner-border);
-  border-radius: var(--cui-radius-1, 0.25rem);
-  background: var(--cui-day-planner-surface);
-  color: inherit;
-  font: inherit;
-  font-weight: var(--cui-font-weight-strong, 680);
-  cursor: pointer;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .nav button {
-    transition:
-      background-color 160ms ease,
-      border-color 160ms ease;
-  }
-}
-
-.nav button:hover {
-  background: var(--cui-day-planner-muted-surface);
-  border-color: var(--cui-day-planner-muted-text);
-}
-
-.nav button:focus-visible {
-  outline: var(--cui-focus-size, 2px) solid var(--cui-color-focus, var(--cui-day-planner-accent));
-  outline-offset: var(--cui-focus-offset, 2px);
-}
+/* .frame, .header, .title, .nav and .nav button live in planner-chrome.css */
 
 .board {
   display: grid;
@@ -251,21 +200,7 @@
   background: var(--cui-day-planner-now-color);
 }
 
-.list-region {
-  display: block;
-}
-
-:host([events-hidden]) .list-region {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
+/* .list-region (and its events-hidden variant) live in planner-chrome.css */
 
 @media (width < 32rem) {
   :host {

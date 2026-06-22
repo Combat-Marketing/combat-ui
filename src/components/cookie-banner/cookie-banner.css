@@ -89,71 +89,20 @@
   margin-block-start: var(--cui-space-5, 1.5rem);
 }
 
-/* Buttons — mirror the cui-button look using tokens, scoped to the shadow ---- */
+/* Buttons — mirror the cui-button look via internal/styles/control-styles.css.
+   This sheet only sets the cookie-banner-specific tokens and variants. ------- */
 
 .btn {
   --_-bg: var(--cui-color-surface-muted, oklch(97.3% 0.009 240deg));
   --_-border: var(--cui-color-border, oklch(92.5% 0.009 240deg));
   --_-color: var(--cui-color, oklch(24% 0.04 264deg));
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--cui-space-2, 0.5rem);
-  min-block-size: var(--cui-control-size, 2.5rem);
-  border: var(--cui-border-size, 1px) solid var(--_-border);
-  border-radius: var(--cui-control-radius, 0.25rem);
-  background: var(--_-bg);
-  color: var(--_-color);
-  font: inherit;
-  font-weight: var(--cui-font-weight-strong, 680);
-  padding-block: 0.625rem;
-  padding-inline: 1rem;
   cursor: pointer;
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-.btn:active {
-  transform: translateY(1px);
-}
-
-.btn:hover {
-  --_-bg: color-mix(
-    in oklch,
-    var(--cui-color-surface-muted, #edf0f4),
-    var(--cui-color, #1b1f27) 8%
-  );
-
-  transform: translateY(-1px);
 }
 
 .btn:focus-visible {
   outline: var(--cui-focus-size, 2px) solid var(--cui-color-focus, currentColor);
   outline-offset: var(--cui-focus-offset, 2px);
-}
-
-.btn-primary {
-  --_-bg: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  --_-border: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  --_-color: var(--cui-color-on-accent, oklch(100% 0 0deg));
-}
-
-.btn-primary:hover {
-  --_-bg: color-mix(
-    in oklch,
-    var(--cui-color-accent, oklch(57% 0.18 246deg)),
-    black 8%
-  );
-  --_-border: color-mix(
-    in oklch,
-    var(--cui-color-accent, oklch(57% 0.18 246deg)),
-    black 8%
-  );
 }
 
 .btn-outline {

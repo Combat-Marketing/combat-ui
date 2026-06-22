@@ -11,6 +11,11 @@
   inline-size: 100%;
 }
 
+/*
+ * Structural + hover/primary rules live in internal/styles/control-styles.css.
+ * This sheet only sets the button-specific theming hooks, full-width sizing,
+ * and the disabled treatment.
+ */
 .control {
   --_-bg: var(
     --cui-button-bg,
@@ -25,62 +30,10 @@
     var(--cui-color, oklch(24% 0.04 264deg))
   );
 
-  display: inline-flex;
   inline-size: 100%;
-  min-block-size: var(--cui-control-size, 2.5rem);
-  align-items: center;
-  justify-content: center;
-  gap: var(--cui-space-2, 0.5rem);
-  border: var(--cui-border-size, 1px) solid var(--_-border);
-  border-radius: var(--cui-control-radius, 0.25rem);
-  background: var(--_-bg);
-  color: var(--_-color);
-  font: inherit;
-  font-weight: var(--cui-font-weight-strong, 680);
-  padding-block: 0.625rem;
-  padding-inline: 1rem;
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-
-  &:active {
-    transform: translateY(1px);
-  }
 }
 
 button.control:disabled,
 a.control[aria-disabled="true"] {
   opacity: 0.58;
-}
-
-.control:hover {
-  --_-bg: color-mix(
-    in oklch,
-    var(--cui-color-surface-muted, #edf0f4),
-    var(--cui-color, #1b1f27) 8%
-  );
-
-  transform: translateY(-1px);
-}
-
-:host([variant="primary"]) .control {
-  --_-bg: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  --_-border: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  --_-color: var(--cui-color-on-accent, oklch(100% 0 0deg));
-}
-
-:host([variant="primary"]) .control:hover {
-  --_-bg: color-mix(
-    in oklch,
-    var(--cui-color-accent, oklch(57% 0.18 246deg)),
-    black 8%
-  );
-  --_-border: color-mix(
-    in oklch,
-    var(--cui-color-accent, oklch(57% 0.18 246deg)),
-    black 8%
-  );
 }

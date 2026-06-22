@@ -1,5 +1,6 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 import { installRemoteTrigger } from "../../internal/remote-trigger";
+import controlStylesCss from "../../internal/styles/control-styles.css?inline";
 import cookieBannerCss from "./cookie-banner.css?inline";
 
 /** Optional consent categories. `necessary` is always granted and not listed. */
@@ -89,7 +90,10 @@ const DEFAULT_COOKIE_EXPIRY = 365;
  */
 export class CuiCookieBanner extends CombatElement {
   static override tagName = "cui-cookie-banner";
-  static override styles = [cssStyleSheet(cookieBannerCss)];
+  static override styles = [
+    cssStyleSheet(controlStylesCss),
+    cssStyleSheet(cookieBannerCss),
+  ];
   static observedAttributes = ["open", "categories"];
 
   private abortController: AbortController | null = null;

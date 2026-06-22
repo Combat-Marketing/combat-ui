@@ -1,6 +1,7 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 import { dateFromIso, resolveLocale, startOfDay, toIso } from "../../internal/date-utils";
 import { parseEventCards, type EventCardData } from "../../internal/event-cards";
+import plannerChromeCss from "../../internal/styles/planner-chrome.css?inline";
 import calendarCss from "./calendar.css?inline";
 
 export type CuiCalendarWeekdayStart = "monday" | "sunday";
@@ -74,7 +75,10 @@ function clampMonth(month: number): { year: number; month: number } {
  */
 export class CuiCalendar extends CombatElement {
   static override tagName = "cui-calendar";
-  static override readonly styles = [cssStyleSheet(calendarCss)];
+  static override readonly styles = [
+    cssStyleSheet(plannerChromeCss),
+    cssStyleSheet(calendarCss),
+  ];
   static observedAttributes = ["year", "month", "weekday-start", "locale"];
 
   private viewYear: number;
