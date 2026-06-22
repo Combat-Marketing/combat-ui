@@ -74,7 +74,7 @@
     </section>
 
     <section class="cui-section cui-section-muted" data-spacing="compact">
-      <div class="cui-container cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+      <class class="cui-container cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
         <div class="cui-prose">
           <h2>Install</h2>
           <p>
@@ -91,41 +91,118 @@
         </cui-code>
 
         <div class="cui-prose">
+          <h3>Use everything (drop-in)</h3>
           <p>
-            Then import the bundle in a <code>script</code> tag. The elements register themselves, so you can use
-            them in your HTML right away.
+            Import the <code>auto</code> entry. Every <code>cui-*</code> element registers itself and the
+            global utility stylesheet is included &mdash; no setup, no build step.
           </p>
-      </div>
-      <cui-code language="html">
-      <!--
-      <script type="module" src="path/to/combat-ui.bundle.js"></script>
-      -->
-      </cui-code>
+        </div>
+        <cui-code language="javascript">
+          <script type="text/plain">
+          import "combat-ui/auto";
+          </script>
+        </cui-code>
 
-      <cui-code language="javascript">
-        <script type="text/plain">
-        import "combat-ui";
+        <div class="cui-prose">
+          <h3>Use only what you need (tree-shakeable)</h3>
+          <p>
+            Import elements from their subpaths. Each one self-registers, so your bundler ships only the
+            components you actually use.
+          </p>
+        </div>
+        <cui-code language="javascript">
+          <script type="text/plain">
+          import "combat-ui/button";
+          import "combat-ui/modal";
+          </script>
+        </cui-code>
 
-        // Custom elements are registered. Use them anywhere.
-        </script>
-      </cui-code>
+        <div class="cui-prose">
+          <h3>Programmatic API &amp; types</h3>
+          <p>
+            The package root is side-effect-free: it exports the element classes, helpers
+            (<code>toast</code>, <code>defineCombatUi</code>, <code>getTheme</code> / <code>setTheme</code>)
+            and TypeScript types, but on its own it does <strong>not</strong> register elements or inject any
+            CSS. Call <code>defineCombatUi()</code> to register the whole set at once.
+          </p>
+        </div>
+        <cui-code language="javascript">
+          <script type="text/plain">
+          import { toast, defineCombatUi, type CuiModalCloseDetail } from "combat-ui";
 
-      <cui-code language="html">
-        <script type="text/plain">
+          defineCombatUi();
+          </script>
+        </cui-code>
+
+        <div class="cui-prose">
+          <h3>Global stylesheet</h3>
+          <p>
+            The utility-class layer (design tokens, layout, and the light-DOM <code>cui-*</code> classes)
+            ships as a separate stylesheet. The <code>auto</code> entry includes it; otherwise import it once:
+          </p>
+        </div>
+        <cui-code language="javascript">
+          <script type="text/plain">
+          import "combat-ui/styles";
+          </script>
+        </cui-code>
+
+        <div class="cui-prose">
+          <h3>Maps</h3>
+          <p>
+            <code>cui-map</code> uses <a href="https://leafletjs.com/">Leaflet</a> as an optional peer
+            dependency, loaded on demand the first time a map appears. Install it alongside Combat UI when
+            you use maps (add <code>leaflet.markercluster</code> too for marker clustering):
+          </p>
+        </div>
+        <h4>With a bundler</h4>
+        <cui-code language="bash">
+          <script type="text/plain">
+          npm install leaflet leaflet.markercluster
+          </script>
+        </cui-code>
+        <h4>Without a bundler</h4>
+        <cui-code language="html">
+          <!--
+          <script type="importmap">
+          {
+            "imports": {
+              "leaflet": "https://esm.sh/leaflet@1.9.4",
+              "leaflet.markercluster": "https://esm.sh/leaflet.markercluster@1.5.3?external=leaflet"
+            }
+          }
+          </script>
+          <script type="module">
+            import "combat-ui/auto";
+          </script>
+          -->
+        </cui-code>
+
+        <div class="cui-prose">
+          <h3>Use a component</h3>
+          <p>
+            Import the bundle, then drop an element into your HTML. The element registers itself and the global
+            utility stylesheet is included, no setup, no build step.
+          </p>
+        </div>
+        <cui-code language="html">
+          <script type="text/plain">
 <cui-hero variant="text" align="center">
   <h1 slot="title">Hello, Combat UI</h1>
   <p>That's it. No build step required to use the elements.</p>
 </cui-hero>
 </script>
-      </cui-code>
-      </div>
+        </cui-code>
+        </div>
+      </class>
     </section>
 
     <section class="cui-section" data-spacing="compact">
       <div class="cui-container cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
         <div class="cui-prose">
           <h2>Documentation</h2>
-          <p>Two tracks &mdash; the build surface (tokens, layout, theming) and the pattern surface (page sections, components, and forms).</p>
+          <p>Two tracks &mdash; the build surface (tokens, layout, theming) and the pattern surface (page sections,
+            components, and forms).</p>
         </div>
 
         <div class="cui-grid" style="--cui-grid-min: 16rem;">
@@ -151,7 +228,8 @@
           </a>
           <a class="docs-link-card" href="./forms.html">
             <h3>Forms</h3>
-            <p><code>cui-field</code> and <code>cui-form</code> with native validation, async validators, and i18n.</p>
+            <p><code>cui-field</code> and <code>cui-form</code> with native validation, async validators, and i18n.
+            </p>
           </a>
         </div>
       </div>
@@ -162,7 +240,8 @@
         <p class="cui-eyebrow">Status</p>
         <h2>Stable primitives, growing component set.</h2>
         <p class="cui-lead">
-          Layout, theming, and foundation classes are stable. The component set is intentionally small and grows when a
+          Layout, theming, and foundation classes are stable. The component set is intentionally small and grows when
+          a
           pattern earns its keep.
         </p>
         <div class="cui-cluster">

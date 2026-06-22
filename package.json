@@ -1,6 +1,6 @@
 {
   "name": "@combat-ui/core",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A responsive, customizable web component framework targeting modern baseline web standards.",
   "private": true,
   "engines": {
@@ -27,14 +27,40 @@
   "type": "module",
   "sideEffects": [
     "**/*.css",
-    "./src/index.ts",
+    "./src/auto.ts",
     "./src/elements/*.ts",
-    "./dist/*.js"
+    "./dist/auto.js",
+    "./dist/article-filter.js",
+    "./dist/button.js",
+    "./dist/calendar.js",
+    "./dist/carousel.js",
+    "./dist/code.js",
+    "./dist/cookie-banner.js",
+    "./dist/cta.js",
+    "./dist/day-planner.js",
+    "./dist/disclosure.js",
+    "./dist/field.js",
+    "./dist/form.js",
+    "./dist/hero.js",
+    "./dist/map.js",
+    "./dist/modal.js",
+    "./dist/navbar.js",
+    "./dist/page-intro.js",
+    "./dist/reveal.js",
+    "./dist/scroll-stage.js",
+    "./dist/tabs.js",
+    "./dist/theme-toggle.js",
+    "./dist/toast.js",
+    "./dist/tree.js"
   ],
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/combat-ui.js"
+    },
+    "./auto": {
+      "types": "./dist/types/auto.d.ts",
+      "import": "./dist/auto.js"
     },
     "./styles": "./dist/combat-ui.css",
     "./article-filter": {
@@ -159,6 +185,8 @@
     "eslint": "10.5.0",
     "eslint-plugin-baseline-js": "0.6.2",
     "eslint-plugin-compat": "7.0.2",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "rimraf": "6.1.3",
     "stylelint": "17.13.0",
     "stylelint-config-standard": "40.0.0",
@@ -167,9 +195,17 @@
     "vite": "8.0.16",
     "vite-plugin-dts": "5.0.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3"
+  },
+  "peerDependenciesMeta": {
+    "leaflet": {
+      "optional": true
+    },
+    "leaflet.markercluster": {
+      "optional": true
+    }
   },
   "customElements": "dist/custom-elements.json"
 }

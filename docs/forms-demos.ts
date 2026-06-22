@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+import "../src/auto";
 import type { CuiField, CuiFieldInvalidDetail, CuiForm } from "../src/index";
 
 function setSlotText(field: CuiField, text: string): void {
