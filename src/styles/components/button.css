@@ -43,7 +43,7 @@
   justify-content: center;
   gap: var(--cui-space-2, 0.5rem);
   border: var(--cui-border-size, 1px) solid var(--cui-button-border, #cfd6df);
-  border-radius: var(--cui-radius-control, 0.25rem);
+  border-radius: var(--cui-control-radius, 0.25rem);
   background: var(--cui-button-bg, #edf0f4);
   color: var(--cui-button-color, #1b1f27);
   font-weight: var(--cui-font-weight-strong, 680);

@@ -116,7 +116,7 @@
   }
 
   .docs-side-nav a {
-    border-radius: var(--cui-radius-control, 0.25rem);
+    border-radius: var(--cui-control-radius, 0.25rem);
     color: var(--cui-color-muted, #5d6675);
     padding-block: var(--cui-space-2, 0.5rem);
     padding-inline: var(--cui-space-3, 0.75rem);
@@ -780,7 +780,7 @@
     font: inherit;
     text-align: start;
     padding: var(--cui-space-2, 0.5rem) var(--cui-space-3, 0.75rem);
-    border-radius: var(--cui-radius-control, 0.25rem);
+    border-radius: var(--cui-control-radius, 0.25rem);
     cursor: pointer;
   }
 

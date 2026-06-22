@@ -20,7 +20,7 @@
  * @cssvar --cui-input-border — Border color. Defaults to `--cui-color-border`.
  * @cssvar --cui-input-color — Foreground. Defaults to `--cui-color`.
  * @cssvar --cui-input-placeholder — Placeholder color. Defaults to `--cui-color-muted`.
- * @cssvar --cui-input-radius — Corner radius. Defaults to `--cui-radius-control`.
+ * @cssvar --cui-input-radius — Corner radius. Defaults to `--cui-control-radius`.
  * @cssvar --cui-input-padding-block — Vertical padding. Defaults to 0.625rem.
  * @cssvar --cui-input-padding-inline — Horizontal padding. Defaults to 0.875rem.
  *
@@ -37,7 +37,7 @@
   --cui-input-border: var(--cui-color-border, #cfd6df);
   --cui-input-color: var(--cui-color, #1b1f27);
   --cui-input-placeholder: var(--cui-color-muted, #5d6675);
-  --cui-input-radius: var(--cui-radius-control, 0.25rem);
+  --cui-input-radius: var(--cui-control-radius, 0.25rem);
   --cui-input-padding-block: 0.625rem;
   --cui-input-padding-inline: 0.875rem;
 
