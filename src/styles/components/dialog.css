@@ -149,7 +149,7 @@
   color: inherit;
   inline-size: 2rem;
   block-size: 2rem;
-  border-radius: var(--cui-radius-control, 0.25rem);
+  border-radius: var(--cui-control-radius, 0.25rem);
   display: inline-grid;
   place-items: center;
   cursor: pointer;

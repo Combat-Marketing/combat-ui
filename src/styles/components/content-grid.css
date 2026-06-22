@@ -282,7 +282,7 @@
 /**
  * Decorative icon slot at the top of `.cui-feature-card`. A
  * square (`--cui-feature-icon-size`, 2.5rem by default) tinted
- * with the accent color, rounded with `--cui-radius-control`. Use
+ * with the accent color, rounded with `--cui-control-radius`. Use
  * `aria-hidden="true"` when the icon is purely decorative — the
  * card's accessible name comes from the heading inside.
  *
@@ -297,7 +297,7 @@
   inline-size: var(--cui-feature-icon-size, var(--cui-control-size, 2.5rem));
   block-size: var(--cui-feature-icon-size, var(--cui-control-size, 2.5rem));
   place-items: center;
-  border-radius: var(--cui-radius-control, 0.25rem);
+  border-radius: var(--cui-control-radius, 0.25rem);
   background: var(--cui-feature-icon-bg, var(--cui-color-surface-muted, #edf0f4));
   color: var(--cui-feature-icon-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
   font-weight: var(--cui-font-weight-strong, 680);
