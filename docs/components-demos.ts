@@ -7,6 +7,7 @@ import {
   type CuiTreeDropDetail,
   type CuiModalCloseDetail,
   type CuiCookieConsentChangeDetail,
+  type CuiCarouselChangeDetail,
 } from "../src/index";
 
 // Toast demos
@@ -154,6 +155,20 @@ import {
       } else {
         log.textContent = "Dismissed.";
       }
+    });
+  }
+}
+
+// Carousel demo
+{
+  const carousel = document.getElementById("docs-carousel-fixed");
+  const log = document.getElementById("docs-carousel-log");
+  if (carousel && log) {
+    carousel.addEventListener("cui-carousel-change", (event) => {
+      const { index, previousIndex } = (
+        event as CustomEvent<CuiCarouselChangeDetail>
+      ).detail;
+      log.textContent = `Slide ${index + 1} (was ${previousIndex + 1}).`;
     });
   }
 }

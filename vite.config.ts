@@ -26,6 +26,7 @@ function elementEntries(): Record<string, string> {
 const docsDir = resolve(__dirname, "docs");
 const docsPages = [
   "atoms",
+  "carousel",
   "components",
   "forms",
   "foundations",

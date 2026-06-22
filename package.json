@@ -49,6 +49,10 @@
       "types": "./dist/types/elements/calendar.d.ts",
       "import": "./dist/calendar.js"
     },
+    "./carousel": {
+      "types": "./dist/types/elements/carousel.d.ts",
+      "import": "./dist/carousel.js"
+    },
     "./code": {
       "types": "./dist/types/elements/code.d.ts",
       "import": "./dist/code.js"
