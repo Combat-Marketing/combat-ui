@@ -138,7 +138,8 @@ export class CuiCarousel extends CombatElement {
     this.build();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.stop();
     this.reducedMotion?.removeEventListener("change", this.handleMotionChange);
   }

@@ -78,7 +78,6 @@ export class CuiField extends CombatElement {
   static override styles = [cssStyleSheet(fieldCss)];
   static observedAttributes = ["required"];
 
-  private abortController: AbortController | null = null;
   private validators: CuiFieldValidator[] = [];
   private externalError: string | null = null;
   private touched = false;
@@ -89,11 +88,6 @@ export class CuiField extends CombatElement {
     this.renderTemplate(this.template());
     this.bindEvents();
     this.sync();
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(): void {
@@ -160,9 +154,7 @@ export class CuiField extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     const defaultSlot =
       this.shadowRoot?.querySelector<HTMLSlotElement>("slot:not([name])");

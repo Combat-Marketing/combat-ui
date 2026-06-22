@@ -19,6 +19,7 @@ export class CombatElement extends HTMLElement {
   public static readonly tagName: string;
 
   private rendered: boolean = false;
+  private listenerController: AbortController | null = null;
 
   constructor() {
     super();
@@ -26,6 +27,24 @@ export class CombatElement extends HTMLElement {
     if (!this.shadowRoot) {
       this.attachShadow({ mode: "open" });
     }
+  }
+
+  /**
+   * Returns a fresh `AbortSignal` for binding event listeners, aborting any
+   * listeners registered via a previous call. The signal is aborted
+   * automatically when the element is disconnected, so listeners bound with it
+   * need no manual teardown. Subclasses that override `disconnectedCallback`
+   * for their own cleanup must call `super.disconnectedCallback()`.
+   */
+  protected freshSignal(): AbortSignal {
+    this.listenerController?.abort();
+    this.listenerController = new AbortController();
+    return this.listenerController.signal;
+  }
+
+  disconnectedCallback(): void {
+    this.listenerController?.abort();
+    this.listenerController = null;
   }
 
   protected renderTemplate(html: string): void {

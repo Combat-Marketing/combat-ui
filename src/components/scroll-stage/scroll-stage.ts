@@ -103,7 +103,8 @@ export class CuiScrollStage extends CombatElement {
     return this.closest("[data-cui-tone-root]") ?? this;
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     if (this.handle !== null) {
       getScrollCoordinator().unregisterStage(this.handle);
       this.handle = null;

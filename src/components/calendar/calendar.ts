@@ -89,7 +89,6 @@ export class CuiCalendar extends CombatElement {
   private grid: HTMLElement | null = null;
   private titleEl: HTMLElement | null = null;
   private slotObserver: MutationObserver | null = null;
-  private abortController: AbortController | null = null;
 
   constructor() {
     super();
@@ -107,11 +106,10 @@ export class CuiCalendar extends CombatElement {
     this.bindEvents();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.slotObserver?.disconnect();
     this.slotObserver = null;
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(): void {
@@ -322,9 +320,7 @@ export class CuiCalendar extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.shadowRoot?.addEventListener("click", (event) => this.onClick(event), {
       signal,

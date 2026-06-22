@@ -158,7 +158,6 @@ export class CuiMap extends CombatElement {
   private regionLayer: Leaflet.GeoJSON | null = null;
   private intersectionObserver: IntersectionObserver | null = null;
   private mutationObserver: MutationObserver | null = null;
-  private abortController: AbortController | null = null;
   private ready = false;
 
   connectedCallback(): void {
@@ -177,13 +176,12 @@ export class CuiMap extends CombatElement {
     this.observeIntersection();
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.intersectionObserver?.disconnect();
     this.intersectionObserver = null;
     this.mutationObserver?.disconnect();
     this.mutationObserver = null;
-    this.abortController?.abort();
-    this.abortController = null;
     this.map?.remove();
     this.map = null;
     this.tiles = null;
@@ -309,9 +307,7 @@ export class CuiMap extends CombatElement {
   }
 
   private bindMapEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
     const map = this.map;
     if (!map) return;
 

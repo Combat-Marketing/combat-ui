@@ -69,7 +69,6 @@ export class CuiTree extends CombatElement {
   static override styles = [cssStyleSheet(treeCss)];
   static observedAttributes = ["selectable", "draggable-items"];
 
-  private abortController: AbortController | null = null;
   private mutationObserver: MutationObserver | null = null;
   private dragSource: HTMLElement | null = null;
 
@@ -80,9 +79,8 @@ export class CuiTree extends CombatElement {
     this.sync();
   }
 
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this.mutationObserver?.disconnect();
     this.mutationObserver = null;
   }
@@ -176,9 +174,7 @@ export class CuiTree extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.addEventListener("click", (event) => this.handleClick(event), {
       signal,

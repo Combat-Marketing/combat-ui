@@ -43,7 +43,6 @@ export class CuiModal extends CombatElement {
   static override styles = [cssStyleSheet(modalCss)];
   static observedAttributes = ["open"];
 
-  private abortController: AbortController | null = null;
 
   connectedCallback(): void {
     this.renderTemplate(`<slot></slot>`);
@@ -56,11 +55,6 @@ export class CuiModal extends CombatElement {
     if (this.hasAttribute("open")) {
       this.open();
     }
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(
@@ -119,9 +113,7 @@ export class CuiModal extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.addEventListener(
       "click",

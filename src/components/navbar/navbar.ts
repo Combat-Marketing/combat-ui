@@ -47,7 +47,6 @@ export class CuiNavbar extends CombatElement {
     "sticky-z-index",
   ];
 
-  private abortController: AbortController | null = null;
   private static instanceCounter = 0;
   private collapseId = `cui-navbar-collapse-${++CuiNavbar.instanceCounter}`;
 
@@ -58,11 +57,6 @@ export class CuiNavbar extends CombatElement {
     this.sync();
     this.syncStickyOptions();
     this.syncDropdowns();
-  }
-
-  disconnectedCallback(): void {
-    this.abortController?.abort();
-    this.abortController = null;
   }
 
   attributeChangedCallback(): void {
@@ -196,9 +190,7 @@ export class CuiNavbar extends CombatElement {
   }
 
   private bindEvents(): void {
-    this.abortController?.abort();
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const signal = this.freshSignal();
 
     this.shadowRoot
       ?.querySelector(".toggle")
