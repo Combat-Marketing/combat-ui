@@ -1,6 +1,7 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 import { dateFromIso, resolveLocale, startOfDay, toIso } from "../../internal/date-utils";
 import { parseEventCards, type EventCardData } from "../../internal/event-cards";
+import plannerChromeCss from "../../internal/styles/planner-chrome.css?inline";
 import dayPlannerCss from "./day-planner.css?inline";
 
 export interface CuiDayPlannerEventSelectDetail {
@@ -126,7 +127,10 @@ function packColumns(events: ParsedEvent[]): PositionedEvent[] {
  */
 export class CuiDayPlanner extends CombatElement {
   static override tagName = "cui-day-planner";
-  static override readonly styles = [cssStyleSheet(dayPlannerCss)];
+  static override readonly styles = [
+    cssStyleSheet(plannerChromeCss),
+    cssStyleSheet(dayPlannerCss),
+  ];
   static observedAttributes = [
     "date",
     "start-hour",

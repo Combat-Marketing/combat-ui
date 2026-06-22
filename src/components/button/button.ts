@@ -1,3 +1,4 @@
+import controlStylesCss from "../../internal/styles/control-styles.css?inline";
 import buttonCss from "./button.css?inline";
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
 
@@ -24,7 +25,10 @@ const stringAttributes = ["href", "target", "rel", "type"] as const;
  */
 export class CuiButton extends CombatElement {
   static override tagName = "cui-button";
-  static override styles = [cssStyleSheet(buttonCss)];
+  static override styles = [
+    cssStyleSheet(controlStylesCss),
+    cssStyleSheet(buttonCss),
+  ];
 
   static get observedAttributes(): string[] {
     return [...booleanAttributes, ...stringAttributes];
