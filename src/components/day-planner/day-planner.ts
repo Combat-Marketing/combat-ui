@@ -296,7 +296,7 @@ export class CuiDayPlanner extends CombatElement {
   }
 
   private host(hours: number): void {
-    this.style.setProperty("--cui-day-planner-hour-rows", String(hours));
+    this.setCssVar("--cui-day-planner-hour-rows", String(hours));
   }
 
   private renderLabels(startHour: number, endHour: number): void {

@@ -99,26 +99,19 @@ export class CuiHero extends CombatElement {
 
   private syncBackground(): void {
     const backgroundSrc = this.getAttribute("background-src");
-    const backgroundPosition = this.getAttribute("background-position");
-    const backgroundSize = this.getAttribute("background-size");
+    const escapedSrc = backgroundSrc?.replaceAll("\\", "\\\\").replaceAll("\"", "\\\"");
 
-    if (backgroundSrc) {
-      const escapedSrc = backgroundSrc.replaceAll("\\", "\\\\").replaceAll("\"", "\\\"");
-      this.style.setProperty("--cui-hero-background-image", `url("${escapedSrc}")`);
-    } else {
-      this.style.removeProperty("--cui-hero-background-image");
-    }
-
-    if (backgroundPosition) {
-      this.style.setProperty("--cui-hero-background-position", backgroundPosition);
-    } else {
-      this.style.removeProperty("--cui-hero-background-position");
-    }
-
-    if (backgroundSize) {
-      this.style.setProperty("--cui-hero-background-size", backgroundSize);
-    } else {
-      this.style.removeProperty("--cui-hero-background-size");
-    }
+    this.setCssVar(
+      "--cui-hero-background-image",
+      escapedSrc ? `url("${escapedSrc}")` : null,
+    );
+    this.setCssVar(
+      "--cui-hero-background-position",
+      this.getAttribute("background-position") || null,
+    );
+    this.setCssVar(
+      "--cui-hero-background-size",
+      this.getAttribute("background-size") || null,
+    );
   }
 }

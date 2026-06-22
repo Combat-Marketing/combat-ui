@@ -112,9 +112,9 @@ export class CuiScrollStage extends CombatElement {
 
     this.parallax?.unregister();
     this.parallax = null;
-    this.style.removeProperty("--cui-stage-focus");
-    this.style.removeProperty("--cui-stage-offset");
-    this.style.removeProperty("--cui-stage-active");
+    this.setCssVar("--cui-stage-focus", null);
+    this.setCssVar("--cui-stage-offset", null);
+    this.setCssVar("--cui-stage-active", null);
     this.classList.remove("is-active");
   }
 
@@ -149,23 +149,20 @@ export class CuiScrollStage extends CombatElement {
     const stickyTop = this.getAttribute("sticky-top");
     const minBlockSize = this.getAttribute("min-block-size");
 
-    if (stickyTop !== null && stickyTop.trim() !== "") {
-      this.style.setProperty("--cui-stage-sticky-top", stickyTop);
-    } else {
-      this.style.removeProperty("--cui-stage-sticky-top");
-    }
-
-    if (minBlockSize !== null && minBlockSize.trim() !== "") {
-      this.style.setProperty("--cui-stage-min-block-size", minBlockSize);
-    } else {
-      this.style.removeProperty("--cui-stage-min-block-size");
-    }
+    this.setCssVar(
+      "--cui-stage-sticky-top",
+      stickyTop && stickyTop.trim() !== "" ? stickyTop : null,
+    );
+    this.setCssVar(
+      "--cui-stage-min-block-size",
+      minBlockSize && minBlockSize.trim() !== "" ? minBlockSize : null,
+    );
   }
 
   private applyState(state: ScrollStageState): void {
-    this.style.setProperty("--cui-stage-focus", state.focus.toFixed(4));
-    this.style.setProperty("--cui-stage-offset", state.offset.toFixed(4));
-    this.style.setProperty("--cui-stage-active", state.active ? "1" : "0");
+    this.setCssVar("--cui-stage-focus", state.focus.toFixed(4));
+    this.setCssVar("--cui-stage-offset", state.offset.toFixed(4));
+    this.setCssVar("--cui-stage-active", state.active ? "1" : "0");
     this.classList.toggle("is-active", state.active);
   }
 }

@@ -1,4 +1,5 @@
 import { CombatElement, cssStyleSheet } from "../../internal/base-element";
+import { valueWithUnit } from "../../internal/css-helpers";
 import { findInComposedPath } from "../../internal/dom";
 import style from "./navbar.css?inline";
 
@@ -156,19 +157,12 @@ export class CuiNavbar extends CombatElement {
     const offset = this.stickyOffset;
     const zIndex = this.stickyZIndex;
 
-    if (offset) {
-      // Numeric strings get px; anything with a unit/function passes through.
-      const value = /^-?\d+(\.\d+)?$/.test(offset) ? `${offset}px` : offset;
-      this.style.setProperty("--cui-navbar-sticky-offset", value);
-    } else {
-      this.style.removeProperty("--cui-navbar-sticky-offset");
-    }
-
-    if (zIndex) {
-      this.style.setProperty("--cui-navbar-sticky-z-index", String(zIndex));
-    } else {
-      this.style.removeProperty("--cui-navbar-sticky-z-index");
-    }
+    // Numeric strings get px; anything with a unit/function passes through.
+    this.setCssVar("--cui-navbar-sticky-offset", valueWithUnit(offset, "px"));
+    this.setCssVar(
+      "--cui-navbar-sticky-z-index",
+      zIndex ? String(zIndex) : null,
+    );
   }
 
   private syncDropdowns(): void {
