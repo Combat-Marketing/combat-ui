@@ -1,6 +1,6 @@
 {
   "name": "@combat-ui/core",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A responsive, customizable web component framework targeting modern baseline web standards.",
   "private": true,
   "engines": {
@@ -151,7 +151,7 @@
     "@html-eslint/parser": "0.62.0",
     "@types/leaflet": "^1.9.21",
     "@types/leaflet.markercluster": "^1.5.6",
-    "@types/node": "26.0.0",
+    "@types/node": "25.9.3",
     "eslint": "10.5.0",
     "eslint-plugin-baseline-js": "0.6.2",
     "eslint-plugin-compat": "7.0.2",
