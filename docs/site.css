@@ -94,6 +94,30 @@
     padding-block-start: var(--cui-space-4, 1rem);
   }
 
+  /* Hero section demos — tuned-down sizing so the previews fit the docs panel
+     rather than filling the viewport. */
+  .docs-hero-section {
+    --cui-stack-gap: var(--cui-space-5, 1.5rem);
+  }
+
+  .docs-hero-demo {
+    --cui-hero-padding-block: var(--cui-space-7, 3rem);
+    --cui-hero-title-size: var(--cui-font-size-5, 4rem);
+  }
+
+  .docs-hero-demo-split {
+    --cui-hero-min-block-size: auto;
+    --cui-hero-media-min-block-size: 22rem;
+  }
+
+  .docs-hero-demo-background {
+    --cui-hero-min-block-size: 32rem;
+  }
+
+  .docs-hero-demo-overlay {
+    --cui-hero-min-block-size: 34rem;
+  }
+
   .docs-preview {
     overflow: hidden;
     border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
