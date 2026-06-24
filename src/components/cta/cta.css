@@ -38,48 +38,14 @@
   gap: var(--cui-space-3, 0.75rem);
 }
 
-::slotted([slot="eyebrow"]) {
-  margin: 0;
-  color: var(--cui-cta-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246)));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-::slotted([slot="title"]) {
-  max-inline-size: 18ch;
-  margin: 0;
-  color: var(--cui-cta-title-color, var(--cui-cta-color, var(--cui-color, #1b1f27)));
-  font-size: var(--cui-cta-title-size, 2.75rem);
-  font-weight: var(--cui-font-weight-display, 760);
-  line-height: var(--cui-line-height-tight, 1.2);
-  text-wrap: balance;
-}
-
-::slotted(:not([slot])) {
-  max-inline-size: var(--cui-content-measure, 68ch);
-  margin: 0;
-  color: var(--cui-cta-muted-color, var(--cui-color-muted, #5d6675));
-}
-
-::slotted([slot="actions"]) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
-}
+/* Slotted typography (eyebrow, title, lede, actions) lives in the light-DOM
+   sheet at src/styles/elements.css so it is identical before and after upgrade
+   — see that file for the rationale. */
 
 :host([align="center"]) .cta,
 :host([variant="simple"]) .cta {
   justify-items: center;
   text-align: center;
-}
-
-:host([align="center"]) ::slotted([slot="title"]),
-:host([align="center"]) ::slotted(:not([slot])),
-:host([variant="simple"]) ::slotted([slot="title"]),
-:host([variant="simple"]) ::slotted(:not([slot])) {
-  margin-inline: auto;
 }
 
 :host([variant="full-bleed"]) .cta {

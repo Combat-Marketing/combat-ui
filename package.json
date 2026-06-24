@@ -153,7 +153,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "web-types.json",
+    "vscode.html-custom-data.json",
+    "vscode.css-custom-data.json"
   ],
   "scripts": {
     "dev": "vite --config vite.config.ts",
@@ -182,6 +185,8 @@
     "@types/leaflet": "^1.9.21",
     "@types/leaflet.markercluster": "^1.5.6",
     "@types/node": "25.9.3",
+    "custom-element-jet-brains-integration": "^1.7.0",
+    "custom-element-vs-code-integration": "^1.5.0",
     "eslint": "10.5.0",
     "eslint-plugin-baseline-js": "0.6.2",
     "eslint-plugin-compat": "7.0.2",
@@ -207,5 +212,6 @@
       "optional": true
     }
   },
-  "customElements": "dist/custom-elements.json"
+  "customElements": "dist/custom-elements.json",
+  "web-types": "./web-types.json"
 }
