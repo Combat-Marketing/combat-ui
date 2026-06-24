@@ -1,0 +1,319 @@
+<section id="contact-blocks" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+  <div class="cui-prose">
+    <h2>Contact</h2>
+    <p>
+      Contact cards, location cards, and a contact form layout. Each is CSS-only and works from
+      CMS-generated HTML — no JavaScript required. Contact and location cards share the
+      <code>.cui-contact-methods</code> list, so a phone number reads the same whether it sits on a
+      support card or beside an office address. Use real <code>&lt;a href="mailto:"&gt;</code> /
+      <code>&lt;a href="tel:"&gt;</code> links and an <code>&lt;address&gt;</code> element so search
+      engines and assistive tech pick the details up directly.
+    </p>
+    <p>
+      Drop several contact cards into a <code>.cui-card-grid</code> for a contacts directory, and put
+      a <code>cui-map</code>, <code>&lt;iframe&gt;</code>, or photo in a location card's media panel.
+      The contact form styles layout only — its controls reuse the shared
+      <code>.cui-input</code> / <code>.cui-textarea</code> / <code>.cui-field-label</code> classes, so
+      it works as a plain <code>&lt;form&gt;</code> or wrapped in a <code>cui-form</code> for
+      validation.
+    </p>
+  </div>
+
+  <cui-tabs>
+    <div class="cui-tablist">
+      <button class="cui-tab" type="button" data-selected="true">Contact card</button>
+      <button class="cui-tab" type="button">Location card</button>
+      <button class="cui-tab" type="button">Contact form</button>
+    </div>
+
+    <section class="docs-panel">
+      <div class="cui-card-grid" data-columns="2">
+        <article class="cui-contact-card">
+          <p class="cui-contact-card-eyebrow">Support</p>
+          <h3 class="cui-contact-card-title">Customer success</h3>
+          <p class="cui-contact-card-lead">
+            Questions about your account or a live project? We reply within one business day.
+          </p>
+          <ul class="cui-contact-methods">
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Email</span>
+              <a class="cui-contact-method-value" href="mailto:hello@example.com">hello@example.com</a>
+            </li>
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Phone</span>
+              <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
+            </li>
+          </ul>
+          <div class="cui-contact-card-actions">
+            <cui-button href="mailto:hello@example.com">Send a message</cui-button>
+          </div>
+        </article>
+
+        <article class="cui-contact-card" data-variant="inverse">
+          <p class="cui-contact-card-eyebrow">Press</p>
+          <h3 class="cui-contact-card-title">Media &amp; partnerships</h3>
+          <p class="cui-contact-card-lead">
+            For interviews, brand assets, and partnership enquiries.
+          </p>
+          <ul class="cui-contact-methods" data-layout="inline">
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Email</span>
+              <a class="cui-contact-method-value" href="mailto:press@example.com">press@example.com</a>
+            </li>
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Hours</span>
+              <span class="cui-contact-method-value">Mon–Fri · 9:00–17:00</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <cui-code language="html">
+        <script type="text/html">
+                      <article class="cui-contact-card">
+                        <p class="cui-contact-card-eyebrow">Support</p>
+                        <h3 class="cui-contact-card-title">Customer success</h3>
+                        <p class="cui-contact-card-lead">We reply within one business day.</p>
+                        <ul class="cui-contact-methods">
+                          <li class="cui-contact-method">
+                            <span class="cui-contact-method-label">Email</span>
+                            <a class="cui-contact-method-value" href="mailto:hello@example.com">hello@example.com</a>
+                          </li>
+                          <li class="cui-contact-method">
+                            <span class="cui-contact-method-label">Phone</span>
+                            <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
+                          </li>
+                        </ul>
+                        <div class="cui-contact-card-actions">
+                          <a class="cui-button" href="mailto:hello@example.com">Send a message</a>
+                        </div>
+                      </article>
+                    </script>
+      </cui-code>
+    </section>
+
+    <section class="docs-panel">
+      <article class="cui-location-card">
+        <div class="cui-location-card-media">
+          <img src="./hero-image.svg" alt="Map of the Amsterdam office">
+        </div>
+        <div class="cui-location-card-body">
+          <h3 class="cui-location-card-name">Amsterdam HQ</h3>
+          <address class="cui-location-card-address">
+            Keizersgracht 123<br>1015 CJ Amsterdam<br>Netherlands
+          </address>
+          <ul class="cui-contact-methods" data-layout="inline">
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Hours</span>
+              <span class="cui-contact-method-value">Mon–Fri · 9:00–18:00</span>
+            </li>
+            <li class="cui-contact-method">
+              <span class="cui-contact-method-label">Phone</span>
+              <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
+            </li>
+          </ul>
+          <div class="cui-location-card-actions">
+            <cui-button href="#contact-blocks">Get directions</cui-button>
+          </div>
+        </div>
+      </article>
+
+      <cui-code language="html">
+        <script type="text/html">
+                      <article class="cui-location-card">
+                        <div class="cui-location-card-media">
+                          <img src="/offices/amsterdam.jpg" alt="Our Amsterdam office">
+                          <!-- or <cui-map>…</cui-map>, or an <iframe> map embed -->
+                        </div>
+                        <div class="cui-location-card-body">
+                          <h3 class="cui-location-card-name">Amsterdam HQ</h3>
+                          <address class="cui-location-card-address">
+                            Keizersgracht 123<br>1015 CJ Amsterdam<br>Netherlands
+                          </address>
+                          <ul class="cui-contact-methods" data-layout="inline">
+                            <li class="cui-contact-method">
+                              <span class="cui-contact-method-label">Hours</span>
+                              <span class="cui-contact-method-value">Mon–Fri · 9:00–18:00</span>
+                            </li>
+                          </ul>
+                          <div class="cui-location-card-actions">
+                            <a class="cui-button" href="https://maps.example.com/?q=Keizersgracht+123">Get directions</a>
+                          </div>
+                        </div>
+                      </article>
+                    </script>
+      </cui-code>
+    </section>
+
+    <section class="docs-panel">
+      <p class="cui-prose">
+        A contact form is a composition, not a dedicated block: <code>cui-form</code> for validation
+        and submit, <code>cui-field</code> for labels / help / errors, the <code>.cui-input</code>
+        family for the controls, and the layout primitives (<code>.cui-stack</code>,
+        <code>.cui-grid</code>, <code>.cui-cluster</code>) for arrangement. See the
+        <a href="./forms.html">Forms page</a> for the full validation and i18n story.
+      </p>
+
+      <cui-form>
+        <form class="cui-stack" novalidate>
+          <div class="cui-grid" data-columns="2">
+            <cui-field required>
+              <label for="cf-name" slot="label">Name</label>
+              <input class="cui-input" id="cf-name" name="name" autocomplete="name">
+              <span slot="error-valueMissing">Please enter your name.</span>
+            </cui-field>
+            <cui-field required>
+              <label for="cf-email" slot="label">Email</label>
+              <input class="cui-input" id="cf-email" name="email" type="email" autocomplete="email">
+              <span slot="error-valueMissing">Please enter your email.</span>
+              <span slot="error-typeMismatch">That doesn't look like a valid email address.</span>
+            </cui-field>
+          </div>
+          <cui-field>
+            <label for="cf-subject" slot="label">Subject</label>
+            <input class="cui-input" id="cf-subject" name="subject">
+          </cui-field>
+          <cui-field required>
+            <label for="cf-message" slot="label">Message</label>
+            <textarea class="cui-textarea" id="cf-message" name="message"></textarea>
+            <span slot="error-valueMissing">Please add a short message.</span>
+          </cui-field>
+          <cui-field required>
+            <label class="cui-check">
+              <input type="checkbox" name="consent" value="yes">
+              <span>I agree to be contacted about my request.</span>
+            </label>
+            <span slot="error-valueMissing">Please confirm we may contact you.</span>
+          </cui-field>
+          <div class="cui-cluster">
+            <button class="cui-button" type="submit" data-variant="primary">Send message</button>
+            <cui-button href="#contact-blocks" variant="ghost">Cancel</cui-button>
+          </div>
+        </form>
+      </cui-form>
+
+      <cui-code language="html">
+        <script type="text/html">
+                      <cui-form>
+                        <form class="cui-stack" novalidate>
+                          <!-- Two fields side by side; stacks on narrow screens -->
+                          <div class="cui-grid" data-columns="2">
+                            <cui-field required>
+                              <span slot="label">Name</span>
+                              <input class="cui-input" name="name" autocomplete="name">
+                              <span slot="error-valueMissing">Please enter your name.</span>
+                            </cui-field>
+                            <cui-field required>
+                              <span slot="label">Email</span>
+                              <input class="cui-input" name="email" type="email" autocomplete="email">
+                              <span slot="error-typeMismatch">That doesn't look like a valid email.</span>
+                            </cui-field>
+                          </div>
+                          <cui-field required>
+                            <span slot="label">Message</span>
+                            <textarea class="cui-textarea" name="message"></textarea>
+                            <span slot="error-valueMissing">Please add a short message.</span>
+                          </cui-field>
+                          <cui-field required>
+                            <label class="cui-check">
+                              <input type="checkbox" name="consent" value="yes">
+                              <span>I agree to be contacted about my request.</span>
+                            </label>
+                          </cui-field>
+                          <div class="cui-cluster">
+                            <button class="cui-button" type="submit" data-variant="primary">Send message</button>
+                          </div>
+                        </form>
+                      </cui-form>
+                    </script>
+      </cui-code>
+    </section>
+  </cui-tabs>
+
+  <cui-disclosure>
+    <details class="cui-disclosure" data-variant="ghost">
+      <summary>API reference</summary>
+      <div class="cui-disclosure-body">
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>.cui-contact-card</code></td>
+              <td>
+                Single point of contact. Carry <code>data-variant="flat | borderless | inverse"</code>
+                for chrome, <code>data-align="center"</code> to center content. Children:
+                <code>.cui-contact-card-eyebrow</code>, <code>.cui-contact-card-title</code>,
+                <code>.cui-contact-card-lead</code>, <code>.cui-contact-card-actions</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><code>.cui-contact-methods</code></td>
+              <td>
+                Label / value list shared by both cards. Render as <code>&lt;ul&gt;</code> of
+                <code>.cui-contact-method</code> rows (or a <code>&lt;dl&gt;</code>).
+                <code>data-layout="inline"</code> lays the label beside the value. Children:
+                <code>.cui-contact-method-label</code>, <code>.cui-contact-method-value</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><code>.cui-location-card</code></td>
+              <td>
+                Office / venue card: media panel plus body. <code>data-orient="stacked"</code> pins the
+                media on top; <code>data-variant="flat | borderless"</code> for chrome. Children:
+                <code>.cui-location-card-media</code>, <code>.cui-location-card-body</code>,
+                <code>.cui-location-card-name</code>, <code>.cui-location-card-address</code> (on
+                <code>&lt;address&gt;</code>), <code>.cui-location-card-actions</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>Contact form</td>
+              <td>
+                No dedicated class — compose <code>cui-form</code> (validation / submit),
+                <code>cui-field</code> (labels / help / errors), and the <code>.cui-input</code> family,
+                laid out with <code>.cui-stack</code>, <code>.cui-grid</code> (<code>data-columns</code>
+                for side-by-side fields), and <code>.cui-cluster</code> (actions). See the
+                <a href="./forms.html">Forms page</a>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--cui-contact-card-padding</code></td>
+              <td><code>--cui-space-5</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-contact-card-title-size</code></td>
+              <td><code>--cui-font-size-2</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-contact-methods-gap</code></td>
+              <td><code>--cui-space-3</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-location-card-media-size</code></td>
+              <td><code>16rem</code> (row orient)</td>
+            </tr>
+            <tr>
+              <td><code>--cui-location-card-media-ratio</code></td>
+              <td><code>16 / 10</code> (when stacked)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </cui-disclosure>
+</section>
