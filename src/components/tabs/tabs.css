@@ -14,23 +14,7 @@
   scrollbar-gutter: stable;
 }
 
-::slotted([slot="tab"]) {
-  flex: 0 0 auto;
-  border: 0;
-  border-block-end: 2px solid transparent;
-  background: transparent;
-  color: var(--cui-color-muted, oklch(41.7% 0.045 264deg));
-  font: inherit;
-  padding-block: var(--cui-space-3, 0.75rem);
-  padding-inline: var(--cui-space-4, 1rem);
-}
-
-::slotted([slot="tab"][aria-selected="true"]) {
-  border-block-end-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  color: var(--cui-color, oklch(24% 0.04 264deg));
-  font-weight: var(--cui-font-weight-strong, 680);
-}
-
-::slotted([slot="panel"][hidden]) {
-  display: none;
-}
+/* Slotted tab-button typography lives in the light-DOM sheet at
+   src/styles/elements.css so it is identical before and after upgrade — see
+   that file for the rationale. Hidden panels are handled by the global
+   `[hidden]` reset, which applies to the light-DOM panels directly. */

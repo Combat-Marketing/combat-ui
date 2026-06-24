@@ -52,11 +52,10 @@ nav {
   text-decoration: none;
 }
 
-::slotted(a[slot="brand"]) {
-  color: inherit;
-  font-weight: var(--cui-font-weight-strong, 680);
-  text-decoration: none;
-}
+/* Slotted styling (brand link, nav/actions containers, nav links and their
+   hover/current states) lives in the light-DOM sheet at
+   src/styles/elements.css so it is identical before and after upgrade — see
+   that file for the rationale. */
 
 .toggle {
   display: inline-flex;
@@ -155,37 +154,6 @@ nav {
   gap: var(--cui-space-2, 0.5rem);
 }
 
-::slotted([slot="nav"]),
-::slotted([slot="actions"]) {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cui-space-2, 0.5rem);
-}
-
-::slotted(a[slot="nav"]) {
-  display: inline-flex;
-  min-block-size: 2rem;
-  align-items: center;
-  justify-content: flex-start;
-  border-radius: var(--cui-navbar-link-radius, 0.25rem);
-  background: var(--cui-navbar-link-bg, transparent);
-  color: var(--cui-navbar-link-color, currentcolor);
-  font-weight: var(--cui-font-weight-strong, 680);
-  padding-block: var(--cui-navbar-link-padding-block, 0.25rem);
-  padding-inline: var(--cui-navbar-link-padding-inline, 0.5rem);
-  text-decoration: none;
-}
-
-::slotted(a[slot="nav"]:hover) {
-  background: var(--cui-navbar-link-hover-bg, var(--cui-color-surface-muted, #edf0f4));
-  color: var(--cui-navbar-link-hover-color, var(--cui-color, #1b1f27));
-}
-
-::slotted(a[slot="nav"][aria-current="page"]) {
-  background: var(--cui-navbar-link-current-bg, var(--cui-color-surface-muted, #edf0f4));
-  color: var(--cui-navbar-link-current-color, var(--cui-color, #1b1f27));
-}
-
 @media (width >= 48rem) {
   nav {
     display: flex;
@@ -226,9 +194,7 @@ nav {
   }
 
   .links,
-  .actions,
-  ::slotted([slot="nav"]),
-  ::slotted([slot="actions"]) {
+  .actions {
     flex-direction: row;
     align-items: center;
   }

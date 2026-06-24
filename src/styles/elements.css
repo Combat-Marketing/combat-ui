@@ -1,0 +1,304 @@
+/**
+ * Light-DOM styling for the custom elements.
+ *
+ * Combat UI's custom elements render their structure in the shadow DOM, but
+ * the *typography* of their slotted (light-DOM) content lives here, in the
+ * global stylesheet, rather than as `::slotted()` rules inside each shadow
+ * root. Two reasons:
+ *
+ *   1. No flash on upgrade. `::slotted()` rules only exist once an element
+ *      upgrades, so slotted headings/copy render at browser-default size and
+ *      weight first, then jump to the display scale when the shadow root
+ *      attaches. Because this sheet ships with the page CSS — before the
+ *      element scripts run — the slotted content is styled identically before
+ *      and after upgrade. No font jump, no reflow, and no need to hide
+ *      undefined elements with `:not(:defined) { visibility: hidden }`.
+ *
+ *   2. Less in the shadow DOM. The shadow roots keep only structural layout
+ *      (grid wrappers, parts, positioning). Slotted typography is a single
+ *      source of truth here.
+ *
+ * Light-DOM author rules win over `::slotted()` for the same element
+ * regardless of specificity, so there is no conflict with anything left in the
+ * shadow roots. The component-scoped `--cui-<name>-*` custom properties keep
+ * working: the rules below read the same tokens, and the element-selector
+ * blocks mirror the `:host` defaults so they resolve before upgrade too.
+ *
+ * Keep these rules in sync with the matching component's shadow CSS in
+ * `src/components/<name>/<name>.css`.
+ */
+
+/* Box-model baselines — unupgraded custom elements are `display: inline` by
+   default, which collapses their layout until the scripts run. Mirror each
+   element's `:host` display so the box is correct on first paint. */
+cui-hero,
+cui-page-intro,
+cui-cta,
+cui-navbar,
+cui-map,
+cui-carousel {
+  display: block;
+}
+
+cui-tabs {
+  display: grid;
+  gap: var(--cui-space-4, 1rem);
+}
+
+cui-field {
+  display: grid;
+  gap: var(--cui-space-1, 0.25rem);
+}
+
+/* Hero ------------------------------------------------------------------- */
+cui-hero {
+  --cui-hero-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
+}
+
+cui-hero > [slot="eyebrow"] {
+  margin: 0;
+  color: var(--cui-hero-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+cui-hero > [slot="title"] {
+  max-inline-size: 13ch;
+  margin: 0;
+  font-size: var(--cui-hero-title-size, 5.5rem);
+  font-weight: var(--cui-font-weight-display, 760);
+  letter-spacing: 0;
+  line-height: var(--cui-line-height-display, 0.98);
+  text-wrap: balance;
+}
+
+cui-hero > :not([slot]) {
+  max-inline-size: var(--cui-content-measure, 68ch);
+  margin: 0;
+  color: var(--cui-hero-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-font-size-2, 1.5rem);
+  line-height: 1.4;
+}
+
+cui-hero > [slot="actions"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+/* Page-intro ------------------------------------------------------------- */
+cui-page-intro {
+  --cui-page-intro-title-size: var(--cui-font-size-5, clamp(2.375rem, 1.66rem + 2.86vi, 4rem));
+}
+
+cui-page-intro[variant="landing"] {
+  --cui-page-intro-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
+}
+
+cui-page-intro > [slot="eyebrow"] {
+  margin: 0;
+  color: var(--cui-page-intro-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+cui-page-intro > [slot="title"] {
+  max-inline-size: 16ch;
+  margin: 0;
+  color: var(--cui-page-intro-title-color, var(--cui-page-intro-color, var(--cui-color, #1b1f27)));
+  font-size: var(--cui-page-intro-title-size, 4rem);
+  font-weight: var(--cui-font-weight-display, 760);
+  letter-spacing: 0;
+  line-height: var(--cui-line-height-display, 0.98);
+  text-wrap: balance;
+}
+
+cui-page-intro > :not([slot]) {
+  max-inline-size: var(--cui-content-measure, 68ch);
+  margin: 0;
+  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  line-height: 1.5;
+}
+
+cui-page-intro > [slot="meta"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-2, 0.5rem) var(--cui-space-4, 1rem);
+  margin: 0;
+  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+cui-page-intro > [slot="actions"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+cui-page-intro > [slot="aside"] {
+  display: block;
+  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-radius: var(--cui-radius-2, 0.5rem);
+  background: var(--cui-color-surface-raised, #fff);
+  box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
+  padding: var(--cui-space-4, 1rem);
+}
+
+/* CTA -------------------------------------------------------------------- */
+cui-cta {
+  --cui-cta-title-size: var(--cui-font-size-4, clamp(1.875rem, 1.48rem + 1.56vi, 2.75rem));
+}
+
+cui-cta > [slot="eyebrow"] {
+  margin: 0;
+  color: var(--cui-cta-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+cui-cta > [slot="title"] {
+  max-inline-size: 18ch;
+  margin: 0;
+  color: var(--cui-cta-title-color, var(--cui-cta-color, var(--cui-color, #1b1f27)));
+  font-size: var(--cui-cta-title-size, 2.75rem);
+  font-weight: var(--cui-font-weight-display, 760);
+  line-height: var(--cui-line-height-tight, 1.2);
+  text-wrap: balance;
+}
+
+cui-cta > :not([slot]) {
+  max-inline-size: var(--cui-content-measure, 68ch);
+  margin: 0;
+  color: var(--cui-cta-muted-color, var(--cui-color-muted, #5d6675));
+}
+
+cui-cta > [slot="actions"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+/* Navbar ----------------------------------------------------------------- */
+cui-navbar {
+  --cui-navbar-link-bg: transparent;
+  --cui-navbar-link-color: var(--cui-color-muted, #5d6675);
+  --cui-navbar-link-hover-bg: var(--cui-color-surface-muted, #edf0f4);
+  --cui-navbar-link-hover-color: var(--cui-color, #1b1f27);
+  --cui-navbar-link-current-bg: var(--cui-color-surface-muted, #edf0f4);
+  --cui-navbar-link-current-color: var(--cui-color, #1b1f27);
+  --cui-navbar-link-padding-block: var(--cui-space-1, 0.25rem);
+  --cui-navbar-link-padding-inline: var(--cui-space-2, 0.5rem);
+  --cui-navbar-link-radius: var(--cui-control-radius, 0.25rem);
+}
+
+cui-navbar > a[slot="brand"] {
+  color: inherit;
+  font-weight: var(--cui-font-weight-strong, 680);
+  text-decoration: none;
+}
+
+cui-navbar > [slot="nav"],
+cui-navbar > [slot="actions"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cui-space-2, 0.5rem);
+}
+
+cui-navbar > a[slot="nav"] {
+  display: inline-flex;
+  min-block-size: 2rem;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: var(--cui-navbar-link-radius, 0.25rem);
+  background: var(--cui-navbar-link-bg, transparent);
+  color: var(--cui-navbar-link-color, currentcolor);
+  font-weight: var(--cui-font-weight-strong, 680);
+  padding-block: var(--cui-navbar-link-padding-block, 0.25rem);
+  padding-inline: var(--cui-navbar-link-padding-inline, 0.5rem);
+  text-decoration: none;
+}
+
+cui-navbar > a[slot="nav"]:hover {
+  background: var(--cui-navbar-link-hover-bg, var(--cui-color-surface-muted, #edf0f4));
+  color: var(--cui-navbar-link-hover-color, var(--cui-color, #1b1f27));
+}
+
+cui-navbar > a[slot="nav"][aria-current="page"] {
+  background: var(--cui-navbar-link-current-bg, var(--cui-color-surface-muted, #edf0f4));
+  color: var(--cui-navbar-link-current-color, var(--cui-color, #1b1f27));
+}
+
+@media (width >= 48rem) {
+  cui-navbar > [slot="nav"],
+  cui-navbar > [slot="actions"] {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Tabs ------------------------------------------------------------------- */
+cui-tabs > [slot="tab"] {
+  flex: 0 0 auto;
+  border: 0;
+  border-block-end: 2px solid transparent;
+  background: transparent;
+  color: var(--cui-color-muted, oklch(41.7% 0.045 264deg));
+  font: inherit;
+  padding-block: var(--cui-space-3, 0.75rem);
+  padding-inline: var(--cui-space-4, 1rem);
+}
+
+cui-tabs > [slot="tab"][aria-selected="true"] {
+  border-block-end-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  color: var(--cui-color, oklch(24% 0.04 264deg));
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+/* Field ------------------------------------------------------------------ */
+cui-field > [slot="help"] {
+  font-size: var(--cui-font-size-1, 0.9375rem);
+  color: var(--cui-color-muted, #5d6675);
+}
+
+cui-field > [slot^="error"] {
+  margin: 0;
+}
+
+/* Map -------------------------------------------------------------------- */
+cui-map > [slot="title"] {
+  margin: 0;
+}
+
+cui-map > [slot="legend"] {
+  margin: 0;
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-caption, 0.875rem);
+}
+
+/* Cookie banner ---------------------------------------------------------- */
+cui-cookie-banner a {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+}
+
+/* Alignment & variant overrides -----------------------------------------
+   Grouped here, after the base rules, so selector specificity ascends
+   through the file (these center-aligned variants are higher specificity
+   than the base slotted rules they override). */
+cui-page-intro[align="center"] > [slot="title"],
+cui-page-intro[align="center"] > :not([slot]),
+cui-cta[align="center"] > [slot="title"],
+cui-cta[align="center"] > :not([slot]),
+cui-cta[variant="simple"] > [slot="title"],
+cui-cta[variant="simple"] > :not([slot]),
+cui-hero[variant="text"][align="center"] > [slot="title"],
+cui-hero[variant="text"][align="center"] > :not([slot]) {
+  margin-inline: auto;
+}
