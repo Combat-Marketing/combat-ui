@@ -1,0 +1,236 @@
+<section id="cta" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+  <div class="cui-prose">
+    <h2>CTA</h2>
+    <p>
+      Use `cui-cta` for conversion sections that need simple, split, full-bleed, or sticky placement.
+    </p>
+  </div>
+
+  <cui-tabs>
+    <button slot="tab" type="button">Simple</button>
+    <button slot="tab" type="button">Split</button>
+    <button slot="tab" type="button">Full bleed</button>
+    <button slot="tab" type="button">Sticky</button>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-cta variant="simple">
+          <p slot="eyebrow">Next step</p>
+          <h3 slot="title">Start with the component docs.</h3>
+          <p>Simple CTAs center the message and action for focused sections.</p>
+          <div slot="actions">
+            <cui-button variant="primary" href="./components.html">Browse components</cui-button>
+          </div>
+        </cui-cta>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-cta variant="simple">
+                        <p slot="eyebrow">Next step</p>
+                        <h1 slot="title">Start with the component docs.</h1>
+                        <p>Simple CTAs center the message and action for focused sections.</p>
+                        <div slot="actions">
+                          <cui-button variant="primary">Browse components</cui-button>
+                        </div>
+                      </cui-cta>
+                    </script>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-cta variant="split">
+          <p slot="eyebrow">Build faster</p>
+          <h3 slot="title">Pair supporting copy with actions.</h3>
+          <p>Split CTAs keep action groups aligned beside the message on wider screens.</p>
+          <div slot="actions">
+            <cui-button variant="primary" href="./examples/">Open demo</cui-button>
+            <cui-button href="./foundations.html">Foundations</cui-button>
+          </div>
+        </cui-cta>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-cta variant="split">
+                        <p slot="eyebrow">Build faster</p>
+                        <h1 slot="title">Pair supporting copy with actions.</h1>
+                        <p>Split CTAs keep action groups aligned beside the message on wider screens.</p>
+                        <div slot="actions">
+                          <cui-button variant="primary">Open demo</cui-button>
+                          <cui-button>Foundations</cui-button>
+                        </div>
+                      </cui-cta>
+                    </script>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-cta variant="full-bleed">
+          <p slot="eyebrow">Launch</p>
+          <h3 slot="title">Create a strong campaign close.</h3>
+          <p>Full-bleed CTAs create a section-level break without adding a separate wrapper.</p>
+          <div slot="actions">
+            <cui-button variant="primary" href="./examples/">View patterns</cui-button>
+          </div>
+        </cui-cta>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-cta variant="full-bleed">
+                        <p slot="eyebrow">Launch</p>
+                        <h1 slot="title">Create a strong campaign close.</h1>
+                        <p>Full-bleed CTAs create a section-level break without adding a separate wrapper.</p>
+                        <div slot="actions">
+                          <cui-button variant="primary">View patterns</cui-button>
+                        </div>
+                      </cui-cta>
+                    </script>
+        </cui-code>
+        <cui-cta inverse variant="full-bleed">
+          <p slot="eyebrow">Inverse full bleed</p>
+          <h3 slot="title">Make contrast explicit.</h3>
+          <p>The `inverse` attribute can be applied to simple, split, full-bleed, or sticky CTAs.</p>
+          <div slot="actions">
+            <cui-button variant="primary" href="./examples/">View inverse</cui-button>
+          </div>
+        </cui-cta>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-cta inverse variant="full-bleed">
+                    <p slot="eyebrow">Inverse full bleed</p>
+                    <h3 slot="title">Make contrast explicit.</h3>
+                    <p>The `inverse` attribute can be applied to simple, split, full-bleed, or sticky CTAs.</p>
+                    <div slot="actions">
+                      <cui-button variant="primary" href="./examples/">View inverse</cui-button>
+                    </div>
+                  </cui-cta>
+                    </script>
+        </cui-code>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-cta variant="sticky">
+          <h3 slot="title">Sticky CTAs stay available during long pages.</h3>
+          <p>Use them sparingly for application flows, demos, and campaign signup pages.</p>
+          <div slot="actions">
+            <cui-button variant="primary" href="./examples/">Continue</cui-button>
+          </div>
+        </cui-cta>
+        <cui-code language="html">
+          <script type="text/html">
+                    <cui-cta variant="sticky">
+                      <h1 slot="title">Sticky CTAs stay available during long pages.</h1>
+                      <p>Use them sparingly for application flows, demos, and campaign signup pages.</p>
+                      <div slot="actions">
+                        <cui-button variant="primary">Continue</cui-button>
+                      </div>
+                    </cui-cta>
+                  </script>
+      </div>
+    </section>
+  </cui-tabs>
+
+  <cui-disclosure>
+    <details class="cui-disclosure" data-variant="ghost">
+      <summary>API reference</summary>
+      <div class="cui-disclosure-body">
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Slot</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>eyebrow</code></td>
+              <td>Small kicker line above the title.</td>
+            </tr>
+            <tr>
+              <td><code>title</code></td>
+              <td>The call-to-action heading.</td>
+            </tr>
+            <tr>
+              <td><em>(default)</em></td>
+              <td>Supporting copy beneath the title.</td>
+            </tr>
+            <tr>
+              <td><code>actions</code></td>
+              <td>One or more CTA buttons. Flex-wraps automatically.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>variant="simple | split | full-bleed | sticky"</code></td>
+              <td>Layout preset. <code>simple</code> is centered; <code>split</code> places actions in a
+                side column at <code>≥ 48rem</code>; <code>full-bleed</code> spans the viewport with
+                section-scale padding; <code>sticky</code> pins the CTA to the bottom of the viewport.</td>
+            </tr>
+            <tr>
+              <td><code>inverse</code></td>
+              <td>Boolean. Switches to inverse surface and text colors for high-contrast moments.</td>
+            </tr>
+            <tr>
+              <td><code>align="start | center"</code></td>
+              <td>Horizontal alignment of content and actions. <code>simple</code> is centered by default.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--cui-cta-padding</code></td>
+              <td><code>--cui-space-6</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-gap</code></td>
+              <td><code>--cui-space-5</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-content-size</code></td>
+              <td><code>48rem</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-title-size</code></td>
+              <td><code>--cui-font-size-4</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-bg</code> · <code>--cui-cta-color</code></td>
+              <td>Surface and text overrides.</td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-inverse-bg</code> · <code>--cui-cta-inverse-color</code> ·
+                <code>--cui-cta-inverse-muted-color</code> · <code>--cui-cta-inverse-eyebrow-color</code>
+              </td>
+              <td>Inverse-mode overrides (applied when <code>inverse</code> is set).</td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-sticky-z-index</code></td>
+              <td><code>20</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-cta-sticky-offset</code></td>
+              <td><code>--cui-space-4</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </cui-disclosure>
+</section>

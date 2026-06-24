@@ -1,0 +1,168 @@
+/**
+ * Page-intro band — the lighter alternative to a hero for case-study,
+ * vacancy, and article pages. Pure CSS; apply `.cui-page-intro` to a
+ * `<section>`. It is the width-capped surface; inside it a
+ * `.cui-page-intro-layout` holds a `.cui-page-intro-content` stack and an
+ * optional `.cui-page-intro-aside`.
+ *
+ * Variant modifiers compose on the container: `.cui-page-intro-landing`,
+ * `-case`, `-vacancy`, `-campaign`, `-inverse`, `-center`, `-full-bleed`.
+ *
+ * @block cui-page-intro
+ * @summary Page-intro surface with content + optional aside; variant modifiers.
+ * @cssvar --cui-page-intro-padding-block — Block padding. Defaults to `--cui-section-space-compact`.
+ * @cssvar --cui-page-intro-gap — Gap between content and aside. Defaults to `--cui-space-5`.
+ * @cssvar --cui-page-intro-content-size — Max inline-size of the content stack. Defaults to 52rem.
+ * @cssvar --cui-page-intro-aside-size — Aside column width at ≥56rem. Defaults to 20rem.
+ * @cssvar --cui-page-intro-title-size — Title font-size. Defaults to `--cui-font-size-5`.
+ *
+ * @example
+ *   <section class="cui-page-intro cui-page-intro-case">
+ *     <div class="cui-page-intro-layout">
+ *       <div class="cui-page-intro-content">
+ *         <p class="cui-eyebrow">Case study</p>
+ *         <h1 class="cui-page-intro-title">Rebuilding a 1000-page site</h1>
+ *         <p class="cui-page-intro-meta">8 min read · March 2026</p>
+ *         <p>How we migrated to baseline web standards.</p>
+ *       </div>
+ *       <aside class="cui-page-intro-aside">Summary card</aside>
+ *     </div>
+ *   </section>
+ */
+.cui-page-intro {
+  --cui-page-intro-padding-block: var(--cui-section-space-compact, clamp(2.5rem, 7vi, 5rem));
+  --cui-page-intro-gap: var(--cui-space-5, 1.5rem);
+  --cui-page-intro-content-size: 52rem;
+  --cui-page-intro-aside-size: 20rem;
+  --cui-page-intro-title-size: var(--cui-font-size-5, clamp(2.375rem, 1.66rem + 2.86vi, 4rem));
+  --cui-page-intro-inverse-bg: var(--cui-color-inverse-surface, #10141b);
+  --cui-page-intro-inverse-color: var(--cui-color-inverse, #f7f8fa);
+  --cui-page-intro-inverse-muted-color: var(--cui-color-inverse-muted, hsl(0deg 0% 100% / 78%));
+  --cui-page-intro-inverse-aside-bg: var(--cui-color-inverse-surface-raised, hsl(220deg 24% 8% / 72%));
+
+  box-sizing: border-box;
+  display: block;
+  inline-size: min(100% - (var(--cui-container-gutter, 2rem) * 2), var(--cui-container-wide, 96rem));
+  margin-inline: auto;
+  border-block-end: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  background: var(--cui-page-intro-bg, var(--cui-color-surface, #f7f8fa));
+  color: var(--cui-page-intro-color, var(--cui-color, #1b1f27));
+  padding-block: var(--cui-page-intro-padding-block, clamp(2.5rem, 7vi, 5rem));
+}
+
+.cui-page-intro-layout {
+  display: grid;
+  max-inline-size: var(--cui-container-wide, 96rem);
+  margin-inline: auto;
+  gap: var(--cui-page-intro-gap, 1.5rem);
+}
+
+.cui-page-intro-content {
+  display: grid;
+  max-inline-size: var(--cui-page-intro-content-size, 52rem);
+  gap: var(--cui-space-4, 1rem);
+}
+
+.cui-page-intro-content > :where(p):not([class]) {
+  max-inline-size: var(--cui-content-measure, 68ch);
+  margin: 0;
+  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-font-size-1, 1.1875rem);
+  line-height: 1.5;
+}
+
+.cui-page-intro-title {
+  max-inline-size: 16ch;
+  margin: 0;
+  color: var(--cui-page-intro-title-color, var(--cui-page-intro-color, var(--cui-color, #1b1f27)));
+  font-size: var(--cui-page-intro-title-size, 4rem);
+  font-weight: var(--cui-font-weight-display, 760);
+  letter-spacing: 0;
+  line-height: var(--cui-line-height-display, 0.98);
+  text-wrap: balance;
+}
+
+.cui-page-intro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-2, 0.5rem) var(--cui-space-4, 1rem);
+  margin: 0;
+  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
+  font-size: var(--cui-font-size-neg-1, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+.cui-page-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-3, 0.75rem);
+}
+
+.cui-page-intro-aside {
+  display: block;
+  align-content: start;
+  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-radius: var(--cui-radius-2, 0.5rem);
+  background: var(--cui-color-surface-raised, #fff);
+  box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
+  padding: var(--cui-space-4, 1rem);
+}
+
+.cui-page-intro-aside:empty {
+  display: none;
+}
+
+/* Variants --------------------------------------------------------------- */
+.cui-page-intro-landing {
+  --cui-page-intro-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
+  --cui-page-intro-content-size: 60rem;
+}
+
+.cui-page-intro-case,
+.cui-page-intro-campaign {
+  --cui-page-intro-bg: var(--cui-color-surface-muted, #edf0f4);
+}
+
+.cui-page-intro-vacancy {
+  --cui-page-intro-content-size: 46rem;
+}
+
+.cui-page-intro-full-bleed {
+  inline-size: 100%;
+  padding-inline: var(--cui-container-gutter, 2rem);
+  background: var(--cui-page-intro-bg, #edf0f4);
+}
+
+.cui-page-intro-inverse {
+  --cui-color: var(--cui-page-intro-inverse-color, #f7f8fa);
+  --cui-color-muted: var(--cui-page-intro-inverse-muted-color, hsl(0deg 0% 100% / 78%));
+  --cui-color-surface-raised: var(--cui-page-intro-inverse-aside-bg, hsl(220deg 24% 8% / 72%));
+  --cui-color-border: var(--cui-color-inverse-border, hsl(0deg 0% 100% / 18%));
+  --cui-page-intro-bg: var(--cui-page-intro-inverse-bg, #10141b);
+  --cui-page-intro-color: var(--cui-page-intro-inverse-color, #f7f8fa);
+  --cui-page-intro-title-color: var(--cui-page-intro-inverse-color, #f7f8fa);
+  --cui-page-intro-muted-color: var(--cui-page-intro-inverse-muted-color, hsl(0deg 0% 100% / 78%));
+
+  background: var(--cui-page-intro-bg, #10141b);
+  color: var(--cui-page-intro-color, #f7f8fa);
+}
+
+.cui-page-intro-center .cui-page-intro-content {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cui-page-intro-center .cui-page-intro-title,
+.cui-page-intro-center .cui-page-intro-content > :where(p):not([class]) {
+  margin-inline: auto;
+}
+
+@media (width >= 56rem) {
+  .cui-page-intro-case .cui-page-intro-layout,
+  .cui-page-intro-vacancy .cui-page-intro-layout,
+  .cui-page-intro-campaign .cui-page-intro-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, var(--cui-page-intro-aside-size, 20rem));
+    align-items: end;
+  }
+}
