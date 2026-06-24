@@ -17,7 +17,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-cta cui-cta-simple">
+        <section class="cui-cta" data-variant="simple">
           <div class="cui-cta-content">
             <p class="cui-eyebrow">Next step</p>
             <h3 class="cui-cta-title">Start with the component docs.</h3>
@@ -29,7 +29,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-cta cui-cta-simple">
+            <section class="cui-cta" data-variant="simple">
               <div class="cui-cta-content">
                 <p class="cui-eyebrow">Next step</p>
                 <h1 class="cui-cta-title">Start with the component docs.</h1>
@@ -46,7 +46,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-cta cui-cta-split">
+        <section class="cui-cta" data-variant="split">
           <div class="cui-cta-content">
             <p class="cui-eyebrow">Build faster</p>
             <h3 class="cui-cta-title">Pair supporting copy with actions.</h3>
@@ -59,7 +59,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-cta cui-cta-split">
+            <section class="cui-cta" data-variant="split">
               <div class="cui-cta-content">
                 <p class="cui-eyebrow">Build faster</p>
                 <h1 class="cui-cta-title">Pair supporting copy with actions.</h1>
@@ -77,7 +77,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-cta cui-cta-full-bleed">
+        <section class="cui-cta" data-variant="full-bleed">
           <div class="cui-cta-content">
             <p class="cui-eyebrow">Launch</p>
             <h3 class="cui-cta-title">Create a strong campaign close.</h3>
@@ -89,7 +89,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-cta cui-cta-full-bleed">
+            <section class="cui-cta" data-variant="full-bleed">
               <div class="cui-cta-content">
                 <p class="cui-eyebrow">Launch</p>
                 <h1 class="cui-cta-title">Create a strong campaign close.</h1>
@@ -101,12 +101,12 @@
             </section>
           </script>
         </cui-code>
-        <section class="cui-cta cui-cta-full-bleed cui-cta-inverse">
+        <section class="cui-cta" data-variant="full-bleed" data-tone="inverse">
           <div class="cui-cta-content">
             <p class="cui-eyebrow">Inverse full bleed</p>
             <h3 class="cui-cta-title">Make contrast explicit.</h3>
-            <p>The <code>.cui-cta-inverse</code> modifier can be combined with simple, split, full-bleed, or
-              sticky CTAs.</p>
+            <p>The <code>data-tone="inverse"</code> treatment can be combined with any
+              <code>data-variant</code>.</p>
           </div>
           <div class="cui-cta-actions">
             <cui-button variant="primary" href="./examples/">View inverse</cui-button>
@@ -114,11 +114,11 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-cta cui-cta-full-bleed cui-cta-inverse">
+            <section class="cui-cta" data-variant="full-bleed" data-tone="inverse">
               <div class="cui-cta-content">
                 <p class="cui-eyebrow">Inverse full bleed</p>
                 <h1 class="cui-cta-title">Make contrast explicit.</h1>
-                <p>The .cui-cta-inverse modifier can be combined with any CTA variant.</p>
+                <p>The data-tone="inverse" treatment can be combined with any data-variant.</p>
               </div>
               <div class="cui-cta-actions">
                 <cui-button variant="primary">View inverse</cui-button>
@@ -131,7 +131,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-cta cui-cta-sticky">
+        <section class="cui-cta" data-variant="sticky">
           <div class="cui-cta-content">
             <h3 class="cui-cta-title">Sticky CTAs stay available during long pages.</h3>
             <p>Use them sparingly for application flows, demos, and campaign signup pages.</p>
@@ -142,7 +142,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-cta cui-cta-sticky">
+            <section class="cui-cta" data-variant="sticky">
               <div class="cui-cta-content">
                 <h1 class="cui-cta-title">Sticky CTAs stay available during long pages.</h1>
                 <p>Use them sparingly for application flows, demos, and campaign signup pages.</p>
@@ -197,28 +197,24 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>.cui-cta-simple</code></td>
+              <td><code>data-variant="simple"</code></td>
               <td>Centers the message and action for focused sections.</td>
             </tr>
             <tr>
-              <td><code>.cui-cta-split</code></td>
+              <td><code>data-variant="split"</code></td>
               <td>Places actions in a side column at <code>≥ 48rem</code>.</td>
             </tr>
             <tr>
-              <td><code>.cui-cta-full-bleed</code></td>
+              <td><code>data-variant="full-bleed"</code></td>
               <td>Edge-to-edge muted band with section-scale padding and no card chrome.</td>
             </tr>
             <tr>
-              <td><code>.cui-cta-sticky</code></td>
+              <td><code>data-variant="sticky"</code></td>
               <td>Pins the CTA to the bottom of the viewport.</td>
             </tr>
             <tr>
-              <td><code>.cui-cta-inverse</code></td>
+              <td><code>data-tone="inverse"</code></td>
               <td>Inverse surface and text colors for high-contrast moments.</td>
-            </tr>
-            <tr>
-              <td><code>.cui-cta-center</code></td>
-              <td>Center-aligns content and actions (implied by <code>.cui-cta-simple</code>).</td>
             </tr>
           </tbody>
         </table>
@@ -255,7 +251,7 @@
               <td><code>--cui-cta-inverse-bg</code> · <code>--cui-cta-inverse-color</code> ·
                 <code>--cui-cta-inverse-muted-color</code> · <code>--cui-cta-inverse-eyebrow-color</code>
               </td>
-              <td>Inverse-mode overrides (applied by <code>.cui-cta-inverse</code>).</td>
+              <td>Inverse-mode overrides (applied by <code>data-tone="inverse"</code>).</td>
             </tr>
             <tr>
               <td><code>--cui-cta-sticky-z-index</code></td>

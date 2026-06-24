@@ -17,7 +17,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-hero cui-hero-split docs-hero-demo docs-hero-demo-split">
+        <section class="cui-hero docs-hero-demo docs-hero-demo-split" data-variant="split">
           <div class="cui-hero-inner">
             <div class="cui-hero-content">
               <p class="cui-eyebrow">Campaign</p>
@@ -37,7 +37,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-hero cui-hero-split">
+            <section class="cui-hero" data-variant="split">
               <div class="cui-hero-inner">
                 <div class="cui-hero-content">
                   <p class="cui-eyebrow">Campaign</p>
@@ -57,7 +57,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-hero cui-hero-background docs-hero-demo docs-hero-demo-background">
+        <section class="cui-hero docs-hero-demo docs-hero-demo-background" data-variant="background">
           <div class="cui-hero-bg"
             style="--cui-hero-background-image: url('./hero-image.svg'); --cui-hero-background-position: center;"></div>
           <div class="cui-hero-inner">
@@ -75,7 +75,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-hero cui-hero-background">
+            <section class="cui-hero" data-variant="background">
               <div
                 class="cui-hero-bg"
                 style="--cui-hero-background-image: url('hero.jpg'); --cui-hero-background-position: center;"
@@ -94,7 +94,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-hero cui-hero-overlay docs-hero-demo docs-hero-demo-overlay">
+        <section class="cui-hero docs-hero-demo docs-hero-demo-overlay" data-variant="overlay">
           <div class="cui-hero-inner">
             <div class="cui-hero-content">
               <p class="cui-eyebrow">Editorial</p>
@@ -115,7 +115,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-hero cui-hero-overlay">
+            <section class="cui-hero" data-variant="overlay">
               <div class="cui-hero-inner">
                 <div class="cui-hero-content">
                   <h1 class="cui-hero-title">Video-backed stories with readable copy.</h1>
@@ -135,7 +135,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-hero cui-hero-text cui-hero-center docs-hero-demo">
+        <section class="cui-hero docs-hero-demo" data-variant="text" data-align="center">
           <div class="cui-hero-inner">
             <div class="cui-hero-content">
               <p class="cui-eyebrow">Announcement</p>
@@ -151,7 +151,7 @@
         </section>
         <cui-code language="html">
           <script type="text/html">
-            <section class="cui-hero cui-hero-text cui-hero-center">
+            <section class="cui-hero" data-variant="text" data-align="center">
               <div class="cui-hero-inner">
                 <div class="cui-hero-content">
                   <p class="cui-eyebrow">Announcement</p>
@@ -231,33 +231,33 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>.cui-hero-split</code></td>
+              <td><code>data-variant="split"</code></td>
               <td>Shows the <code>.cui-hero-media</code> beside the copy.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-background</code></td>
+              <td><code>data-variant="background"</code></td>
               <td>Renders the <code>.cui-hero-bg</code> image behind the content.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-overlay</code></td>
+              <td><code>data-variant="overlay"</code></td>
               <td>Layers the content on top of a <code>.cui-hero-media</code> element with a
                 darkening gradient.
               </td>
             </tr>
             <tr>
-              <td><code>.cui-hero-text</code></td>
+              <td><code>data-variant="text"</code></td>
               <td>Copy-only hero with tighter rhythm and a narrower container.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-media-start</code></td>
+              <td><code>data-media="start"</code></td>
               <td>Places the media before the copy in the split layout.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-center</code></td>
-              <td>Centers the content column (pair with <code>.cui-hero-text</code>).</td>
+              <td><code>data-align="center"</code></td>
+              <td>Centers the content column (pair with <code>data-variant="text"</code>).</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-narrow · .cui-hero-default · .cui-hero-wide</code></td>
+              <td><code>data-width="narrow · default · wide"</code></td>
               <td>Caps the inner content's inline-size to a site container scale while the hero
                 surface stays full-bleed. Defaults to wide (96rem); <code>default</code> aligns with
                 the rest of the site content (72rem), <code>narrow</code> suits editorial copy
@@ -294,7 +294,7 @@
             <tr>
               <td><code>--cui-hero-container-size</code></td>
               <td><code>--cui-container-wide</code> (96rem); switched by
-                <code>.cui-hero-narrow / -default / -wide</code>.</td>
+                <code>data-width="narrow · default · wide"</code>.</td>
             </tr>
             <tr>
               <td><code>--cui-hero-media-size</code></td>
