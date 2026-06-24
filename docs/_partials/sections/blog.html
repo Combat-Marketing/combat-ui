@@ -11,12 +11,13 @@
   </div>
 
   <cui-tabs>
-    <button slot="tab" type="button">Article card</button>
-    <button slot="tab" type="button">Grid</button>
-    <button slot="tab" type="button">List</button>
-    <button slot="tab" type="button">Category filter</button>
-
-    <section slot="panel" class="docs-panel">
+    <div class="cui-tablist">
+      <button class="cui-tab" type="button" data-selected="true">Article card</button>
+      <button class="cui-tab" type="button">Grid</button>
+      <button class="cui-tab" type="button">List</button>
+      <button class="cui-tab" type="button">Category filter</button>
+    </div>
+    <section class="docs-panel">
       <div class="cui-stack">
         <article class="cui-article-card" data-variant="featured">
           <a class="cui-article-card-media" href="#blog-blocks" aria-label="Read article">
@@ -90,7 +91,7 @@
       </div>
     </section>
 
-    <section slot="panel" class="docs-panel">
+    <section class="docs-panel">
       <div class="cui-stack">
         <div class="cui-article-grid" data-columns="3">
           <article class="cui-article-card">
@@ -158,7 +159,7 @@
       </div>
     </section>
 
-    <section slot="panel" class="docs-panel">
+    <section class="docs-panel">
       <div class="cui-stack">
         <div class="cui-article-list">
           <article class="cui-article-card" data-orient="row">
@@ -271,7 +272,7 @@
       </div>
     </section>
 
-    <section slot="panel" class="docs-panel">
+    <section class="docs-panel">
       <div class="cui-stack">
         <div class="cui-prose">
           <p>
