@@ -36,16 +36,13 @@
     "./dist/carousel.js",
     "./dist/code.js",
     "./dist/cookie-banner.js",
-    "./dist/cta.js",
     "./dist/day-planner.js",
     "./dist/disclosure.js",
     "./dist/field.js",
     "./dist/form.js",
-    "./dist/hero.js",
     "./dist/map.js",
     "./dist/modal.js",
     "./dist/navbar.js",
-    "./dist/page-intro.js",
     "./dist/reveal.js",
     "./dist/scroll-stage.js",
     "./dist/tabs.js",
@@ -57,10 +54,6 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/combat-ui.js"
-    },
-    "./auto": {
-      "types": "./dist/types/auto.d.ts",
-      "import": "./dist/auto.js"
     },
     "./styles": "./dist/combat-ui.css",
     "./article-filter": {
@@ -87,10 +80,6 @@
       "types": "./dist/types/elements/cookie-banner.d.ts",
       "import": "./dist/cookie-banner.js"
     },
-    "./cta": {
-      "types": "./dist/types/elements/cta.d.ts",
-      "import": "./dist/cta.js"
-    },
     "./day-planner": {
       "types": "./dist/types/elements/day-planner.d.ts",
       "import": "./dist/day-planner.js"
@@ -107,10 +96,6 @@
       "types": "./dist/types/elements/form.d.ts",
       "import": "./dist/form.js"
     },
-    "./hero": {
-      "types": "./dist/types/elements/hero.d.ts",
-      "import": "./dist/hero.js"
-    },
     "./map": {
       "types": "./dist/types/elements/map.d.ts",
       "import": "./dist/map.js"
@@ -122,10 +107,6 @@
     "./navbar": {
       "types": "./dist/types/elements/navbar.d.ts",
       "import": "./dist/navbar.js"
-    },
-    "./page-intro": {
-      "types": "./dist/types/elements/page-intro.d.ts",
-      "import": "./dist/page-intro.js"
     },
     "./reveal": {
       "types": "./dist/types/elements/reveal.d.ts",

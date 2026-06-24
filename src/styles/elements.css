@@ -1,40 +1,23 @@
 /**
- * Light-DOM styling for the custom elements.
- *
- * Combat UI's custom elements render their structure in the shadow DOM, but
- * the *typography* of their slotted (light-DOM) content lives here, in the
- * global stylesheet, rather than as `::slotted()` rules inside each shadow
- * root. Two reasons:
- *
- *   1. No flash on upgrade. `::slotted()` rules only exist once an element
- *      upgrades, so slotted headings/copy render at browser-default size and
- *      weight first, then jump to the display scale when the shadow root
- *      attaches. Because this sheet ships with the page CSS — before the
- *      element scripts run — the slotted content is styled identically before
- *      and after upgrade. No font jump, no reflow, and no need to hide
- *      undefined elements with `:not(:defined) { visibility: hidden }`.
- *
- *   2. Less in the shadow DOM. The shadow roots keep only structural layout
- *      (grid wrappers, parts, positioning). Slotted typography is a single
- *      source of truth here.
+ * Light-DOM styling for the custom elements that still render a shadow root
+ * and project author content through slots (field, map, cookie-banner) plus
+ * the navbar's pre-upgrade reserve-layout. Putting the slotted typography here,
+ * in the global stylesheet, rather than in `::slotted()` rules inside each
+ * shadow root means it is present from the page's first paint — identical
+ * before and after the element upgrades — so there is no font flash and no need
+ * to hide undefined elements.
  *
  * Light-DOM author rules win over `::slotted()` for the same element
- * regardless of specificity, so there is no conflict with anything left in the
- * shadow roots. The component-scoped `--cui-<name>-*` custom properties keep
- * working: the rules below read the same tokens, and the element-selector
- * blocks mirror the `:host` defaults so they resolve before upgrade too.
+ * regardless of specificity, and the component-scoped `--cui-<name>-*` custom
+ * properties keep working because these rules read the same tokens.
  *
- * Keep these rules in sync with the matching component's shadow CSS in
- * `src/components/<name>/<name>.css`.
+ * Components with no behavior (hero, page-intro, cta) and the tabs interface
+ * are pure CSS classes now — see `src/styles/components/`.
  */
 
 /* Box-model baselines — unupgraded custom elements are `display: inline` by
    default, which collapses their layout until the scripts run. Mirror each
    element's `:host` display so the box is correct on first paint. */
-cui-hero,
-cui-page-intro,
-cui-cta,
-cui-navbar,
 cui-map,
 cui-carousel {
   display: block;
@@ -50,142 +33,6 @@ cui-field {
   gap: var(--cui-space-1, 0.25rem);
 }
 
-/* Hero ------------------------------------------------------------------- */
-cui-hero {
-  --cui-hero-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
-}
-
-cui-hero > [slot="eyebrow"] {
-  margin: 0;
-  color: var(--cui-hero-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-cui-hero > [slot="title"] {
-  max-inline-size: 13ch;
-  margin: 0;
-  font-size: var(--cui-hero-title-size, 5.5rem);
-  font-weight: var(--cui-font-weight-display, 760);
-  letter-spacing: 0;
-  line-height: var(--cui-line-height-display, 0.98);
-  text-wrap: balance;
-}
-
-cui-hero > :not([slot]) {
-  max-inline-size: var(--cui-content-measure, 68ch);
-  margin: 0;
-  color: var(--cui-hero-muted-color, var(--cui-color-muted, #5d6675));
-  font-size: var(--cui-font-size-2, 1.5rem);
-  line-height: 1.4;
-}
-
-cui-hero > [slot="actions"] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
-}
-
-/* Page-intro ------------------------------------------------------------- */
-cui-page-intro {
-  --cui-page-intro-title-size: var(--cui-font-size-5, clamp(2.375rem, 1.66rem + 2.86vi, 4rem));
-}
-
-cui-page-intro[variant="landing"] {
-  --cui-page-intro-title-size: var(--cui-font-size-display, clamp(3rem, 1.9rem + 4.4vi, 5.5rem));
-}
-
-cui-page-intro > [slot="eyebrow"] {
-  margin: 0;
-  color: var(--cui-page-intro-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-cui-page-intro > [slot="title"] {
-  max-inline-size: 16ch;
-  margin: 0;
-  color: var(--cui-page-intro-title-color, var(--cui-page-intro-color, var(--cui-color, #1b1f27)));
-  font-size: var(--cui-page-intro-title-size, 4rem);
-  font-weight: var(--cui-font-weight-display, 760);
-  letter-spacing: 0;
-  line-height: var(--cui-line-height-display, 0.98);
-  text-wrap: balance;
-}
-
-cui-page-intro > :not([slot]) {
-  max-inline-size: var(--cui-content-measure, 68ch);
-  margin: 0;
-  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
-  font-size: var(--cui-font-size-1, 1.1875rem);
-  line-height: 1.5;
-}
-
-cui-page-intro > [slot="meta"] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-2, 0.5rem) var(--cui-space-4, 1rem);
-  margin: 0;
-  color: var(--cui-page-intro-muted-color, var(--cui-color-muted, #5d6675));
-  font-size: var(--cui-font-size-neg-1, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-}
-
-cui-page-intro > [slot="actions"] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
-}
-
-cui-page-intro > [slot="aside"] {
-  display: block;
-  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
-  border-radius: var(--cui-radius-2, 0.5rem);
-  background: var(--cui-color-surface-raised, #fff);
-  box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
-  padding: var(--cui-space-4, 1rem);
-}
-
-/* CTA -------------------------------------------------------------------- */
-cui-cta {
-  --cui-cta-title-size: var(--cui-font-size-4, clamp(1.875rem, 1.48rem + 1.56vi, 2.75rem));
-}
-
-cui-cta > [slot="eyebrow"] {
-  margin: 0;
-  color: var(--cui-cta-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-cui-cta > [slot="title"] {
-  max-inline-size: 18ch;
-  margin: 0;
-  color: var(--cui-cta-title-color, var(--cui-cta-color, var(--cui-color, #1b1f27)));
-  font-size: var(--cui-cta-title-size, 2.75rem);
-  font-weight: var(--cui-font-weight-display, 760);
-  line-height: var(--cui-line-height-tight, 1.2);
-  text-wrap: balance;
-}
-
-cui-cta > :not([slot]) {
-  max-inline-size: var(--cui-content-measure, 68ch);
-  margin: 0;
-  color: var(--cui-cta-muted-color, var(--cui-color-muted, #5d6675));
-}
-
-cui-cta > [slot="actions"] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
-}
-
 /* Navbar ----------------------------------------------------------------- */
 cui-navbar {
   --cui-navbar-link-bg: transparent;
@@ -197,6 +44,41 @@ cui-navbar {
   --cui-navbar-link-padding-block: var(--cui-space-1, 0.25rem);
   --cui-navbar-link-padding-inline: var(--cui-space-2, 0.5rem);
   --cui-navbar-link-radius: var(--cui-control-radius, 0.25rem);
+}
+
+/* The bar/container structure (centered width, fixed height, the brand + nav
+   + actions row) lives in the shadow DOM, so before the element upgrades there
+   is no bar — the slotted brand, nav, and actions stack at full height and
+   then snap into place when the shadow root attaches, reflowing the page. This
+   reserves the upgraded bar's box so nothing moves: same centered width, same
+   total height (`--cui-navbar-size` plus the block padding the shadow `nav`
+   adds), brand and nav/actions on one row. It is scoped to `:not(:defined)`,
+   so it stops applying the instant the shadow DOM takes over — no manual
+   tag list, no hidden content. */
+cui-navbar:not(:defined) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cui-space-5, 1.5rem);
+  inline-size: min(
+    100% - var(--cui-navbar-gutter, 2rem),
+    var(--cui-navbar-width, var(--cui-container, 72rem))
+  );
+  margin-inline: auto;
+  min-block-size: calc(
+    var(--cui-navbar-size, 3.25rem) + (var(--cui-navbar-padding-block, 0.75rem) * 2)
+  );
+}
+
+/* Below the desktop breakpoint the upgraded navbar tucks nav + actions behind
+   the burger button, leaving only the brand in the bar. Match that before
+   upgrade so the bar height holds; the collapsible content reappears, laid out
+   correctly, once the element upgrades. */
+@media (width < 48rem) {
+  cui-navbar:not(:defined) > [slot="nav"],
+  cui-navbar:not(:defined) > [slot="actions"] {
+    display: none;
+  }
 }
 
 cui-navbar > a[slot="brand"] {
@@ -244,23 +126,10 @@ cui-navbar > a[slot="nav"][aria-current="page"] {
   }
 }
 
-/* Tabs ------------------------------------------------------------------- */
-cui-tabs > [slot="tab"] {
-  flex: 0 0 auto;
-  border: 0;
-  border-block-end: 2px solid transparent;
-  background: transparent;
-  color: var(--cui-color-muted, oklch(41.7% 0.045 264deg));
-  font: inherit;
-  padding-block: var(--cui-space-3, 0.75rem);
-  padding-inline: var(--cui-space-4, 1rem);
-}
-
-cui-tabs > [slot="tab"][aria-selected="true"] {
-  border-block-end-color: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  color: var(--cui-color, oklch(24% 0.04 264deg));
-  font-weight: var(--cui-font-weight-strong, 680);
-}
+/* Tabs (cui-tabs) renders no shadow structure — it enhances `.cui-tabs` /
+   `.cui-tablist` / `.cui-tab` light-DOM markup, styled by
+   src/styles/components/tabs.css. The element-level grid layout is set in the
+   box-model baselines above. */
 
 /* Field ------------------------------------------------------------------ */
 cui-field > [slot="help"] {
@@ -286,19 +155,4 @@ cui-map > [slot="legend"] {
 /* Cookie banner ---------------------------------------------------------- */
 cui-cookie-banner a {
   color: var(--cui-color-accent, oklch(57% 0.18 246deg));
-}
-
-/* Alignment & variant overrides -----------------------------------------
-   Grouped here, after the base rules, so selector specificity ascends
-   through the file (these center-aligned variants are higher specificity
-   than the base slotted rules they override). */
-cui-page-intro[align="center"] > [slot="title"],
-cui-page-intro[align="center"] > :not([slot]),
-cui-cta[align="center"] > [slot="title"],
-cui-cta[align="center"] > :not([slot]),
-cui-cta[variant="simple"] > [slot="title"],
-cui-cta[variant="simple"] > :not([slot]),
-cui-hero[variant="text"][align="center"] > [slot="title"],
-cui-hero[variant="text"][align="center"] > :not([slot]) {
-  margin-inline: auto;
 }

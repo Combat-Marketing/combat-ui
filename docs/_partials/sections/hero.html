@@ -1,0 +1,284 @@
+<section id="hero" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
+  <div class="cui-prose">
+    <h2>Hero</h2>
+    <p>
+      Use <code>cui-hero</code> for text-only, split-media, background-image, and full-bleed overlay
+      introductions. Image and video media can stay in light DOM through the <code>media</code> slot.
+    </p>
+  </div>
+
+  <cui-tabs>
+    <button slot="tab" type="button">Image</button>
+    <button slot="tab" type="button">Background</button>
+    <button slot="tab" type="button">Video</button>
+    <button slot="tab" type="button">Text</button>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-hero variant="split"
+          style="--cui-hero-min-block-size: auto; --cui-hero-padding-block: var(--cui-space-7, 3rem); --cui-hero-title-size: var(--cui-font-size-5, 4rem); --cui-hero-media-min-block-size: 22rem;">
+          <p slot="eyebrow">Campaign</p>
+          <h3 slot="title">Launch pages with rich media.</h3>
+          <p>
+            Pair concise copy with product visuals, venue photography, or campaign artwork.
+          </p>
+          <div slot="actions" class="cui-hero-actions">
+            <cui-button variant="primary">Start</cui-button>
+            <cui-button>Preview</cui-button>
+          </div>
+          <img slot="media" class="cui-hero-media" src="./hero-image.svg" alt="Abstract product interface preview">
+        </cui-hero>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-hero variant="split">
+                        <p slot="eyebrow">Campaign</p>
+                        <h1 slot="title">Launch pages with rich media.</h1>
+                        <p>Pair concise copy with product visuals or campaign artwork.</p>
+                        <div slot="actions" class="cui-hero-actions">
+                          <cui-button variant="primary">Start</cui-button>
+                        </div>
+                        <img slot="media" class="cui-hero-media" src="./hero-image.svg" alt="">
+                      </cui-hero>
+                    </script>
+        </cui-code>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-hero variant="background" background-src="./hero-image.svg" background-position="center"
+          style="--cui-hero-min-block-size: 32rem; --cui-hero-padding-block: var(--cui-space-7, 3rem); --cui-hero-title-size: var(--cui-font-size-5, 4rem);">
+          <p slot="eyebrow">Background</p>
+          <h3 slot="title">Put imagery behind the message.</h3>
+          <p>
+            Background image heroes work well when the visual is decorative and the copy should lead.
+          </p>
+          <div slot="actions" class="cui-hero-actions">
+            <cui-button variant="primary" href="./examples/">Explore</cui-button>
+          </div>
+        </cui-hero>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-hero
+                        variant="background"
+                        background-src="./hero-image.svg"
+                        background-position="center"
+                      >
+                        <h1 slot="title">Put imagery behind the message.</h1>
+                        <p>Use this when the image is decorative and the copy should lead.</p>
+                      </cui-hero>
+                    </script>
+        </cui-code>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-hero variant="overlay"
+          style="--cui-hero-min-block-size: 34rem; --cui-hero-padding-block: var(--cui-space-7, 3rem); --cui-hero-title-size: var(--cui-font-size-5, 4rem);">
+          <p slot="eyebrow">Editorial</p>
+          <h3 slot="title">Video-backed stories with readable copy.</h3>
+          <p>
+            Use an overlay hero when motion supports the message and the headline still needs priority.
+          </p>
+          <div slot="actions" class="cui-hero-actions">
+            <cui-button variant="primary" href="./examples/">Watch</cui-button>
+          </div>
+          <video slot="media" class="cui-hero-media" autoplay muted loop playsinline poster="./hero-image.svg">
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+          </video>
+        </cui-hero>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-hero variant="overlay">
+                        <h1 slot="title">Video-backed stories with readable copy.</h1>
+                        <p>Use overlays when motion supports the message.</p>
+                        <video slot="media" class="cui-hero-media" autoplay muted loop playsinline>
+                          <source src="hero.mp4" type="video/mp4">
+                        </video>
+                      </cui-hero>
+                    </script>
+        </cui-code>
+      </div>
+    </section>
+
+    <section slot="panel" class="docs-panel">
+      <div class="cui-stack">
+        <cui-hero variant="text" align="center"
+          style="--cui-hero-padding-block: var(--cui-space-7, 3rem); --cui-hero-title-size: var(--cui-font-size-5, 4rem);">
+          <p slot="eyebrow">Announcement</p>
+          <h3 slot="title">A focused text hero for direct messages.</h3>
+          <p>
+            Text-only heroes keep the first viewport calm for documentation, changelogs, and product updates.
+          </p>
+          <div slot="actions" class="cui-hero-actions">
+            <cui-button variant="primary">Read more</cui-button>
+          </div>
+        </cui-hero>
+        <cui-code language="html">
+          <script type="text/html">
+                      <cui-hero
+                        variant="text"
+                        align="center"
+                        style="--cui-hero-padding-block: var(--cui-space-7, 3rem); --cui-hero-title-size: var(--cui-font-size-5, 4rem);"
+                      >
+                        <p slot="eyebrow">Announcement</p>
+                        <h3 slot="title">A focused text hero for direct messages.</h3>
+                        <p>
+                          Text-only heroes keep the first viewport calm for documentation, changelogs, and product updates.
+                        </p>
+                        <div slot="actions" class="cui-hero-actions">
+                          <cui-button variant="primary">Read more</cui-button>
+                        </div>
+                      </cui-hero>
+                  </script>
+        </cui-code>
+      </div>
+    </section>
+  </cui-tabs>
+
+  <cui-disclosure>
+    <details class="cui-disclosure" data-variant="ghost">
+      <summary>API reference</summary>
+      <div class="cui-disclosure-body">
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Slot</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>eyebrow</code></td>
+              <td>Small kicker text rendered above the title.</td>
+            </tr>
+            <tr>
+              <td><code>title</code></td>
+              <td>Display heading. Sized via <code>--cui-hero-title-size</code>.</td>
+            </tr>
+            <tr>
+              <td><em>(default)</em></td>
+              <td>Lead copy and supporting paragraphs.</td>
+            </tr>
+            <tr>
+              <td><code>actions</code></td>
+              <td>CTA button group. Wrap in a <code>.cui-hero-actions</code> cluster.</td>
+            </tr>
+            <tr>
+              <td><code>media</code></td>
+              <td>Image, video, or markup for the split / overlay variants. Use the
+                <code>.cui-hero-media</code> class for cover fit.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Attribute / property</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>variant="split | background | overlay | text"</code></td>
+              <td>Layout preset. <code>split</code> shows media beside copy;
+                <code>background</code> renders <code>background-src</code> behind the content;
+                <code>overlay</code> layers content on top of a media slot; <code>text</code> is
+                copy-only.
+              </td>
+            </tr>
+            <tr>
+              <td><code>background-src</code></td>
+              <td>Image URL used by the <code>background</code> variant. Reflected to the
+                <code>--cui-hero-background-image</code> custom property.
+              </td>
+            </tr>
+            <tr>
+              <td><code>background-position</code></td>
+              <td>CSS <code>background-position</code> for the background variant. Defaults to
+                <code>center</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><code>background-size</code></td>
+              <td>CSS <code>background-size</code> for the background variant. Defaults to
+                <code>cover</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><code>align="start | center"</code></td>
+              <td>Horizontal alignment of the content column.</td>
+            </tr>
+            <tr>
+              <td><code>content-width="narrow | default | wide"</code></td>
+              <td>Caps the inner content's inline-size to a site container scale while the hero
+                surface stays full-bleed. Omit for the wide default (96rem); use
+                <code>default</code> to align with the rest of the site content (72rem), or
+                <code>narrow</code> for editorial copy (48rem). Drives
+                <code>--cui-hero-container-size</code>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="docs-token-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--cui-hero-min-block-size</code></td>
+              <td><code>min(86vb, 48rem)</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-padding-block</code></td>
+              <td><code>--cui-section-space-hero</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-gap</code></td>
+              <td><code>--cui-space-7</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-content-size</code></td>
+              <td><code>42rem</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-container-size</code></td>
+              <td><code>--cui-container-wide</code> (96rem); switched by <code>content-width</code>.</td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-media-size</code></td>
+              <td><code>38rem</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-media-min-block-size</code></td>
+              <td><code>clamp(18rem, 44vi, 34rem)</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-media-radius</code></td>
+              <td><code>--cui-radius-2</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-title-size</code></td>
+              <td><code>--cui-font-size-display</code></td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-overlay</code></td>
+              <td>Linear gradient — only used by the <code>overlay</code> variant.</td>
+            </tr>
+            <tr>
+              <td><code>--cui-hero-bg</code> · <code>--cui-hero-color</code></td>
+              <td>Surface and text overrides.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </cui-disclosure>
+</section>

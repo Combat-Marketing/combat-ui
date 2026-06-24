@@ -187,6 +187,49 @@
           }
         },
         {
+          "name": "cui-code",
+          "description": "Displays a code sample with a copy-to-clipboard button. Reads source from\nits text content, from an HTML comment child, or from a `<script type=\"…\">`\nchild — whichever is present — so example markup can stay valid HTML.\n---\n\n\n### **Slots:**\n - _default_ - The code to display. Can be raw text, an HTML comment containing markup, or a `<script type=\"text/plain\">` block (useful when the example itself is HTML you don't want the browser to render).",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "language",
+              "description": "Source language hint (`text`, `html`, `css`, `js`, …). Used as a CSS hook and in the copy-button label.",
+              "value": { "type": "string" }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "The code to display. Can be raw text, an HTML comment containing markup, or a `<script type=\"text/plain\">` block (useful when the example itself is HTML you don't want the browser to render)."
+            }
+          ],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
+          "name": "cui-cta",
+          "description": "Call-to-action section with optional eyebrow, title, body copy, and an\nactions row. All structural pieces are slots so content stays in light DOM.\n---\n\n\n### **Slots:**\n - _default_ - Body copy.\n- **eyebrow** - Small label above the title (category, audience, etc.).\n- **title** - The CTA headline. Use a heading element (`<h2>`, `<h3>`) for correct document outline.\n- **actions** - One or more buttons or links. Typically `cui-button`s.",
+          "doc-url": "",
+          "attributes": [],
+          "slots": [
+            { "name": "", "description": "Body copy." },
+            {
+              "name": "eyebrow",
+              "description": "Small label above the title (category, audience, etc.)."
+            },
+            {
+              "name": "title",
+              "description": "The CTA headline. Use a heading element (`<h2>`, `<h3>`) for correct document outline."
+            },
+            {
+              "name": "actions",
+              "description": "One or more buttons or links. Typically `cui-button`s."
+            }
+          ],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
           "name": "cui-calendar",
           "description": "Month-view calendar that decorates a slotted list of\n`.cui-event-card` children. Reads each card's first `<time\ndatetime>` to plot an event pill onto the matching day cell;\nthe source cards remain in light DOM beneath the grid (or\nvisually hidden via `events-hidden`) so search engines and feed\nreaders index the full event copy without depending on the\ncomponent's JS.\n\nClick a day to fire `cui-calendar-day-select`; click an event\npill to fire `cui-calendar-event-select`; the prev / next\nbuttons fire `cui-calendar-navigate`. Keyboard nav inside the\ngrid uses arrow keys, Home / End, and PgUp / PgDn (with Shift\njumping a year).\n---\n\n\n### **Events:**\n - **cui-calendar-event-select** - Fires when an event pill is activated.\n- **cui-calendar-day-select** - Fires when a day cell is activated.\n- **cui-calendar-navigate** - Fires when the visible month changes.\n\n### **Methods:**\n - **goTo(year: _number_, month: _number_): _void_** - Programmatically navigate to a specific month (1-12).\n- **next(): _void_** - Move forward one month.\n- **previous(): _void_** - Move back one month.\n- **refresh(): _void_** - Re-read slotted event cards. Call after dynamic updates.\n\n### **Slots:**\n - _default_ - One or more `.cui-event-card` elements. Cards without a `<time datetime>` are skipped; multi-day events use the start date for plotting (single-cell rendering for v1).",
           "doc-url": "",
@@ -263,49 +306,6 @@
               }
             ]
           }
-        },
-        {
-          "name": "cui-code",
-          "description": "Displays a code sample with a copy-to-clipboard button. Reads source from\nits text content, from an HTML comment child, or from a `<script type=\"…\">`\nchild — whichever is present — so example markup can stay valid HTML.\n---\n\n\n### **Slots:**\n - _default_ - The code to display. Can be raw text, an HTML comment containing markup, or a `<script type=\"text/plain\">` block (useful when the example itself is HTML you don't want the browser to render).",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "language",
-              "description": "Source language hint (`text`, `html`, `css`, `js`, …). Used as a CSS hook and in the copy-button label.",
-              "value": { "type": "string" }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "The code to display. Can be raw text, an HTML comment containing markup, or a `<script type=\"text/plain\">` block (useful when the example itself is HTML you don't want the browser to render)."
-            }
-          ],
-          "events": [],
-          "js": { "properties": [], "events": [] }
-        },
-        {
-          "name": "cui-cta",
-          "description": "Call-to-action section with optional eyebrow, title, body copy, and an\nactions row. All structural pieces are slots so content stays in light DOM.\n---\n\n\n### **Slots:**\n - _default_ - Body copy.\n- **eyebrow** - Small label above the title (category, audience, etc.).\n- **title** - The CTA headline. Use a heading element (`<h2>`, `<h3>`) for correct document outline.\n- **actions** - One or more buttons or links. Typically `cui-button`s.",
-          "doc-url": "",
-          "attributes": [],
-          "slots": [
-            { "name": "", "description": "Body copy." },
-            {
-              "name": "eyebrow",
-              "description": "Small label above the title (category, audience, etc.)."
-            },
-            {
-              "name": "title",
-              "description": "The CTA headline. Use a heading element (`<h2>`, `<h3>`) for correct document outline."
-            },
-            {
-              "name": "actions",
-              "description": "One or more buttons or links. Typically `cui-button`s."
-            }
-          ],
-          "events": [],
-          "js": { "properties": [], "events": [] }
         },
         {
           "name": "cui-day-planner",
@@ -393,6 +393,44 @@
                 "name": "cui-day-planner-navigate",
                 "type": "CustomEvent<CuiDayPlannerNavigateDetail>",
                 "description": "Fires after the visible day changes."
+              }
+            ]
+          }
+        },
+        {
+          "name": "cui-disclosure",
+          "description": "Lightweight custom element that wraps a native `<details>` element so it can\nbe opened, closed, or toggled by ID from anywhere on the page, and so its\nopen state is observable as an attribute and a custom event.\n\nThe `<details>` element stays in the light DOM, so it's contents remain\nsearchable, indexable, and stylable from the host page.\n---\n\n\n### **Events:**\n - **cui-disclosure-toggle** - Bubbles after the disclosure opens/closes. `detail.open` is the new state.\n\n### **Slots:**\n - _default_ - A single `<details>` element with its `<summary>` and body. The element does not render its own UI - it only observes and controls the nested `<details>`.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "open",
+              "description": "Reflects the inner `<details>.open`. Set or remove this attribute to open/close the disclosure; the attribute also updates when the user toggles the disclosure by clicking the `<summary>` directly.",
+              "value": { "type": "boolean" }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "A single `<details>` element with its `<summary>` and body. The element does not render its own UI - it only observes and controls the nested `<details>`."
+            }
+          ],
+          "events": [
+            {
+              "name": "cui-disclosure-toggle",
+              "type": "CustomEvent<CuiDisclosureToggleDetail>",
+              "description": "Bubbles after the disclosure opens/closes. `detail.open` is the new state."
+            }
+          ],
+          "js": {
+            "properties": [
+              { "name": "details", "type": "HTMLDetailsElement | null" },
+              { "name": "isOpen", "type": "boolean" }
+            ],
+            "events": [
+              {
+                "name": "cui-disclosure-toggle",
+                "type": "CustomEvent<CuiDisclosureToggleDetail>",
+                "description": "Bubbles after the disclosure opens/closes. `detail.open` is the new state."
               }
             ]
           }
@@ -523,44 +561,6 @@
           }
         },
         {
-          "name": "cui-disclosure",
-          "description": "Lightweight custom element that wraps a native `<details>` element so it can\nbe opened, closed, or toggled by ID from anywhere on the page, and so its\nopen state is observable as an attribute and a custom event.\n\nThe `<details>` element stays in the light DOM, so it's contents remain\nsearchable, indexable, and stylable from the host page.\n---\n\n\n### **Events:**\n - **cui-disclosure-toggle** - Bubbles after the disclosure opens/closes. `detail.open` is the new state.\n\n### **Slots:**\n - _default_ - A single `<details>` element with its `<summary>` and body. The element does not render its own UI - it only observes and controls the nested `<details>`.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "open",
-              "description": "Reflects the inner `<details>.open`. Set or remove this attribute to open/close the disclosure; the attribute also updates when the user toggles the disclosure by clicking the `<summary>` directly.",
-              "value": { "type": "boolean" }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "A single `<details>` element with its `<summary>` and body. The element does not render its own UI - it only observes and controls the nested `<details>`."
-            }
-          ],
-          "events": [
-            {
-              "name": "cui-disclosure-toggle",
-              "type": "CustomEvent<CuiDisclosureToggleDetail>",
-              "description": "Bubbles after the disclosure opens/closes. `detail.open` is the new state."
-            }
-          ],
-          "js": {
-            "properties": [
-              { "name": "details", "type": "HTMLDetailsElement | null" },
-              { "name": "isOpen", "type": "boolean" }
-            ],
-            "events": [
-              {
-                "name": "cui-disclosure-toggle",
-                "type": "CustomEvent<CuiDisclosureToggleDetail>",
-                "description": "Bubbles after the disclosure opens/closes. `detail.open` is the new state."
-              }
-            ]
-          }
-        },
-        {
           "name": "cui-field",
           "description": "Form-field wrapper that surfaces native `ValidityState` as user-visible\nmessages, supports server-side errors via `setError()`, async validators\nvia `addValidator()`, and i18n via slotted `error-<validityKey>` content.\nDesigned to be a child of `cui-form`, but works standalone.\n---\n\n\n### **Events:**\n - **cui-field-valid** - Fires when the field transitions to a valid state.\n- **cui-field-invalid** - Fires when validation fails. `detail.key` is the first failing `ValidityState` key; `detail.params` carries control-derived values for message interpolation.\n\n### **Slots:**\n - _default_ - The form control (`<input>`, `<select>`, `<textarea>`, or a custom control matching `CuiFieldControl`).\n- **label** - The field label. Will be associated with the control via `for=` / `aria-labelledby`.\n- **help** - Descriptive help text shown beneath the control.\n- **error** - Generic error message. Used when no `error-<key>` slot matches the failing validity key.\n- **error-{validityKey}** - Validity-key-specific error message (`error-valueMissing`, `error-typeMismatch`, `error-tooShort`, …). The first matching slot wins.",
           "doc-url": "",
@@ -622,120 +622,6 @@
                 "description": "Fires when validation fails. `detail.key` is the first failing `ValidityState` key; `detail.params` carries control-derived values for message interpolation."
               }
             ]
-          }
-        },
-        {
-          "name": "cui-form",
-          "description": "Coordinates submission and validation across child `cui-field` elements.\nRuns each field's async validators, blocks submit on failures, and\nsurfaces submit / success / error events with typed details. Set a JS\nsubmit handler with `setSubmitHandler(fn)`.\n---\n\n\n### **Events:**\n - **cui-form-invalid** - Fires when submission is blocked because one or more fields failed validation.\n- **cui-form-submit** - Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot.\n- **cui-form-success** - Fires after a JS submit handler resolves successfully.\n- **cui-form-error** - Fires when a JS submit handler rejects. `detail.error` is the thrown value.\n\n### **Slots:**\n - _default_ - A native `<form>` element containing `cui-field`s and a submit button. The form's `action` and `method` are honored when no JS handler is attached.",
-          "doc-url": "",
-          "attributes": [],
-          "slots": [
-            {
-              "name": "",
-              "description": "A native `<form>` element containing `cui-field`s and a submit button. The form's `action` and `method` are honored when no JS handler is attached."
-            }
-          ],
-          "events": [
-            {
-              "name": "cui-form-invalid",
-              "type": "CustomEvent",
-              "description": "Fires when submission is blocked because one or more fields failed validation."
-            },
-            {
-              "name": "cui-form-submit",
-              "type": "CustomEvent<CuiFormSubmitDetail>",
-              "description": "Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot."
-            },
-            {
-              "name": "cui-form-success",
-              "type": "CustomEvent<CuiFormSubmitDetail>",
-              "description": "Fires after a JS submit handler resolves successfully."
-            },
-            {
-              "name": "cui-form-error",
-              "type": "CustomEvent<CuiFormErrorDetail>",
-              "description": "Fires when a JS submit handler rejects. `detail.error` is the thrown value."
-            }
-          ],
-          "js": {
-            "properties": [{ "name": "busy", "type": "boolean" }],
-            "events": [
-              {
-                "name": "cui-form-invalid",
-                "type": "CustomEvent",
-                "description": "Fires when submission is blocked because one or more fields failed validation."
-              },
-              {
-                "name": "cui-form-submit",
-                "type": "CustomEvent<CuiFormSubmitDetail>",
-                "description": "Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot."
-              },
-              {
-                "name": "cui-form-success",
-                "type": "CustomEvent<CuiFormSubmitDetail>",
-                "description": "Fires after a JS submit handler resolves successfully."
-              },
-              {
-                "name": "cui-form-error",
-                "type": "CustomEvent<CuiFormErrorDetail>",
-                "description": "Fires when a JS submit handler rejects. `detail.error` is the thrown value."
-              }
-            ]
-          }
-        },
-        {
-          "name": "cui-hero",
-          "description": "Hero section with optional responsive background image and content + media\nregions. All copy and media stay in light DOM via slots.\n---\n\n\n### **Slots:**\n - _default_ - Body copy beneath the title.\n- **eyebrow** - Small label above the title.\n- **title** - Main hero headline. Use a heading element.\n- **actions** - Primary and secondary CTAs (typically `cui-button`s).\n- **media** - Hero artwork (image, illustration, video) shown alongside or behind the copy depending on layout class.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "background-position",
-              "description": "CSS `background-position` value (`center`, `50% 30%`, …) for the background image.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "background-size",
-              "description": "CSS `background-size` value (`cover`, `contain`, …) for the background image.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "background-src",
-              "description": "URL of the background image. Sets a CSS custom property the stylesheet consumes; omit for no background.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "content-width",
-              "description": "Caps the inner content's inline-size to one of the site container scales while the hero surface (background, accent fill) stays full-bleed. Omit for the wide default (`--cui-container-wide`); use `default` to align with the rest of the site content (`--cui-container`); use `narrow` for editorial copy (`--cui-container-narrow`).",
-              "value": { "type": "\"narrow\"|\"default\"|\"wide\"" }
-            }
-          ],
-          "slots": [
-            { "name": "", "description": "Body copy beneath the title." },
-            {
-              "name": "eyebrow",
-              "description": "Small label above the title."
-            },
-            {
-              "name": "title",
-              "description": "Main hero headline. Use a heading element."
-            },
-            {
-              "name": "actions",
-              "description": "Primary and secondary CTAs (typically `cui-button`s)."
-            },
-            {
-              "name": "media",
-              "description": "Hero artwork (image, illustration, video) shown alongside or behind the copy depending on layout class."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              { "name": "backgroundSrc", "type": "string | null" },
-              { "name": "backgroundPosition", "type": "string | null" },
-              { "name": "backgroundSize", "type": "string | null" }
-            ],
-            "events": []
           }
         },
         {
@@ -873,6 +759,282 @@
           }
         },
         {
+          "name": "cui-hero",
+          "description": "Hero section with optional responsive background image and content + media\nregions. All copy and media stay in light DOM via slots.\n---\n\n\n### **Slots:**\n - _default_ - Body copy beneath the title.\n- **eyebrow** - Small label above the title.\n- **title** - Main hero headline. Use a heading element.\n- **actions** - Primary and secondary CTAs (typically `cui-button`s).\n- **media** - Hero artwork (image, illustration, video) shown alongside or behind the copy depending on layout class.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "background-position",
+              "description": "CSS `background-position` value (`center`, `50% 30%`, …) for the background image.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "background-size",
+              "description": "CSS `background-size` value (`cover`, `contain`, …) for the background image.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "background-src",
+              "description": "URL of the background image. Sets a CSS custom property the stylesheet consumes; omit for no background.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "content-width",
+              "description": "Caps the inner content's inline-size to one of the site container scales while the hero surface (background, accent fill) stays full-bleed. Omit for the wide default (`--cui-container-wide`); use `default` to align with the rest of the site content (`--cui-container`); use `narrow` for editorial copy (`--cui-container-narrow`).",
+              "value": { "type": "\"narrow\"|\"default\"|\"wide\"" }
+            }
+          ],
+          "slots": [
+            { "name": "", "description": "Body copy beneath the title." },
+            {
+              "name": "eyebrow",
+              "description": "Small label above the title."
+            },
+            {
+              "name": "title",
+              "description": "Main hero headline. Use a heading element."
+            },
+            {
+              "name": "actions",
+              "description": "Primary and secondary CTAs (typically `cui-button`s)."
+            },
+            {
+              "name": "media",
+              "description": "Hero artwork (image, illustration, video) shown alongside or behind the copy depending on layout class."
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              { "name": "backgroundSrc", "type": "string | null" },
+              { "name": "backgroundPosition", "type": "string | null" },
+              { "name": "backgroundSize", "type": "string | null" }
+            ],
+            "events": []
+          }
+        },
+        {
+          "name": "cui-navbar",
+          "description": "Responsive site navigation with collapsible mobile panel, nested\ndropdowns, and optional sticky positioning. Brand, links, and action\nbuttons are all slotted so the markup stays semantic and SEO-friendly.\n---\n\n\n### **Slots:**\n - **brand** - Site logo or wordmark (typically an `<a>` to the home page).\n- **nav** - Primary navigation. Use a `<ul>` with `<li>` items; nest a `.cui-dropdown` for menus.\n- **actions** - Trailing actions (sign-in button, theme toggle, etc.).",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "expanded",
+              "description": "Mobile collapse panel state. Toggled by the built-in burger button; can also be set programmatically.",
+              "value": { "type": "boolean" }
+            },
+            {
+              "name": "sticky",
+              "description": "Enables `position: sticky` on the navbar.",
+              "value": { "type": "boolean" }
+            },
+            {
+              "name": "sticky-offset",
+              "description": "CSS length used as `top` while sticky (e.g. `0`, `var(--cui-space-2)`).",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "sticky-z-index",
+              "description": "CSS `z-index` while sticky.",
+              "value": { "type": "string" }
+            }
+          ],
+          "slots": [
+            {
+              "name": "brand",
+              "description": "Site logo or wordmark (typically an `<a>` to the home page)."
+            },
+            {
+              "name": "nav",
+              "description": "Primary navigation. Use a `<ul>` with `<li>` items; nest a `.cui-dropdown` for menus."
+            },
+            {
+              "name": "actions",
+              "description": "Trailing actions (sign-in button, theme toggle, etc.)."
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              { "name": "expanded", "type": "boolean" },
+              { "name": "sticky", "type": "boolean" },
+              { "name": "stickyOffset", "type": "string | null" },
+              { "name": "stickyZIndex", "type": "number" }
+            ],
+            "events": []
+          }
+        },
+        {
+          "name": "cui-page-intro",
+          "description": "Page-intro section with eyebrow, title, meta line, body copy, actions,\nand optional aside. Use it as the first block on case-study, vacancy, or\narticle pages where the hero is too heavy.\n---\n\n\n### **Slots:**\n - _default_ - Body copy (lede paragraph).\n- **eyebrow** - Small label above the title.\n- **title** - Page title. Use a heading element.\n- **meta** - Compact metadata line (date, author, reading time, tags).\n- **actions** - Optional buttons or links beneath the copy.\n- **aside** - Optional side rail (table of contents, summary card).",
+          "doc-url": "",
+          "attributes": [],
+          "slots": [
+            { "name": "", "description": "Body copy (lede paragraph)." },
+            {
+              "name": "eyebrow",
+              "description": "Small label above the title."
+            },
+            {
+              "name": "title",
+              "description": "Page title. Use a heading element."
+            },
+            {
+              "name": "meta",
+              "description": "Compact metadata line (date, author, reading time, tags)."
+            },
+            {
+              "name": "actions",
+              "description": "Optional buttons or links beneath the copy."
+            },
+            {
+              "name": "aside",
+              "description": "Optional side rail (table of contents, summary card)."
+            }
+          ],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
+          "name": "cui-form",
+          "description": "Coordinates submission and validation across child `cui-field` elements.\nRuns each field's async validators, blocks submit on failures, and\nsurfaces submit / success / error events with typed details. Set a JS\nsubmit handler with `setSubmitHandler(fn)`.\n---\n\n\n### **Events:**\n - **cui-form-invalid** - Fires when submission is blocked because one or more fields failed validation.\n- **cui-form-submit** - Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot.\n- **cui-form-success** - Fires after a JS submit handler resolves successfully.\n- **cui-form-error** - Fires when a JS submit handler rejects. `detail.error` is the thrown value.\n\n### **Slots:**\n - _default_ - A native `<form>` element containing `cui-field`s and a submit button. The form's `action` and `method` are honored when no JS handler is attached.",
+          "doc-url": "",
+          "attributes": [],
+          "slots": [
+            {
+              "name": "",
+              "description": "A native `<form>` element containing `cui-field`s and a submit button. The form's `action` and `method` are honored when no JS handler is attached."
+            }
+          ],
+          "events": [
+            {
+              "name": "cui-form-invalid",
+              "type": "CustomEvent",
+              "description": "Fires when submission is blocked because one or more fields failed validation."
+            },
+            {
+              "name": "cui-form-submit",
+              "type": "CustomEvent<CuiFormSubmitDetail>",
+              "description": "Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot."
+            },
+            {
+              "name": "cui-form-success",
+              "type": "CustomEvent<CuiFormSubmitDetail>",
+              "description": "Fires after a JS submit handler resolves successfully."
+            },
+            {
+              "name": "cui-form-error",
+              "type": "CustomEvent<CuiFormErrorDetail>",
+              "description": "Fires when a JS submit handler rejects. `detail.error` is the thrown value."
+            }
+          ],
+          "js": {
+            "properties": [{ "name": "busy", "type": "boolean" }],
+            "events": [
+              {
+                "name": "cui-form-invalid",
+                "type": "CustomEvent",
+                "description": "Fires when submission is blocked because one or more fields failed validation."
+              },
+              {
+                "name": "cui-form-submit",
+                "type": "CustomEvent<CuiFormSubmitDetail>",
+                "description": "Fires when the form passes validation and is about to submit. `detail.formData` is the `FormData` snapshot."
+              },
+              {
+                "name": "cui-form-success",
+                "type": "CustomEvent<CuiFormSubmitDetail>",
+                "description": "Fires after a JS submit handler resolves successfully."
+              },
+              {
+                "name": "cui-form-error",
+                "type": "CustomEvent<CuiFormErrorDetail>",
+                "description": "Fires when a JS submit handler rejects. `detail.error` is the thrown value."
+              }
+            ]
+          }
+        },
+        {
+          "name": "cui-reveal",
+          "description": "Reveals its content with an entry animation as it scrolls into view, using\n`IntersectionObserver` under the hood. Honors `prefers-reduced-motion` —\nusers with reduced motion see the content immediately, no transform.\n---\n\n\n### **Slots:**\n - _default_ - Content to reveal. Any block-level content works.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "delay",
+              "description": "Delay before the reveal starts. Accepts a number (milliseconds) or any CSS time value (`200ms`, `0.3s`).",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "distance",
+              "description": "Translate distance for the entry transform. Accepts a number (pixels) or any CSS length (`24px`, `2rem`).",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "threshold",
+              "description": "`IntersectionObserver` threshold (0–1).",
+              "value": { "type": "string" }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Content to reveal. Any block-level content works."
+            }
+          ],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
+          "name": "cui-scroll-stage",
+          "description": "Scroll-driven \"stage\" element that publishes its focus/offset/active state\nas CSS custom properties on itself (and optionally on a tone target like\n`:root`), so child layouts and parallax effects can react via CSS alone.\nPair with `cui-reveal` for entry animations or with the exported\n`attachCuiParallax()` helper for parallax bindings.\n---\n\n\n### **Slots:**\n - _default_ - Stage content. Typically a sticky inner region plus the layers that move with scroll progress.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "focus-bias",
+              "description": "Where in the viewport the stage is considered \"in focus\". CSS length or unit-less ratio.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "hold",
+              "description": "How long to keep the stage at full focus before easing out, as a CSS length or ratio.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "threshold",
+              "description": "Minimum viewport overlap before the stage starts publishing focus (0–1).",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "tone",
+              "description": "Tone value to publish on the tone target while the stage is active (e.g. `dark`, `inverse`).",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "tone-target",
+              "description": "CSS selector that should receive the tone attribute. Accepts `document` or `:root` to target the root element.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "sticky-top",
+              "description": "CSS `top` value applied to the inner sticky region.",
+              "value": { "type": "string" }
+            },
+            {
+              "name": "min-block-size",
+              "description": "Minimum block-size of the stage; controls how much scroll the stage consumes.",
+              "value": { "type": "string" }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Stage content. Typically a sticky inner region plus the layers that move with scroll progress."
+            }
+          ],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
           "name": "cui-modal",
           "description": "Modal dialog built over the native `<dialog>` element. Backdrop dismiss,\nESC handling, and focus management come from the platform; this element\nadds attribute control, an open/close JS API, typed close events, and\nremote triggering via `data-cui-modal-target` from anywhere on the page.\n---\n\n\n### **Events:**\n - **cui-modal-open** - Fires after the dialog opens.\n- **cui-modal-close** - Fires after the dialog closes. `detail.returnValue` carries the dialog's `returnValue` (set via `close(value)` or `<form method=\"dialog\">`).\n- **cui-modal-cancel** - Fires when the user cancels via ESC or backdrop click (before `cui-modal-close`).\n\n### **Slots:**\n - _default_ - The dialog body. Wrap with a `<div>` or semantic landmark; include a close affordance (any element with `data-cui-modal-close`) for users who can't dismiss via ESC.",
           "doc-url": "",
@@ -933,57 +1095,6 @@
           }
         },
         {
-          "name": "cui-navbar",
-          "description": "Responsive site navigation with collapsible mobile panel, nested\ndropdowns, and optional sticky positioning. Brand, links, and action\nbuttons are all slotted so the markup stays semantic and SEO-friendly.\n---\n\n\n### **Slots:**\n - **brand** - Site logo or wordmark (typically an `<a>` to the home page).\n- **nav** - Primary navigation. Use a `<ul>` with `<li>` items; nest a `.cui-dropdown` for menus.\n- **actions** - Trailing actions (sign-in button, theme toggle, etc.).",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "expanded",
-              "description": "Mobile collapse panel state. Toggled by the built-in burger button; can also be set programmatically.",
-              "value": { "type": "boolean" }
-            },
-            {
-              "name": "sticky",
-              "description": "Enables `position: sticky` on the navbar.",
-              "value": { "type": "boolean" }
-            },
-            {
-              "name": "sticky-offset",
-              "description": "CSS length used as `top` while sticky (e.g. `0`, `var(--cui-space-2)`).",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "sticky-z-index",
-              "description": "CSS `z-index` while sticky.",
-              "value": { "type": "string" }
-            }
-          ],
-          "slots": [
-            {
-              "name": "brand",
-              "description": "Site logo or wordmark (typically an `<a>` to the home page)."
-            },
-            {
-              "name": "nav",
-              "description": "Primary navigation. Use a `<ul>` with `<li>` items; nest a `.cui-dropdown` for menus."
-            },
-            {
-              "name": "actions",
-              "description": "Trailing actions (sign-in button, theme toggle, etc.)."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              { "name": "expanded", "type": "boolean" },
-              { "name": "sticky", "type": "boolean" },
-              { "name": "stickyOffset", "type": "string | null" },
-              { "name": "stickyZIndex", "type": "number" }
-            ],
-            "events": []
-          }
-        },
-        {
           "name": "cui-tabs",
           "description": "Tabbed interface with ARIA `tablist`/`tab`/`tabpanel` roles and full\nkeyboard support (Left/Right, Home/End). Tabs and panels are slotted so\ncrawlers see all panel content regardless of which tab is active.\n---\n\n\n### **Slots:**\n - **tab** - One tab control per tab. Use `<button>` elements; the element wires up `id`, `aria-controls`, and `aria-selected` automatically.\n- **panel** - One panel per tab, in the same order as the tab slots.",
           "doc-url": "",
@@ -996,117 +1107,6 @@
             {
               "name": "panel",
               "description": "One panel per tab, in the same order as the tab slots."
-            }
-          ],
-          "events": [],
-          "js": { "properties": [], "events": [] }
-        },
-        {
-          "name": "cui-scroll-stage",
-          "description": "Scroll-driven \"stage\" element that publishes its focus/offset/active state\nas CSS custom properties on itself (and optionally on a tone target like\n`:root`), so child layouts and parallax effects can react via CSS alone.\nPair with `cui-reveal` for entry animations or with the exported\n`attachCuiParallax()` helper for parallax bindings.\n---\n\n\n### **Slots:**\n - _default_ - Stage content. Typically a sticky inner region plus the layers that move with scroll progress.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "focus-bias",
-              "description": "Where in the viewport the stage is considered \"in focus\". CSS length or unit-less ratio.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "hold",
-              "description": "How long to keep the stage at full focus before easing out, as a CSS length or ratio.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "threshold",
-              "description": "Minimum viewport overlap before the stage starts publishing focus (0–1).",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "tone",
-              "description": "Tone value to publish on the tone target while the stage is active (e.g. `dark`, `inverse`).",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "tone-target",
-              "description": "CSS selector that should receive the tone attribute. Accepts `document` or `:root` to target the root element.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "sticky-top",
-              "description": "CSS `top` value applied to the inner sticky region.",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "min-block-size",
-              "description": "Minimum block-size of the stage; controls how much scroll the stage consumes.",
-              "value": { "type": "string" }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Stage content. Typically a sticky inner region plus the layers that move with scroll progress."
-            }
-          ],
-          "events": [],
-          "js": { "properties": [], "events": [] }
-        },
-        {
-          "name": "cui-page-intro",
-          "description": "Page-intro section with eyebrow, title, meta line, body copy, actions,\nand optional aside. Use it as the first block on case-study, vacancy, or\narticle pages where the hero is too heavy.\n---\n\n\n### **Slots:**\n - _default_ - Body copy (lede paragraph).\n- **eyebrow** - Small label above the title.\n- **title** - Page title. Use a heading element.\n- **meta** - Compact metadata line (date, author, reading time, tags).\n- **actions** - Optional buttons or links beneath the copy.\n- **aside** - Optional side rail (table of contents, summary card).",
-          "doc-url": "",
-          "attributes": [],
-          "slots": [
-            { "name": "", "description": "Body copy (lede paragraph)." },
-            {
-              "name": "eyebrow",
-              "description": "Small label above the title."
-            },
-            {
-              "name": "title",
-              "description": "Page title. Use a heading element."
-            },
-            {
-              "name": "meta",
-              "description": "Compact metadata line (date, author, reading time, tags)."
-            },
-            {
-              "name": "actions",
-              "description": "Optional buttons or links beneath the copy."
-            },
-            {
-              "name": "aside",
-              "description": "Optional side rail (table of contents, summary card)."
-            }
-          ],
-          "events": [],
-          "js": { "properties": [], "events": [] }
-        },
-        {
-          "name": "cui-reveal",
-          "description": "Reveals its content with an entry animation as it scrolls into view, using\n`IntersectionObserver` under the hood. Honors `prefers-reduced-motion` —\nusers with reduced motion see the content immediately, no transform.\n---\n\n\n### **Slots:**\n - _default_ - Content to reveal. Any block-level content works.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "delay",
-              "description": "Delay before the reveal starts. Accepts a number (milliseconds) or any CSS time value (`200ms`, `0.3s`).",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "distance",
-              "description": "Translate distance for the entry transform. Accepts a number (pixels) or any CSS length (`24px`, `2rem`).",
-              "value": { "type": "string" }
-            },
-            {
-              "name": "threshold",
-              "description": "`IntersectionObserver` threshold (0–1).",
-              "value": { "type": "string" }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Content to reveal. Any block-level content works."
             }
           ],
           "events": [],
