@@ -6,21 +6,30 @@
  * `.cui-hero-bg` element and set its image with an inline custom property:
  * `style="--cui-hero-background-image: url('/hero.jpg')"`.
  *
- * Variant modifiers compose on the container: `.cui-hero-split` (default —
- * content + media side by side), `.cui-hero-text` (no media), `.cui-hero-overlay`
- * (media behind the copy), `.cui-hero-background` (background image),
- * `.cui-hero-media-start` (media leads), `.cui-hero-center`, and the content
- * widths `.cui-hero-narrow` / `.cui-hero-default` / `.cui-hero-wide`.
+ * Modifiers compose on the container via data-attributes: the `data-variant`
+ * layout (`split` — content + media side by side; `text` — no media; `overlay`
+ * — media behind the copy; `background` — background image), `data-media="start"`
+ * (media leads), `data-align="center"`, and the content width
+ * `data-width="narrow | default | wide"`.
  *
  * @block cui-hero
  * @summary Hero surface with content + optional media/background; variant modifiers.
+ * @variant split — `[data-variant="split"]`. Content and media side by side.
+ * @variant text — `[data-variant="text"]`. Text-only hero; tighter rhythm and container.
+ * @variant overlay — `[data-variant="overlay"]`. Light copy over a darkened media layer.
+ * @variant background — `[data-variant="background"]`. Light copy over a background image on `.cui-hero-bg`.
+ * @variant media-start — `[data-media="start"]`. Media column leads, content follows.
+ * @variant center — `[data-align="center"]`. Centers the content column (pair with `text`).
+ * @variant narrow — `[data-width="narrow"]`. Caps the inner column to `--cui-container-narrow`.
+ * @variant default — `[data-width="default"]`. Caps the inner column to `--cui-container`.
+ * @variant wide — `[data-width="wide"]`. Caps the inner column to `--cui-container-wide`.
  * @cssvar --cui-hero-min-block-size — Minimum hero height. Defaults to min(86vb, 48rem).
  * @cssvar --cui-hero-content-size — Max inline-size of the content column. Defaults to 42rem.
  * @cssvar --cui-hero-title-size — Title font-size. Defaults to `--cui-font-size-display`.
  * @cssvar --cui-hero-background-image — Background image for `.cui-hero-bg`. Set inline.
  *
  * @example
- *   <section class="cui-hero cui-hero-split">
+ *   <section class="cui-hero" data-variant="split">
  *     <div class="cui-hero-inner">
  *       <div class="cui-hero-content">
  *         <p class="cui-eyebrow">New release</p>
@@ -59,6 +68,14 @@
   padding-block: var(--cui-hero-padding-block, clamp(6rem, 18vi, 14rem));
 }
 
+/**
+ * Background layer for the `background` variant. An absolutely-positioned
+ * element behind the content whose image is set inline via
+ * `--cui-hero-background-image`; its `::after` paints the overlay tint.
+ *
+ * @block cui-hero-bg
+ * @summary Absolutely-positioned background-image layer for the hero.
+ */
 .cui-hero-bg {
   position: absolute;
   z-index: 0;
@@ -75,6 +92,14 @@
   content: "";
 }
 
+/**
+ * Width-capped inner wrapper inside `.cui-hero`. Centers the content and
+ * media columns to the active container width (set per `data-width`) and
+ * supplies the column gap.
+ *
+ * @block cui-hero-inner
+ * @summary Width-capped, centered wrapper for the hero content + media.
+ */
 .cui-hero-inner {
   z-index: 1;
   display: grid;
@@ -83,6 +108,14 @@
   gap: var(--cui-hero-gap, 3rem);
 }
 
+/**
+ * Content column inside `.cui-hero-inner` — eyebrow, `.cui-hero-title`, copy,
+ * and `.cui-hero-actions`. A capped-width grid that sits above any media or
+ * background layer; unclassed paragraphs render larger and muted.
+ *
+ * @block cui-hero-content
+ * @summary Capped content column (eyebrow + title + copy + actions).
+ */
 .cui-hero-content {
   position: relative;
   z-index: 1;
@@ -99,6 +132,13 @@
   line-height: 1.4;
 }
 
+/**
+ * Hero headline inside `.cui-hero-content`. The largest type in the system —
+ * display weight, tight display line-height, balanced wrapping.
+ *
+ * @block cui-hero-title
+ * @summary Display-scale hero headline.
+ */
 .cui-hero-title {
   max-inline-size: 13ch;
   margin: 0;
@@ -144,110 +184,110 @@
 }
 
 /* Split — content + media side by side. */
-.cui-hero-split .cui-hero-inner {
+.cui-hero[data-variant="split"] .cui-hero-inner {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.cui-hero-split .cui-hero-media {
+.cui-hero[data-variant="split"] .cui-hero-media {
   display: block;
   max-inline-size: min(100%, var(--cui-hero-media-size, 38rem));
 }
 
 /* Media-position start — media leads, content follows. */
-.cui-hero-media-start .cui-hero-content {
+.cui-hero[data-media="start"] .cui-hero-content {
   order: 2;
 }
 
-.cui-hero-media-start .cui-hero-media {
+.cui-hero[data-media="start"] .cui-hero-media {
   order: 1;
 }
 
 /* Text — no media; tighter rhythm and container. */
-.cui-hero-text {
+.cui-hero[data-variant="text"] {
   --cui-hero-min-block-size: auto;
   --cui-hero-padding-block: var(--cui-section-space, clamp(4rem, 10vi, 8rem));
   --cui-hero-container-size: var(--cui-container, 72rem);
 }
 
-.cui-hero-text .cui-hero-content {
+.cui-hero[data-variant="text"] .cui-hero-content {
   justify-items: var(--cui-hero-text-justify, start);
   max-inline-size: var(--cui-hero-text-size, 54rem);
 }
 
-.cui-hero-text.cui-hero-center {
+.cui-hero[data-variant="text"][data-align="center"] {
   --cui-hero-text-justify: center;
 }
 
-.cui-hero-text.cui-hero-center .cui-hero-content {
+.cui-hero[data-variant="text"][data-align="center"] .cui-hero-content {
   margin-inline: auto;
   text-align: center;
 }
 
-.cui-hero-text.cui-hero-center .cui-hero-title,
-.cui-hero-text.cui-hero-center .cui-hero-content > :where(p):not([class]) {
+.cui-hero[data-variant="text"][data-align="center"] .cui-hero-title,
+.cui-hero[data-variant="text"][data-align="center"] .cui-hero-content > :where(p):not([class]) {
   margin-inline: auto;
 }
 
 /* Overlay / background — light copy over a darkened image. */
-.cui-hero-overlay,
-.cui-hero-background {
+.cui-hero[data-variant="overlay"],
+.cui-hero[data-variant="background"] {
   --cui-hero-color: var(--cui-color-on-accent, #fff);
   --cui-hero-muted-color: hsl(0deg 0% 100% / 82%);
 }
 
-.cui-hero-overlay .cui-eyebrow,
-.cui-hero-background .cui-eyebrow {
+.cui-hero[data-variant="overlay"] .cui-eyebrow,
+.cui-hero[data-variant="background"] .cui-eyebrow {
   color: hsl(0deg 0% 100% / 78%);
 }
 
-.cui-hero-background .cui-hero-bg {
+.cui-hero[data-variant="background"] .cui-hero-bg {
   display: block;
 }
 
-.cui-hero-overlay .cui-hero-media {
+.cui-hero[data-variant="overlay"] .cui-hero-media {
   position: absolute;
   z-index: 0;
   display: block;
   inset: 0;
 }
 
-.cui-hero-overlay .cui-hero-media::after {
+.cui-hero[data-variant="overlay"] .cui-hero-media::after {
   position: absolute;
   inset: 0;
   background: var(--cui-hero-overlay, linear-gradient(90deg, hsl(220deg 24% 8% / 82%), hsl(220deg 24% 8% / 28%)));
   content: "";
 }
 
-.cui-hero-overlay .cui-hero-media > :where(img, video, picture) {
+.cui-hero[data-variant="overlay"] .cui-hero-media > :where(img, video, picture) {
   block-size: 100%;
   min-block-size: 100%;
   border-radius: 0;
 }
 
 /* Content widths — cap the inner column independently of the surface. */
-.cui-hero-narrow {
+.cui-hero[data-width="narrow"] {
   --cui-hero-container-size: var(--cui-container-narrow, 48rem);
 }
 
-.cui-hero-default {
+.cui-hero[data-width="default"] {
   --cui-hero-container-size: var(--cui-container, 72rem);
 }
 
-.cui-hero-wide {
+.cui-hero[data-width="wide"] {
   --cui-hero-container-size: var(--cui-container-wide, 96rem);
 }
 
 @media (width >= 56rem) {
-  .cui-hero-split .cui-hero-inner {
+  .cui-hero[data-variant="split"] .cui-hero-inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   }
 
-  .cui-hero-media-start .cui-hero-inner {
+  .cui-hero[data-media="start"] .cui-hero-inner {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   }
 
-  .cui-hero-media-start .cui-hero-content,
-  .cui-hero-media-start .cui-hero-media {
+  .cui-hero[data-media="start"] .cui-hero-content,
+  .cui-hero[data-media="start"] .cui-hero-media {
     order: initial;
   }
 }

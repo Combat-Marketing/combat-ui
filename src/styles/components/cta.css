@@ -4,12 +4,16 @@
  * `<section>` (or any container).
  *
  * Structure: a `.cui-cta-content` stack (eyebrow + `.cui-cta-title` + copy) and
- * an optional `.cui-cta-actions` row of buttons. Modifier classes
- * (`.cui-cta-split`, `.cui-cta-simple`, `.cui-cta-center`, `.cui-cta-inverse`,
- * `.cui-cta-full-bleed`, `.cui-cta-sticky`) compose freely.
+ * an optional `.cui-cta-actions` row of buttons. The `data-variant` shape and
+ * the `data-tone` treatment compose freely.
  *
  * @block cui-cta
  * @summary Call-to-action card with content + actions; variant modifiers.
+ * @variant split — `[data-variant="split"]`. Content and actions side by side at ≥48rem.
+ * @variant simple — `[data-variant="simple"]`. Centers the content stack and its text.
+ * @variant full-bleed — `[data-variant="full-bleed"]`. Edge-to-edge muted band with no card chrome.
+ * @variant sticky — `[data-variant="sticky"]`. Pins to the viewport bottom, capped to the container width.
+ * @tone inverse — `[data-tone="inverse"]`. Dark surface with light foreground; combines with any variant.
  * @cssvar --cui-cta-gap — Gap between content and actions. Defaults to `--cui-space-5`.
  * @cssvar --cui-cta-padding — Card padding. Defaults to `--cui-space-6`.
  * @cssvar --cui-cta-content-size — Max inline-size of the content stack. Defaults to 48rem.
@@ -48,6 +52,13 @@
   padding: var(--cui-cta-padding, 2rem);
 }
 
+/**
+ * Content stack inside `.cui-cta` — eyebrow, `.cui-cta-title`, and body copy.
+ * A capped-width grid; unclassed paragraphs render muted at reading measure.
+ *
+ * @block cui-cta-content
+ * @summary Capped content stack (eyebrow + title + copy) inside the CTA.
+ */
 .cui-cta-content {
   display: grid;
   max-inline-size: var(--cui-cta-content-size, 48rem);
@@ -60,6 +71,12 @@
   color: var(--cui-cta-muted-color, var(--cui-color-muted, #5d6675));
 }
 
+/**
+ * Actions row inside `.cui-cta` — a wrapping flex row of buttons/links.
+ *
+ * @block cui-cta-actions
+ * @summary Wrapping row of CTA buttons.
+ */
 .cui-cta-actions {
   display: flex;
   flex-wrap: wrap;
@@ -67,6 +84,13 @@
   gap: var(--cui-space-3, 0.75rem);
 }
 
+/**
+ * Headline inside `.cui-cta-content`. Display-weight, balanced, and capped to
+ * a short measure so it stays punchy.
+ *
+ * @block cui-cta-title
+ * @summary Display-weight CTA headline.
+ */
 .cui-cta-title {
   max-inline-size: 18ch;
   margin: 0;
@@ -77,22 +101,19 @@
   text-wrap: balance;
 }
 
-/* Center / simple — center the content stack and its text. */
-.cui-cta-center,
-.cui-cta-simple {
+/* Simple — center the content stack and its text. */
+.cui-cta[data-variant="simple"] {
   justify-items: center;
   text-align: center;
 }
 
-.cui-cta-center .cui-cta-title,
-.cui-cta-center .cui-cta-content > :where(p):not([class]),
-.cui-cta-simple .cui-cta-title,
-.cui-cta-simple .cui-cta-content > :where(p):not([class]) {
+.cui-cta[data-variant="simple"] .cui-cta-title,
+.cui-cta[data-variant="simple"] .cui-cta-content > :where(p):not([class]) {
   margin-inline: auto;
 }
 
 /* Full-bleed — edge-to-edge band with a muted fill and no chrome. */
-.cui-cta-full-bleed {
+.cui-cta[data-variant="full-bleed"] {
   --cui-cta-padding: var(--cui-section-space-compact, clamp(2.5rem, 7vi, 5rem)) var(--cui-container-gutter, 2rem);
 
   border-inline: 0;
@@ -102,7 +123,7 @@
 }
 
 /* Inverse — dark surface with light foreground. */
-.cui-cta-inverse {
+.cui-cta[data-tone="inverse"] {
   --cui-color: var(--cui-cta-inverse-color, #f7f8fa);
   --cui-color-muted: var(--cui-cta-inverse-muted-color, hsl(0deg 0% 100% / 78%));
   --cui-color-surface-raised: var(--cui-color-inverse-surface-raised, hsl(220deg 24% 8% / 72%));
@@ -117,7 +138,7 @@
 }
 
 /* Sticky — pin to the bottom of the viewport, capped to the container width. */
-.cui-cta-sticky {
+.cui-cta[data-variant="sticky"] {
   position: sticky;
   z-index: var(--cui-cta-sticky-z-index, 20);
   inset-block-end: var(--cui-cta-sticky-offset, var(--cui-space-4, 1rem));
@@ -126,8 +147,8 @@
 }
 
 @media (width >= 48rem) {
-  .cui-cta-split,
-  .cui-cta-sticky {
+  .cui-cta[data-variant="split"],
+  .cui-cta[data-variant="sticky"] {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }

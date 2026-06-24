@@ -55,7 +55,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-page-intro cui-page-intro-landing">
+        <section class="cui-page-intro" data-variant="landing">
           <div class="cui-page-intro-layout">
             <div class="cui-page-intro-content">
               <p class="cui-eyebrow">Combat UI</p>
@@ -70,7 +70,7 @@
         </section>
         <cui-code language="html">
           <script type="text/plain">
-            <section class="cui-page-intro cui-page-intro-landing">
+            <section class="cui-page-intro" data-variant="landing">
               <div class="cui-page-intro-layout">
                 <div class="cui-page-intro-content">
                   <h1 class="cui-page-intro-title">Bigger display heading.</h1>
@@ -85,7 +85,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-page-intro cui-page-intro-case">
+        <section class="cui-page-intro" data-variant="case">
           <div class="cui-page-intro-layout">
             <div class="cui-page-intro-content">
               <p class="cui-eyebrow">Case study</p>
@@ -106,7 +106,7 @@
         </section>
         <cui-code language="html">
           <script type="text/plain">
-            <section class="cui-page-intro cui-page-intro-case">
+            <section class="cui-page-intro" data-variant="case">
               <div class="cui-page-intro-layout">
                 <div class="cui-page-intro-content">
                   <p class="cui-eyebrow">Case study</p>
@@ -130,13 +130,13 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-page-intro cui-page-intro-inverse">
+        <section class="cui-page-intro" data-tone="inverse">
           <div class="cui-page-intro-layout">
             <div class="cui-page-intro-content">
               <p class="cui-eyebrow">Promo</p>
               <h3 class="cui-page-intro-title">Inverse surface for the headline moment.</h3>
               <p>Flips surface and text tokens for emphasis. Pair with
-                <code>.cui-page-intro-full-bleed</code> for a hero band.</p>
+                <code>data-variant="full-bleed"</code> for a hero band.</p>
               <div class="cui-page-intro-actions">
                 <cui-button variant="primary">Try it</cui-button>
               </div>
@@ -145,7 +145,7 @@
         </section>
         <cui-code language="html">
           <script type="text/plain">
-            <section class="cui-page-intro cui-page-intro-inverse">
+            <section class="cui-page-intro" data-tone="inverse">
               <div class="cui-page-intro-layout">
                 <div class="cui-page-intro-content">
                   <h1 class="cui-page-intro-title">Inverse surface.</h1>
@@ -160,7 +160,7 @@
 
     <section class="docs-panel">
       <div class="cui-stack">
-        <section class="cui-page-intro cui-page-intro-center">
+        <section class="cui-page-intro" data-align="center">
           <div class="cui-page-intro-layout">
             <div class="cui-page-intro-content">
               <p class="cui-eyebrow">Status</p>
@@ -171,7 +171,7 @@
         </section>
         <cui-code language="html">
           <script type="text/plain">
-            <section class="cui-page-intro cui-page-intro-center">
+            <section class="cui-page-intro" data-align="center">
               <div class="cui-page-intro-layout">
                 <div class="cui-page-intro-content">
                   <h1 class="cui-page-intro-title">Centered title.</h1>
@@ -198,31 +198,31 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>.cui-page-intro-landing</code></td>
+              <td><code>data-variant="landing"</code></td>
               <td>Display-scale title, wider content column</td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-case</code></td>
+              <td><code>data-variant="case"</code></td>
               <td>Muted background, two-column with aside at <code>≥ 56rem</code></td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-vacancy</code></td>
+              <td><code>data-variant="vacancy"</code></td>
               <td>Two-column with aside; tighter content measure</td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-campaign</code></td>
+              <td><code>data-variant="campaign"</code></td>
               <td>Muted background, two-column with aside</td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-inverse</code></td>
+              <td><code>data-tone="inverse"</code></td>
               <td>Inverse surface and foreground tokens</td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-full-bleed</code></td>
+              <td><code>data-variant="full-bleed"</code></td>
               <td>Span the full inline-size of the parent</td>
             </tr>
             <tr>
-              <td><code>.cui-page-intro-center</code></td>
+              <td><code>data-align="center"</code></td>
               <td>Center-align title, copy, and actions</td>
             </tr>
           </tbody>
@@ -306,7 +306,7 @@
                 <code>--cui-page-intro-inverse-eyebrow-color</code> ·
                 <code>--cui-page-intro-inverse-aside-bg</code>
               </td>
-              <td>Inverse-mode overrides (applied by <code>.cui-page-intro-inverse</code>).</td>
+              <td>Inverse-mode overrides (applied by <code>data-tone="inverse"</code>).</td>
             </tr>
           </tbody>
         </table>

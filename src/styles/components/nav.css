@@ -314,6 +314,13 @@
   inset-block-start: var(--cui-navbar-sticky-offset, 0);
 }
 
+/**
+ * Width-capped inner wrapper inside `.cui-navbar`. Centers the bar and the
+ * collapse panel to the container width and supplies the block padding.
+ *
+ * @block cui-navbar-inner
+ * @summary Width-capped, centered wrapper for the navbar bar + collapse.
+ */
 .cui-navbar-inner {
   display: grid;
   inline-size: min(100% - var(--cui-navbar-gutter, 2rem), var(--cui-navbar-width, var(--cui-container, 72rem)));
@@ -321,6 +328,13 @@
   padding-block: var(--cui-navbar-padding-block, 0.75rem);
 }
 
+/**
+ * Always-visible top row of the navbar: brand on one side, the burger
+ * toggle (and any inline actions) on the other.
+ *
+ * @block cui-navbar-bar
+ * @summary Top row holding the brand and the burger toggle.
+ */
 .cui-navbar-bar {
   display: flex;
   min-block-size: var(--cui-navbar-size, 3.25rem);
@@ -329,6 +343,13 @@
   gap: var(--cui-space-3, 0.75rem);
 }
 
+/**
+ * Brand link/lockup in the navbar bar. An inline-flex anchor that keeps the
+ * logo + wordmark on one line and inherits the bar's color.
+ *
+ * @block cui-navbar-brand
+ * @summary Inline-flex brand link in the navbar bar.
+ */
 .cui-navbar-brand {
   display: inline-flex;
   min-inline-size: 0;
@@ -358,6 +379,13 @@
   font: inherit;
 }
 
+/**
+ * The three burger bars inside `.cui-navbar-toggle`, drawn with the element
+ * plus its `::before` / `::after` pseudo-elements.
+ *
+ * @block cui-navbar-toggle-lines
+ * @summary Three-bar burger glyph for the navbar toggle.
+ */
 .cui-navbar-toggle-lines,
 .cui-navbar-toggle-lines::before,
 .cui-navbar-toggle-lines::after {
@@ -387,6 +415,15 @@
   inset-block-start: 0.375rem;
 }
 
+/**
+ * Animated collapse region below the bar. Collapsed to zero height by
+ * default; the `cui-navbar` element opens it via `[expanded]`, animating
+ * grid-template-rows, opacity, and transform. The `[animation="fade"]` and
+ * `[animation="none"]` attributes on the host tune or disable the motion.
+ *
+ * @block cui-navbar-collapse
+ * @summary Animated collapse region revealed when the navbar is expanded.
+ */
 .cui-navbar-collapse {
   display: grid;
   grid-template-rows: 0fr;
@@ -417,6 +454,13 @@
   transition: none;
 }
 
+/**
+ * Inner padding wrapper for the collapse region. Stacks the nav list and
+ * actions and clips overflow while the panel animates open.
+ *
+ * @block cui-navbar-collapse-panel
+ * @summary Padded inner stack inside the collapse region.
+ */
 .cui-navbar-collapse-panel {
   display: grid;
   min-block-size: 0;
@@ -425,6 +469,14 @@
   padding-block: var(--cui-space-3, 0.75rem) var(--cui-space-2, 0.5rem);
 }
 
+/**
+ * The two stacks inside the collapse panel: `.cui-navbar-nav` for the
+ * primary links and `.cui-navbar-actions` for buttons/CTAs. Both stack
+ * vertically below 48rem and lay out inline at wider widths.
+ *
+ * @block cui-navbar-nav
+ * @summary Navigation-link and action stacks inside the collapse panel.
+ */
 .cui-navbar-nav,
 .cui-navbar-actions {
   display: flex;
