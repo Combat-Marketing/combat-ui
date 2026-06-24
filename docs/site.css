@@ -94,12 +94,13 @@
     padding-block-start: var(--cui-space-4, 1rem);
   }
 
-  /* Hero section demos — tuned-down sizing so the previews fit the docs panel
-     rather than filling the viewport. */
-  .docs-hero-section {
+  /* Roomier gap for the prose → demos → API-reference rhythm in section docs. */
+  .docs-section-stack {
     --cui-stack-gap: var(--cui-space-5, 1.5rem);
   }
 
+  /* Hero section demos — tuned-down sizing so the previews fit the docs panel
+     rather than filling the viewport. */
   .docs-hero-demo {
     --cui-hero-padding-block: var(--cui-space-7, 3rem);
     --cui-hero-title-size: var(--cui-font-size-5, 4rem);

@@ -42,14 +42,15 @@
 
   box-sizing: border-box;
   display: block;
-  inline-size: min(100% - (var(--cui-container-gutter, 2rem) * 2), var(--cui-container-wide, 96rem));
-  margin-inline: auto;
   border-block-end: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
   background: var(--cui-page-intro-bg, var(--cui-color-surface, #f7f8fa));
   color: var(--cui-page-intro-color, var(--cui-color, #1b1f27));
   padding-block: var(--cui-page-intro-padding-block, clamp(2.5rem, 7vi, 5rem));
+  padding-inline: var(--cui-container-gutter, 2rem);
 }
 
+/* Full-width surface, content capped and centered — the background reaches the
+   band edges while the copy stays inset by the gutter. */
 .cui-page-intro-layout {
   display: grid;
   max-inline-size: var(--cui-container-wide, 96rem);
@@ -99,13 +100,18 @@
 }
 
 .cui-page-intro-aside {
-  display: block;
+  display: grid;
+  gap: var(--cui-space-2, 0.5rem);
   align-content: start;
   border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
   border-radius: var(--cui-radius-2, 0.5rem);
   background: var(--cui-color-surface-raised, #fff);
   box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
   padding: var(--cui-space-4, 1rem);
+}
+
+.cui-page-intro-aside > :where(h1, h2, h3, h4, p) {
+  margin: 0;
 }
 
 .cui-page-intro-aside:empty {
@@ -127,10 +133,14 @@
   --cui-page-intro-content-size: 46rem;
 }
 
+/* Full-bleed — muted surface and an uncapped content column (the surface is
+   already edge-to-edge with the gutter padding from the base block). */
 .cui-page-intro-full-bleed {
-  inline-size: 100%;
-  padding-inline: var(--cui-container-gutter, 2rem);
-  background: var(--cui-page-intro-bg, #edf0f4);
+  --cui-page-intro-bg: var(--cui-color-surface-muted, #edf0f4);
+}
+
+.cui-page-intro-full-bleed .cui-page-intro-layout {
+  max-inline-size: 100%;
 }
 
 .cui-page-intro-inverse {
