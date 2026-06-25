@@ -1,80 +1,11 @@
-.cui-card-grid,
-.cui-feature-grid,
-.cui-case-grid,
-.cui-stats-grid,
-.cui-logo-strip {
-  display: grid;
-  align-items: var(--cui-content-grid-align, stretch);
-  justify-content: var(--cui-content-grid-justify, stretch);
-  gap:
-    var(--cui-content-grid-row-gap, var(--cui-content-grid-gap, var(--cui-space-4, 1rem)))
-    var(--cui-content-grid-column-gap, var(--cui-content-grid-gap, var(--cui-space-4, 1rem)));
-}
-
 /**
- * Auto-fitting card grid — the generic version of the content-grid
- * family. Columns auto-fit at `--cui-card-grid-min` (16rem default),
- * gap defaults to `--cui-content-grid-gap`. Use for mixed-card
- * layouts where you want columns to flow naturally; reach for the
- * typed variants (`.cui-feature-grid`, `.cui-case-grid`,
- * `.cui-stats-grid`, `.cui-logo-strip`) when the children are
- * homogeneous and you want their bespoke column-min defaults.
- *
- * @block cui-card-grid
- * @summary Auto-fit grid for mixed cards; 16rem column minimum.
- * @variant compact | spacious — Maps to `[data-gap]`. Overrides
- *   `--cui-content-grid-gap` to `--cui-space-3` or `--cui-space-6`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`. Pin to a fixed
- *   column count at viewports ≥48rem; below, falls back to
- *   auto-fit.
- * @cssvar --cui-card-grid-min — Minimum column width. Defaults to 16rem.
- *
- * @example
- *   <div class="cui-card-grid" data-columns="3">
- *     <article class="cui-surface cui-stack">…</article>
- *     <article class="cui-surface cui-stack">…</article>
- *     <article class="cui-surface cui-stack">…</article>
- *   </div>
- */
-.cui-card-grid {
-  --cui-content-grid-min: var(--cui-card-grid-min, 16rem);
-
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 16rem)), 1fr))
-  );
-}
-
-/**
- * Auto-fit grid optimized for `.cui-feature-card` children — wider
- * columns (18rem default) to give icon + heading + paragraph room
- * to breathe. Same `[data-gap]` / `[data-columns]` axes as
- * `.cui-card-grid`.
- *
- * @block cui-feature-grid
- * @summary Auto-fit grid for feature cards; 18rem column minimum.
- * @variant compact | spacious — Maps to `[data-gap]`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`.
- * @cssvar --cui-feature-grid-min — Minimum column width. Defaults to 18rem.
- * @cssvar --cui-feature-card-rows — Subgrid row span used to align each card's icon / heading / body across the row. Defaults to 3.
- */
-.cui-feature-grid {
-  --cui-content-grid-min: var(--cui-feature-grid-min, 18rem);
-
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 18rem)), 1fr))
-  );
-}
-
-/**
- * Cross-card alignment for `.cui-feature-grid`. Feature cards already
- * stretch to equal height (grid default), but with uneven content a
- * longer heading in one card pushes its paragraph down while a shorter
- * heading beside it does not — so headings and body copy drift out of
- * line across the row. Subgrid fixes this: each card maps its three
- * rows (icon, heading, body) onto shared parent tracks, so the tallest
- * icon / heading / body in a row sets that row's height and every
+ * Cross-card alignment for `.cui-feature-card` children of a `.cui-grid`.
+ * Feature cards already stretch to equal height (grid default), but
+ * with uneven content a longer heading in one card pushes its paragraph
+ * down while a shorter heading beside it does not — so headings and body
+ * copy drift out of line across the row. Subgrid fixes this: each card maps
+ * its three rows (icon, heading, body) onto shared parent tracks, so the
+ * tallest icon / heading / body in a row sets that row's height and every
  * card's heading and paragraph start on the same line.
  *
  * Scoped to direct `.cui-feature-card` children with the canonical
@@ -86,7 +17,7 @@
  * top-aligned behavior rather than reserving empty tracks.
  */
 @supports (grid-template-rows: subgrid) {
-  .cui-feature-grid > .cui-feature-card {
+  .cui-grid > .cui-feature-card {
     grid-row: span var(--cui-feature-card-rows, 3);
     grid-template-rows: subgrid;
     row-gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
@@ -94,94 +25,12 @@
 }
 
 /**
- * Auto-fit grid for `.cui-case-card` children — wider still
- * (20rem default) since case cards usually include a media
- * region. Same `[data-gap]` / `[data-columns]` axes as the rest
- * of the family.
- *
- * @block cui-case-grid
- * @summary Auto-fit grid for case-study cards; 20rem column minimum.
- * @variant compact | spacious — Maps to `[data-gap]`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`.
- * @cssvar --cui-case-grid-min — Minimum column width. Defaults to 20rem.
- */
-.cui-case-grid {
-  --cui-content-grid-min: var(--cui-case-grid-min, 20rem);
-
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 20rem)), 1fr))
-  );
-}
-
-/**
- * Auto-fit grid for `.cui-stat` children — narrow columns
- * (10rem default) to allow many KPIs per row on wide viewports.
- * Same `[data-gap]` / `[data-columns]` axes as the rest of the
- * family.
- *
- * @block cui-stats-grid
- * @summary Auto-fit grid for KPI stat cards; 10rem column minimum.
- * @variant compact | spacious — Maps to `[data-gap]`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`.
- * @cssvar --cui-stats-grid-min — Minimum column width. Defaults to 10rem.
- */
-.cui-stats-grid {
-  --cui-content-grid-min: var(--cui-stats-grid-min, 10rem);
-
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 10rem)), 1fr))
-  );
-}
-
-/**
- * Auto-fit grid for `.cui-logo-item` children — moderate columns
- * (9rem default) sized for compact brand logos. Items align
- * `stretch` (instead of the family default) so logo cells share
- * a uniform block-size. Same `[data-gap]` / `[data-columns]`
- * axes as the rest of the family.
- *
- * @block cui-logo-strip
- * @summary Auto-fit grid for brand logos; 9rem column minimum, stretch align.
- * @variant compact | spacious — Maps to `[data-gap]`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`.
- * @cssvar --cui-logo-strip-min — Minimum column width. Defaults to 9rem.
- */
-.cui-logo-strip {
-  --cui-content-grid-min: var(--cui-logo-strip-min, 9rem);
-
-  align-items: stretch;
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-content-grid-min, 9rem)), 1fr))
-  );
-}
-
-.cui-card-grid[data-gap="compact"],
-.cui-feature-grid[data-gap="compact"],
-.cui-case-grid[data-gap="compact"],
-.cui-stats-grid[data-gap="compact"],
-.cui-logo-strip[data-gap="compact"] {
-  --cui-content-grid-gap: var(--cui-space-3, 0.75rem);
-}
-
-.cui-card-grid[data-gap="spacious"],
-.cui-feature-grid[data-gap="spacious"],
-.cui-case-grid[data-gap="spacious"],
-.cui-stats-grid[data-gap="spacious"],
-.cui-logo-strip[data-gap="spacious"] {
-  --cui-content-grid-gap: var(--cui-space-6, 2rem);
-}
-
-/**
  * Feature card — icon + heading + paragraph, designed to call out
- * a single feature, value prop, or step. Shares the bordered +
- * elevated card chrome with `.cui-content-card`, `.cui-stat`,
- * `.cui-logo-item`, and (with extras) `.cui-case-card`; this
- * combined rule applies the shared border / background / shadow /
- * corner-radius surface to all five so they visually match in a
- * mixed grid.
+ * a single feature, value prop, or step. Compose `.cui-surface` in
+ * markup for the shared bordered + elevated chrome (the card maps the
+ * `--cui-content-card-*` knobs onto the surface override vars), as do
+ * `.cui-content-card`, `.cui-stat`, `.cui-logo-item`, and
+ * `.cui-case-card`, so they all visually match in a mixed grid.
  *
  * `.cui-content-card` is the generic sibling — same chrome and
  * padding, no icon slot — use it when the card is a free-form
@@ -190,12 +39,13 @@
  * (see its own entry).
  *
  * @block cui-feature-card
- * @summary Card with icon + heading + paragraph; shares chrome with content / stat / logo / case cards.
+ * @summary Card with icon + heading + paragraph; composes `.cui-surface` chrome, shared with content / stat / logo / case cards.
  * @variant center — Maps to `[data-align]`. Centers content and
  *   text (applies to all five card types).
  * @variant flat | borderless — Maps to `[data-variant]`. `flat`
  *   drops the shadow. `borderless` drops border and shadow.
  *   (Both apply to all five card types.)
+ * @cssvar --cui-feature-card-rows — Subgrid row span used to align each card's icon / heading / body across the row. Defaults to 3.
  * @cssvar --cui-content-card-bg — Card background. Defaults to `--cui-color-surface-raised`.
  * @cssvar --cui-content-card-border — Border color. Defaults to `--cui-color-border`.
  * @cssvar --cui-content-card-radius — Corner radius. Defaults to `--cui-radius-2`.
@@ -205,7 +55,7 @@
  * @cssvar --cui-content-card-muted-color — Muted body-text color (applies to `<p>` children automatically). Defaults to `--cui-color-muted`.
  *
  * @example
- *   <article class="cui-feature-card">
+ *   <article class="cui-surface cui-feature-card">
  *     <div class="cui-feature-icon" aria-hidden="true">★</div>
  *     <h3>Feature headline</h3>
  *     <p>One or two sentences of supporting copy.</p>
@@ -213,7 +63,7 @@
  *
  * @example
  *   <!-- Generic content card (no icon) -->
- *   <article class="cui-content-card">
+ *   <article class="cui-surface cui-content-card">
  *     <h3>Section title</h3>
  *     <p>Free-form content. Same chrome as feature cards.</p>
  *   </article>
@@ -223,20 +73,26 @@
 .cui-content-card,
 .cui-stat,
 .cui-logo-item {
-  border: var(--cui-border-size, 1px) solid var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
-  border-radius: var(--cui-content-card-radius, var(--cui-radius-2, 0.5rem));
-  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-bg: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  --cui-surface-radius: var(--cui-content-card-radius, var(--cui-radius-2, 0.5rem));
+  --cui-surface-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+
   color: var(--cui-color, #1b1f27);
-  box-shadow: var(--cui-content-card-shadow, var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%)));
 }
 
 .cui-feature-card,
 .cui-content-card,
 .cui-stat,
 .cui-logo-item {
+  --cui-surface-padding: var(--cui-content-card-padding, var(--cui-space-5, 1.5rem));
+
   display: grid;
   gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
-  padding: var(--cui-content-card-padding, var(--cui-space-5, 1.5rem));
 }
 
 .cui-feature-card[data-align="center"],
@@ -298,8 +154,14 @@
   block-size: var(--cui-feature-icon-size, var(--cui-control-size, 2.5rem));
   place-items: center;
   border-radius: var(--cui-control-radius, 0.25rem);
-  background: var(--cui-feature-icon-bg, var(--cui-color-surface-muted, #edf0f4));
-  color: var(--cui-feature-icon-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
+  background: var(
+    --cui-feature-icon-bg,
+    var(--cui-color-surface-muted, #edf0f4)
+  );
+  color: var(
+    --cui-feature-icon-color,
+    var(--cui-color-accent, oklch(57% 0.18 246deg))
+  );
   font-weight: var(--cui-font-weight-strong, 680);
 }
 
@@ -317,9 +179,9 @@
  * @cssvar --cui-case-card-media-ratio — Media aspect ratio. Defaults to `16 / 10`.
  *
  * @example
- *   <a class="cui-case-card" href="/cases/acme">
+ *   <a class="cui-surface cui-case-card" href="/cases/acme">
  *     <img class="cui-case-card-media" src="/cases/acme.jpg" alt="">
- *     <div class="cui-case-card-body">
+ *     <div class="cui-case-card-body cui-stack">
  *       <p class="cui-case-card-meta">FinTech · 2025</p>
  *       <h3>Acme case study headline</h3>
  *       <p>A two-sentence summary of the engagement.</p>
@@ -327,6 +189,8 @@
  *   </a>
  */
 .cui-case-card {
+  --cui-surface-padding: 0;
+
   overflow: hidden;
   display: grid;
 }
@@ -348,23 +212,19 @@
 }
 
 /**
- * Content body inside `.cui-case-card`. A stacked grid with the
- * shared `--cui-content-card-gap` and `--cui-content-card-padding`
- * so case cards feel consistent with feature / content cards
- * even though the card itself doesn't carry padding. Heading and
- * paragraph children get `margin: 0`.
+ * Content body inside `.cui-case-card`. Composes `.cui-stack` in
+ * markup for the vertical rhythm and direct-child margin reset; this
+ * thin delta adds the body padding (the case card itself carries none)
+ * and tightens the gap to `--cui-content-card-gap` so case cards feel
+ * consistent with feature / content cards.
  *
  * @block cui-case-card-body
- * @summary Stacked content body inside a case card.
+ * @summary Padding + gap delta over `.cui-stack` for a case-card body.
  */
 .cui-case-card-body {
-  display: grid;
-  gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
-  padding: var(--cui-content-card-padding, var(--cui-space-5, 1.5rem));
-}
+  --cui-stack-gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
 
-.cui-case-card-body > :where(h2, h3, p) {
-  margin: 0;
+  padding: var(--cui-content-card-padding, var(--cui-space-5, 1.5rem));
 }
 
 /**
@@ -383,7 +243,7 @@
 }
 
 /**
- * Logo cell inside `.cui-logo-strip` (or any logo grid). A
+ * Logo cell inside a `.cui-grid` logo strip (or any grid). A
  * centered container that pins `<img>` / `<svg>` children to a
  * maximum width and height, so brand marks stay visually balanced
  * regardless of their native aspect ratio. The cell itself uses
@@ -398,11 +258,11 @@
  * @cssvar --cui-logo-max-block-size — Child media maximum height. Defaults to 2.25rem.
  *
  * @example
- *   <div class="cui-logo-strip" data-variant="borderless">
- *     <a class="cui-logo-item" href="https://acme.com">
+ *   <div class="cui-grid" style="--cui-grid-min: 9rem;">
+ *     <a class="cui-surface cui-logo-item" data-variant="borderless" href="https://acme.com">
  *       <img src="/logos/acme.svg" alt="Acme">
  *     </a>
- *     <a class="cui-logo-item" href="https://contoso.com">
+ *     <a class="cui-surface cui-logo-item" data-variant="borderless" href="https://contoso.com">
  *       <img src="/logos/contoso.svg" alt="Contoso">
  *     </a>
  *   </div>
@@ -432,16 +292,16 @@
  * @cssvar --cui-stat-align — Block-axis alignment of the card content. Defaults to `start`.
  *
  * @example
- *   <div class="cui-stats-grid" data-columns="3">
- *     <article class="cui-stat" data-align="center">
+ *   <div class="cui-grid" data-columns="3" style="--cui-grid-min: 10rem;">
+ *     <article class="cui-surface cui-stat" data-align="center">
  *       <p class="cui-stat-value">128M</p>
  *       <p class="cui-stat-label">Active users</p>
  *     </article>
- *     <article class="cui-stat" data-align="center">
+ *     <article class="cui-surface cui-stat" data-align="center">
  *       <p class="cui-stat-value">99.9%</p>
  *       <p class="cui-stat-label">Uptime</p>
  *     </article>
- *     <article class="cui-stat" data-align="center">
+ *     <article class="cui-surface cui-stat" data-align="center">
  *       <p class="cui-stat-value">4.8★</p>
  *       <p class="cui-stat-label">App store rating</p>
  *     </article>
@@ -449,32 +309,6 @@
  */
 .cui-stat {
   align-content: var(--cui-stat-align, start);
-}
-
-@media (width >= 48rem) {
-  .cui-card-grid[data-columns="2"],
-  .cui-feature-grid[data-columns="2"],
-  .cui-case-grid[data-columns="2"],
-  .cui-stats-grid[data-columns="2"],
-  .cui-logo-strip[data-columns="2"] {
-    --cui-content-grid-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cui-card-grid[data-columns="3"],
-  .cui-feature-grid[data-columns="3"],
-  .cui-case-grid[data-columns="3"],
-  .cui-stats-grid[data-columns="3"],
-  .cui-logo-strip[data-columns="3"] {
-    --cui-content-grid-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .cui-card-grid[data-columns="4"],
-  .cui-feature-grid[data-columns="4"],
-  .cui-case-grid[data-columns="4"],
-  .cui-stats-grid[data-columns="4"],
-  .cui-logo-strip[data-columns="4"] {
-    --cui-content-grid-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 /**

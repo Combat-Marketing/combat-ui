@@ -527,24 +527,54 @@
 
 /**
  * Auto-fit grid primitive — columns of at least `--cui-grid-min`
- * (16rem default) that fill the available inline-size. Use as a
- * lightweight alternative to the typed `.cui-card-grid` /
- * `.cui-feature-grid` / `.cui-case-grid` family when you don't
- * need their per-type column-min defaults or
- * `[data-gap]` / `[data-columns]` axes.
+ * (16rem default) that fill the available inline-size. Pin a fixed
+ * column count at ≥48rem with `[data-columns="2|3|4"]`, and tune the
+ * gap with `[data-gap="compact|spacious"]` or `--cui-grid-gap`. Set a
+ * per-content-type column min inline (e.g. 18rem for feature cards,
+ * 10rem for stats, 9rem for logos).
  *
  * @block cui-grid
  * @summary Auto-fit grid; columns of at least `--cui-grid-min`.
+ * @variant 2 | 3 | 4 — Maps to `[data-columns]`. Pins a fixed column count at ≥48rem; below, falls back to auto-fit.
+ * @variant compact | spacious — Maps to `[data-gap]`. Overrides `--cui-grid-gap` to `--cui-space-3` or `--cui-space-6`.
  * @cssvar --cui-grid-min — Minimum column width. Defaults to 16rem.
  * @cssvar --cui-grid-gap — Gap between cells. Defaults to `--cui-space-4`.
+ * @example
+ *   <div class="cui-grid" data-columns="3" style="--cui-grid-min: 18rem;">
+ *     <article class="cui-surface cui-stack">…</article>
+ *     <article class="cui-surface cui-stack">…</article>
+ *     <article class="cui-surface cui-stack">…</article>
+ *   </div>
  */
 .cui-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, var(--cui-grid-min, 16rem)), 1fr)
+  grid-template-columns: var(
+    --cui-grid-columns,
+    repeat(auto-fit, minmax(min(100%, var(--cui-grid-min, 16rem)), 1fr))
   );
   gap: var(--cui-grid-gap, var(--cui-space-4, 1rem));
+}
+
+.cui-grid[data-gap="compact"] {
+  --cui-grid-gap: var(--cui-space-3, 0.75rem);
+}
+
+.cui-grid[data-gap="spacious"] {
+  --cui-grid-gap: var(--cui-space-6, 2rem);
+}
+
+@media (width >= 48rem) {
+  .cui-grid[data-columns="2"] {
+    --cui-grid-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cui-grid[data-columns="3"] {
+    --cui-grid-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cui-grid[data-columns="4"] {
+    --cui-grid-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 /**
