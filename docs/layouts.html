@@ -438,8 +438,10 @@
             <div class="cui-prose">
               <h2>Surface</h2>
               <p>
-                Card-like wrapper with raised background, hairline border, soft elevation, and rounded corners. Pair
-                with stack, cluster, or split inside.
+                Card-like wrapper with raised background, hairline border, soft elevation, and rounded corners.
+                Compose a layout primitive inside — <code>cui-stack</code>, <code>cui-cluster</code>, or
+                <code>cui-split</code> — rather than reaching for a typed card class. Every chrome property is an
+                override var, so a block can re-skin padding, radius, or shadow without redeclaring the rule.
               </p>
             </div>
 
@@ -458,15 +460,45 @@
                     <cui-button>Cancel</cui-button>
                   </div>
                 </div>
+                <div
+                  class="cui-surface cui-stack"
+                  style="--cui-surface-padding: var(--cui-space-6); --cui-surface-radius: 0; --cui-surface-shadow: none;"
+                >
+                  <strong>Re-skinned</strong>
+                  <p style="margin: 0; color: var(--cui-color-muted);">
+                    Flush, flat, square — override vars only, no new selector.
+                  </p>
+                </div>
               </div>
             </div>
+            <cui-code language="html">
+              <script type="text/plain">
+                <div class="cui-surface cui-stack">
+                  <strong>Surface card</strong>
+                  <p style="margin: 0; color: var(--cui-color-muted);">
+                    Default elevation, hairline border, raised background.
+                  </p>
+                </div>
 
-            <cui-code language="html"><script type="text/plain">
-<div class="cui-surface cui-stack">
-  <h3>Card title</h3>
-  <p>Body copy.</p>
-</div>
-</script></cui-code>
+                <div class="cui-surface cui-stack">
+                  <strong>With cluster</strong>
+                  <div class="cui-cluster">
+                    <cui-button variant="primary">Confirm</cui-button>
+                    <cui-button>Cancel</cui-button>
+                  </div>
+                </div>
+                
+                <div
+                  class="cui-surface cui-stack"
+                  style="--cui-surface-padding: var(--cui-space-6); --cui-surface-radius: 0; --cui-surface-shadow: none;"
+                >
+                  <strong>Re-skinned</strong>
+                  <p style="margin: 0; color: var(--cui-color-muted);">
+                    Flush, flat, square — override vars only, no new selector.
+                  </p>
+                </div>
+              </script>
+            </cui-code>
           </section>
 
           <section id="shell" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">

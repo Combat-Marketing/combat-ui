@@ -4,13 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Combat UI foundations: section tones, containers, editorial type, prose, flow, and utility classes.">
+  <meta name="description"
+    content="Combat UI foundations: section tones, containers, editorial type, prose, flow, and utility classes.">
   <title>Foundations · Combat UI</title>
   <script>
     try {
       var t = localStorage.getItem("cui-theme");
       if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
-    } catch (_) {}
+    } catch (_) { }
   </script>
   <script type="module" src="./index.ts"></script>
   <link rel="stylesheet" href="./site.css">
@@ -61,7 +62,8 @@
               <div class="cui-section cui-section-muted" data-spacing="compact">
                 <div class="cui-page">
                   <p class="cui-eyebrow">Muted</p>
-                  <p style="margin: 0;"><code>.cui-section-muted</code> — subdued surface for breaks between primary sections.</p>
+                  <p style="margin: 0;"><code>.cui-section-muted</code> — subdued surface for breaks between primary
+                    sections.</p>
                 </div>
               </div>
             </div>
@@ -69,7 +71,8 @@
               <div class="cui-section cui-section-inverse" data-spacing="compact">
                 <div class="cui-page">
                   <p class="cui-eyebrow">Inverse</p>
-                  <p style="margin: 0;"><code>.cui-section-inverse</code> — full-bleed dark band for promos and footers.</p>
+                  <p style="margin: 0;"><code>.cui-section-inverse</code> — full-bleed dark band for promos and footers.
+                  </p>
                 </div>
               </div>
             </div>
@@ -82,29 +85,52 @@
               </div>
             </div>
 
-            <cui-code language="html"><script type="text/plain">
+            <cui-code language="html">
+              <script type="text/plain">
 <!-- Spacing: data-spacing or modifier class -->
-<section class="cui-section" data-spacing="compact">…</section>
-<section class="cui-section cui-section-spacious">…</section>
-<section class="cui-section cui-section-hero">…</section>
+              <section class="cui-section" data-spacing="compact">…</section>
+              <section class="cui-section cui-section-spacious">…</section>
+              <section class="cui-section cui-section-hero">…</section>
 
-<!-- Tones: class modifiers -->
-<section class="cui-section cui-section-muted">…</section>
-<section class="cui-section cui-section-inverse">…</section>
-<section class="cui-section cui-section-accent">…</section>
-</script></cui-code>
+              <!-- Tones: class modifiers -->
+              <section class="cui-section cui-section-muted">…</section>
+              <section class="cui-section cui-section-inverse">…</section>
+              <section class="cui-section cui-section-accent">…</section>
+              </script>
+            </cui-code>
 
             <table class="docs-token-table">
               <thead>
-                <tr><th>Modifier</th><th>Effect</th></tr>
+                <tr>
+                  <th>Modifier</th>
+                  <th>Effect</th>
+                </tr>
               </thead>
               <tbody>
-                <tr><td><code>data-spacing="compact"</code> / <code>.cui-section-compact</code></td><td>Tight block padding</td></tr>
-                <tr><td><code>data-spacing="spacious"</code> / <code>.cui-section-spacious</code></td><td>Open block padding</td></tr>
-                <tr><td><code>data-spacing="hero"</code> / <code>.cui-section-hero</code></td><td>Hero-scale block padding</td></tr>
-                <tr><td><code>.cui-section-muted</code></td><td>Surface-muted background</td></tr>
-                <tr><td><code>.cui-section-inverse</code></td><td>Inverse surface (dark in light, light in dark)</td></tr>
-                <tr><td><code>.cui-section-accent</code></td><td>Accent surface with on-accent foreground</td></tr>
+                <tr>
+                  <td><code>data-spacing="compact"</code> / <code>.cui-section-compact</code></td>
+                  <td>Tight block padding</td>
+                </tr>
+                <tr>
+                  <td><code>data-spacing="spacious"</code> / <code>.cui-section-spacious</code></td>
+                  <td>Open block padding</td>
+                </tr>
+                <tr>
+                  <td><code>data-spacing="hero"</code> / <code>.cui-section-hero</code></td>
+                  <td>Hero-scale block padding</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-section-muted</code></td>
+                  <td>Surface-muted background</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-section-inverse</code></td>
+                  <td>Inverse surface (dark in light, light in dark)</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-section-accent</code></td>
+                  <td>Accent surface with on-accent foreground</td>
+                </tr>
               </tbody>
             </table>
           </section>
@@ -134,17 +160,19 @@
               </div>
             </div>
 
-            <cui-code language="html"><script type="text/plain">
+            <cui-code language="html">
+              <script type="text/plain">
 <section class="cui-section">
   <div class="cui-container cui-container-narrow">
     <!-- 48rem reading column -->
   </div>
 </section>
-</script></cui-code>
+</script>
+            </cui-code>
 
             <p class="cui-caption">
               For non-section page wrappers (e.g. an app shell page), see <a href="./layouts.html#page">Layouts → Page
-              wrappers</a>.
+                wrappers</a>.
             </p>
           </section>
 
@@ -161,7 +189,8 @@
               <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
                 <p class="cui-eyebrow">Eyebrow</p>
                 <p class="cui-display">A display-scale headline.</p>
-                <p class="cui-caption" style="margin: var(--cui-space-3, 0.75rem) 0 0;"><code>.cui-display</code> — fluid display size, display weight, balanced wrap.</p>
+                <p class="cui-caption" style="margin: var(--cui-space-3, 0.75rem) 0 0;"><code>.cui-display</code> —
+                  fluid display size, display weight, balanced wrap.</p>
               </div>
 
               <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
@@ -169,39 +198,81 @@
                   Lead text introduces a section with extra inline-size and weight. Pair it with a smaller body
                   paragraph below.
                 </p>
-                <p class="cui-caption" style="margin: var(--cui-space-3, 0.75rem) 0 0;"><code>.cui-lead</code> — 1.5rem fluid, muted color, capped at 68ch.</p>
+                <p class="cui-caption" style="margin: var(--cui-space-3, 0.75rem) 0 0;"><code>.cui-lead</code> — 1.5rem
+                  fluid, muted color, capped at 68ch.</p>
               </div>
 
               <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
                 <p class="cui-eyebrow">Eyebrow / kicker</p>
-                <p class="cui-caption" style="margin: 0;"><code>.cui-eyebrow</code> and <code>.cui-kicker</code> are aliases — small accent label, uppercase, tracked.</p>
+                <p class="cui-caption" style="margin: 0;"><code>.cui-eyebrow</code> and <code>.cui-kicker</code> are
+                  aliases — small accent label, uppercase, tracked.</p>
               </div>
 
               <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
                 <p class="cui-caption">Caption — small muted note that sits next to or under primary content.</p>
                 <p class="cui-metadata">METADATA — small, strong, muted: dates, authors, statuses.</p>
               </div>
+              <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
+                <ul class="cui-meta">
+                  <li>5 min read</li>
+                  <li>March 2026</li>
+                  <li class="cui-text-muted">Engineering</li>
+                </ul>
+                <p class="cui-caption" style="margin: var(--cui-space-3, 0.75rem) 0 0;"><code>.cui-meta</code> — the row
+                  form of <code>.cui-metadata</code>: a wrapping list of facts with <code>·</code> separators and list
+                  reset baked in. One class replaces the old per-block <code>*-meta</code> rows.</p>
+              </div>
+
             </div>
 
-            <cui-code language="html"><script type="text/plain">
-<p class="cui-eyebrow">Eyebrow</p>
-<h1 class="cui-display">Display headline</h1>
-<p class="cui-lead">Lead paragraph that introduces the section.</p>
+            <cui-code language="html">
+              <script type="text/plain">
+              <p class="cui-eyebrow">Eyebrow</p>
+              <h1 class="cui-display">Display headline</h1>
+              <p class="cui-lead">Lead paragraph that introduces the section.</p>
 
-<p class="cui-caption">Caption text.</p>
-<p class="cui-metadata">5 min read · 2026-05-08</p>
-</script></cui-code>
+              <p class="cui-caption">Caption text.</p>
+              <p class="cui-metadata">5 min read · 2026-05-08</p>
+              <ul class="cui-meta">
+                <li>5 min read</li>
+                <li>March 2026</li>
+                <li>Engineering</li>
+              </ul>
+              </script>
+            </cui-code>
 
             <table class="docs-token-table">
               <thead>
-                <tr><th>Class</th><th>Tokens</th></tr>
+                <tr>
+                  <th>Class</th>
+                  <th>Tokens</th>
+                </tr>
               </thead>
               <tbody>
-                <tr><td><code>.cui-display</code></td><td><code>--cui-font-size-display</code>, <code>--cui-font-weight-display</code>, <code>--cui-line-height-display</code></td></tr>
-                <tr><td><code>.cui-lead</code></td><td><code>--cui-font-size-2</code>, <code>--cui-color-muted</code>, <code>--cui-content-measure</code></td></tr>
-                <tr><td><code>.cui-eyebrow</code> / <code>.cui-kicker</code></td><td><code>--cui-color-accent</code>, <code>--cui-font-size-eyebrow</code>, <code>--cui-font-weight-strong</code></td></tr>
-                <tr><td><code>.cui-caption</code></td><td><code>--cui-font-size-caption</code>, <code>--cui-color-muted</code></td></tr>
-                <tr><td><code>.cui-metadata</code></td><td><code>--cui-font-size-metadata</code>, <code>--cui-font-weight-strong</code>, <code>--cui-color-muted</code></td></tr>
+                <tr>
+                  <td><code>.cui-display</code></td>
+                  <td><code>--cui-font-size-display</code>, <code>--cui-font-weight-display</code>,
+                    <code>--cui-line-height-display</code></td>
+                </tr>
+                <tr>
+                  <td><code>.cui-lead</code></td>
+                  <td><code>--cui-font-size-2</code>, <code>--cui-color-muted</code>, <code>--cui-content-measure</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>.cui-eyebrow</code> / <code>.cui-kicker</code></td>
+                  <td><code>--cui-color-accent</code>, <code>--cui-font-size-eyebrow</code>,
+                    <code>--cui-font-weight-strong</code></td>
+                </tr>
+                <tr>
+                  <td><code>.cui-caption</code></td>
+                  <td><code>--cui-font-size-caption</code>, <code>--cui-color-muted</code></td>
+                </tr>
+                <tr>
+                  <td><code>.cui-metadata</code></td>
+                  <td><code>--cui-font-size-metadata</code>, <code>--cui-font-weight-strong</code>,
+                    <code>--cui-color-muted</code></td>
+                </tr>
               </tbody>
             </table>
           </section>
@@ -240,12 +311,15 @@
             <div class="docs-layout-frame" style="padding: var(--cui-space-5, 1.5rem);">
               <div class="cui-flow">
                 <h3 style="margin: 0;">Block one</h3>
-                <p style="margin: 0;">Children are spaced with <code>--cui-flow-space</code> via margin, not gap — useful when wrappers like CMS regions can't control their direct children.</p>
-                <p style="margin: 0;">Each successive child gets <code>margin-block-start</code> applied automatically.</p>
+                <p style="margin: 0;">Children are spaced with <code>--cui-flow-space</code> via margin, not gap —
+                  useful when wrappers like CMS regions can't control their direct children.</p>
+                <p style="margin: 0;">Each successive child gets <code>margin-block-start</code> applied automatically.
+                </p>
               </div>
             </div>
 
-            <cui-code language="html"><script type="text/plain">
+            <cui-code language="html">
+              <script type="text/plain">
 <article class="cui-prose">
   <h2>Heading</h2>
   <p>Body paragraph.</p>
@@ -259,7 +333,8 @@
   <p>Block two</p>
   <p>Block three</p>
 </div>
-</script></cui-code>
+</script>
+            </cui-code>
           </section>
 
           <section id="utilities" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
@@ -273,37 +348,60 @@
 
             <table class="docs-token-table">
               <thead>
-                <tr><th>Class</th><th>Effect</th></tr>
+                <tr>
+                  <th>Class</th>
+                  <th>Effect</th>
+                </tr>
               </thead>
               <tbody>
-                <tr><td><code>.cui-text-muted</code></td><td>Apply <code>--cui-color-muted</code> to text.</td></tr>
-                <tr><td><code>.cui-text-balance</code></td><td>Set <code>text-wrap: balance</code> for short headings.</td></tr>
-                <tr><td><code>.cui-visually-hidden</code></td><td>Visually hide content while keeping it accessible to screen readers.</td></tr>
-                <tr><td><code>.cui-full-bleed</code></td><td>Break a child out of its container to span the viewport.</td></tr>
-                <tr><td><code>.cui-size-sm</code> / <code>.cui-size-lg</code></td><td>Shorthand for <code>--cui-control-scale: 0.88</code> / <code>1.16</code>.</td></tr>
-                <tr><td><code>.cui-density-compact</code> / <code>.cui-density-comfortable</code></td><td>Shorthand for <code>--cui-density: 0</code> / <code>1.25</code>.</td></tr>
+                <tr>
+                  <td><code>.cui-text-muted</code></td>
+                  <td>Apply <code>--cui-color-muted</code> to text.</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-text-balance</code></td>
+                  <td>Set <code>text-wrap: balance</code> for short headings.</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-visually-hidden</code></td>
+                  <td>Visually hide content while keeping it accessible to screen readers.</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-full-bleed</code></td>
+                  <td>Break a child out of its container to span the viewport.</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-size-sm</code> / <code>.cui-size-lg</code></td>
+                  <td>Shorthand for <code>--cui-control-scale: 0.88</code> / <code>1.16</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>.cui-density-compact</code> / <code>.cui-density-comfortable</code></td>
+                  <td>Shorthand for <code>--cui-density: 0</code> / <code>1.25</code>.</td>
+                </tr>
               </tbody>
             </table>
 
-            <cui-code language="html"><script type="text/plain">
+            <cui-code language="html">
+              <script type="text/plain">
 <!-- Muted body copy -->
-<p class="cui-text-muted">Secondary information.</p>
+              <p class="cui-text-muted">Secondary information.</p>
 
-<!-- Screen-reader-only label -->
-<button>
-  Close
-  <span class="cui-visually-hidden">the dialog</span>
-</button>
+              <!-- Screen-reader-only label -->
+              <button>
+                Close
+                <span class="cui-visually-hidden">the dialog</span>
+              </button>
 
-<!-- Break out of the parent container -->
-<figure class="cui-full-bleed">…</figure>
+              <!-- Break out of the parent container -->
+              <figure class="cui-full-bleed">…</figure>
 
-<!-- Scope a denser control set -->
-<div class="cui-density-compact cui-cluster">
-  <cui-button>Save</cui-button>
-  <cui-button>Cancel</cui-button>
-</div>
-</script></cui-code>
+              <!-- Scope a denser control set -->
+              <div class="cui-density-compact cui-cluster">
+                <cui-button>Save</cui-button>
+                <cui-button>Cancel</cui-button>
+              </div>
+              </script>
+            </cui-code>
           </section>
 
           <section id="skip-link" class="cui-stack" style="--cui-stack-gap: var(--cui-space-5, 1.5rem);">
@@ -315,13 +413,15 @@
               </p>
             </div>
 
-            <cui-code language="html"><script type="text/plain">
+            <cui-code language="html">
+              <script type="text/plain">
 <body>
   <a class="cui-skip-link" href="#main">Skip to content</a>
   <header>…</header>
   <main id="main">…</main>
 </body>
-</script></cui-code>
+</script>
+            </cui-code>
 
             <p class="cui-caption">
               Press <kbd>Tab</kbd> on this page to see the skip link slide in from the top-left corner.

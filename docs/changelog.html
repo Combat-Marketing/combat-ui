@@ -37,6 +37,7 @@
     <section class="cui-section">
       <div class="cui-container docs-doc-layout">
         <aside class="docs-on-page" aria-label="Releases">
+          <a class="cui-nav-link" href="#v0-5-0">v0.5.0</a>
           <a class="cui-nav-link" href="#v0-4-0">v0.4.0</a>
           <a class="cui-nav-link" href="#v0-3-1">v0.3.1</a>
           <a class="cui-nav-link" href="#v0-3-0">v0.3.0</a>
@@ -48,7 +49,40 @@
         </aside>
 
         <div class="cui-stack docs-changelog">
+          <!-- ============================ v0.5.0 ============================ -->
+          <section id="v0-5-0" class="docs-release">
+            <header class="docs-release-header">
+              <div>
+                <p class="docs-release-eyebrow">Unreleased</p>
+                <h2 class="docs-release-title">v0.5.0</h2>
+              </div>
+              <span class="docs-release-tag" data-impact="breaking">Breaking</span>
+            </header>
 
+            <p class="docs-release-summary">
+              CSS footprint reduction. The block stylesheets stop re-implementing structural chrome and instead
+              compose the foundational primitives (<code>.cui-surface</code>, <code>.cui-stack</code>,
+              <code>.cui-cluster</code>, <code>.cui-grid</code>) in markup. Dozens of bespoke <code>*-body</code>,
+              <code>*-actions</code>, <code>*-grid</code>, and <code>*-meta</code> subclasses are removed in favour of
+              a small canonical vocabulary. <em>Removals and the migration guide below are filled in as each block
+              lands.</em>
+            </p>
+
+            <div class="docs-change-group" data-change="added">
+              <h3 class="docs-change-heading">Added</h3>
+              <ul class="docs-change-list">
+                <li>Override custom properties on <code>.cui-surface</code> so any block can re-skin the chrome
+                  without redeclaring it: <code>--cui-surface-bg</code>, <code>--cui-surface-border</code>,
+                  <code>--cui-surface-radius</code>, <code>--cui-surface-shadow</code>, and
+                  <code>--cui-surface-padding</code> (each defaults to the previous hardcoded value).</li>
+                <li>New <code>.cui-meta</code> class — one canonical metadata row (wrapping list with
+                  <code>·</code> separators and list reset) that replaces the per-block <code>*-meta</code> rows.
+                  Tunable via <code>--cui-meta-gap</code> and <code>--cui-meta-separator</code>.</li>
+              </ul>
+            </div>
+
+            <!-- Removed / Changed groups and the Upgrade guide are appended by later block commits. -->
+          </section>
           <!-- ============================ v0.4.0 ============================ -->
           <section id="v0-4-0" class="docs-release">
             <header class="docs-release-header">
