@@ -146,7 +146,8 @@
   position: sticky;
   z-index: 10;
   inset-block-start: 0;
-  border-block-end: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-block-end: var(--cui-border-size, 1px) solid
+    var(--cui-color-border, #cfd6df);
 }
 
 /**
@@ -159,7 +160,8 @@
  * @summary Raised-surface footer for `.cui-shell`.
  */
 .cui-shell-footer {
-  border-block-start: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-block-start: var(--cui-border-size, 1px) solid
+    var(--cui-color-border, #cfd6df);
 }
 
 /**
@@ -264,7 +266,8 @@
   display: block;
   inline-size: min(var(--cui-app-sidebar-size, 16rem), calc(100vi - 3rem));
   min-inline-size: var(--cui-app-sidebar-size, 16rem);
-  border-inline-end: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  border-inline-end: var(--cui-border-size, 1px) solid
+    var(--cui-color-border, #cfd6df);
   background: var(--cui-color-surface-raised, #fff);
   box-shadow: var(--cui-shadow-2, 0 12px 28px hsl(220deg 25% 10% / 14%));
   overflow: auto;
@@ -530,7 +533,10 @@
  */
 .cui-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--cui-grid-min, 16rem)), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--cui-grid-min, 16rem)), 1fr)
+  );
   gap: var(--cui-grid-gap, var(--cui-space-4, 1rem));
 }
 
@@ -629,17 +635,110 @@
 /**
  * Generic raised surface — the simplest possible card primitive.
  * Background, border, corner radius, default shadow, default
- * padding. Use as a lightweight box when none of the typed
- * cards (`.cui-card`, `.cui-feature-card`, `.cui-content-card`,
- * etc.) match the content.
+ * padding, all driven by override vars so any block can re-skin the
+ * chrome without redeclaring it. Compose it with a layout primitive
+ * (`.cui-stack`, `.cui-cluster`, `.cui-grid`) in markup rather than
+ * reaching for a typed card class.
  *
  * @block cui-surface
  * @summary Bordered, elevated surface with default padding.
+ * @cssvar --cui-surface-bg — Background color. Defaults to `--cui-color-surface-raised`.
+ * @cssvar --cui-surface-border — Border. Defaults to `--cui-border-size solid --cui-color-border`.
+ * @cssvar --cui-surface-radius — Corner radius. Defaults to `--cui-radius-2`.
+ * @cssvar --cui-surface-shadow — Box shadow. Defaults to `--cui-shadow-1`.
+ * @cssvar --cui-surface-padding — Padding. Defaults to `--cui-space-4`.
+ *
+ * @example
+ *   <div class="cui-surface">
+ *     <p>A plain raised box with the default chrome.</p>
+ *   </div>
+ *
+ * @example
+ *   <!-- The card recipe: surface chrome + stacked children. -->
+ *   <article class="cui-surface cui-stack">
+ *     <h3>Card title</h3>
+ *     <p>Body copy stacked with the default --cui-stack-gap.</p>
+ *     <a class="cui-button" href="/more">Read more</a>
+ *   </article>
+ *
+ * @example
+ *   <!-- Re-skin the chrome via override vars (flush, flat, square). -->
+ *   <div
+ *     class="cui-surface cui-stack"
+ *     style="
+ *       --cui-surface-padding: var(--cui-space-6);
+ *       --cui-surface-radius: 0;
+ *       --cui-surface-shadow: none;
+ *     "
+ *   >
+ *     <h3>Custom surface</h3>
+ *     <p>Padding, radius, and shadow overridden inline.</p>
+ *   </div>
  */
 .cui-surface {
-  background: var(--cui-color-surface-raised, #fff);
-  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
-  border-radius: var(--cui-radius-2, 0.5rem);
-  box-shadow: var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%));
-  padding: var(--cui-space-4, 1rem);
+  background: var(--cui-surface-bg, var(--cui-color-surface-raised, #fff));
+  border: var(
+    --cui-surface-border,
+    var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df)
+  );
+  border-radius: var(--cui-surface-radius, var(--cui-radius-2, 0.5rem));
+  box-shadow: var(
+    --cui-surface-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+  padding: var(--cui-surface-padding, var(--cui-space-4, 1rem));
+}
+
+/**
+ * Metadata row — one canonical replacement for the per-block `*-meta`
+ * rows (article, event, vacancy, page-intro, person, case). A
+ * flex-wrap row of muted, metadata-sized, strong-weight labels with
+ * list reset baked in, so it works directly on a `<ul>` of `<li>`s or
+ * a row of `<span>`s. Composes the cluster row, a list reset, and the
+ * `.cui-metadata` type into a single class.
+ *
+ * Adjacent items are separated by a `·` glyph inserted via `::before`.
+ * Set `--cui-meta-separator` to change the glyph (e.g. `"—"`) or to
+ * `""` to drop separators entirely. Emphasize a single entry (byline,
+ * time) by giving it full-strength color in markup, not extra weight.
+ *
+ * @block cui-meta
+ * @summary Flex-wrap metadata row with `·` separators and list reset.
+ * @cssvar --cui-meta-gap — Row/column gap between items. Defaults to `--cui-space-2` / `--cui-space-3`.
+ * @cssvar --cui-meta-separator — Glyph between adjacent items. Defaults to `"·"`.
+ *
+ * @example
+ *   <ul class="cui-meta">
+ *     <li>5 min read</li>
+ *     <li>March 2026</li>
+ *     <li>Engineering</li>
+ *   </ul>
+ */
+.cui-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(
+    --cui-meta-gap,
+    var(--cui-space-2, 0.5rem) var(--cui-space-3, 0.75rem)
+  );
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-metadata, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
+.cui-meta > * {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cui-space-2, 0.5rem);
+  margin: 0;
+}
+
+.cui-meta > * + *::before {
+  content: var(--cui-meta-separator, "·");
+  margin-inline-end: var(--cui-space-2, 0.5rem);
+  color: var(--cui-color-border, #cfd6df);
 }
