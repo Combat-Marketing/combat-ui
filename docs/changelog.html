@@ -75,6 +75,14 @@
                   <code>.cui-cluster</code>. Its default gap (<code>--cui-space-3</code>) is identical, so the
                   swap is purely a class rename in markup.
                 </li>
+                <li>The five typed content grids - <code>.cui-card-grid</code>, <code>.cui-feature-grid</code>,
+                  <code>.cui-case-grid</code>, <code>.cui-stats-grid</code>, <code>.cui-logo-strip</code> (and
+                  their <code>--cui-*-grid-min</code> / <code>--cui-content-grid-*</code> vars). Use
+                  <code>.cui-grid</code> with <code>--cui-grid-min</code> per content type (18rem features, 20rem
+                  cases, 10rem stats, 9rem logos); the card classes (<code>.cui-feature-card</code>,
+                  <code>.cui-case-card</code>, <code>.cui-content-card</code>, <code>.cui-stat</code>,
+                  <code>.cui-logo-item</code>) are unchanged.
+                </li>
               </ul>
             </div>
 
@@ -96,7 +104,20 @@
                   gap is the sole source of vertical rhythm. This makes it a drop-in for the per-block
                   <code>*-body</code> margin resets being removed across this release.
                 </li>
-
+                <li><code>.cui-grid</code> now supports the <code>[data-columns="2|3|4"]</code> and
+                  <code>[data-gap="compact|spacious"]</code> axes (ported from the removed typed grids), and
+                  aligns <code>.cui-feature-card</code> children across a row via subgrid.
+                </li>
+                <li>The content cards - <code>.cui-feature-card</code>, <code>.cui-content-card</code>,
+                  <code>.cui-stat</code>, <code>.cui-logo-item</code>, <code>.cui-case-card</code> - no longer
+                  carry their own chrome; they compose <code>.cui-surface</code>. Add it in markup, e.g.
+                  <code>class="cui-surface cui-feature-card"</code>. The <code>--cui-content-card-*</code> knobs are
+                  preserved - they now feed the matching <code>--cui-surface-*</code> override vars.
+                </li>
+                <li><code>.cui-case-card-body</code> now composes <code>.cui-stack</code>; update it to
+                  <code>class="cui-case-card-body cui-stack"</code>. It keeps only the body padding and the
+                  tightened gap delta.
+                </li>
               </ul>
             </div>
 
