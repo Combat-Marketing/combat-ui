@@ -204,6 +204,23 @@
                   between event cards; the agenda day headers are author-supplied
                   <code>&lt;h3&gt;</code>s (no dedicated class).
                 </li>
+                <li><code>.cui-media-card-body</code>, <code>.cui-media-card-eyebrow</code>,
+                  <code>.cui-media-card-meta</code>, <code>.cui-media-card-actions</code> - the media
+                  card now styles its own descendants (contextual markup). The body is a
+                  <code>.cui-stack</code>, the eyebrow a <code>.cui-eyebrow</code>, the meta line the
+                  shared <code>.cui-metadata</code>, and the actions a <code>.cui-cluster</code>; the
+                  title stays a bare heading. The <code>.cui-media-card-media</code> region is
+                  preserved (bare first-child media still works).
+                </li>
+                <li><code>.cui-media-overlay-body</code>, <code>.cui-media-overlay-eyebrow</code>,
+                  <code>.cui-media-overlay-title</code>, <code>.cui-media-overlay-actions</code> - the
+                  overlay now styles its own descendants. The body is a <code>.cui-stack</code>, the
+                  eyebrow a <code>.cui-eyebrow</code> (retinted near-white over the scrim), the title a
+                  <code>.cui-display</code> (retuned to overlay scale; the
+                  <code>--cui-media-overlay-title-size</code> knob is preserved), and the actions a
+                  <code>.cui-cluster</code>. The <code>.cui-media-overlay-media</code> background slot
+                  is preserved.
+                </li>
               </ul>
             </div>
 
@@ -284,6 +301,17 @@
                   <code>.cui-event-card-title</code>. Add <code>data-cui-event-title</code> to the
                   title heading (alongside <code>.cui-display</code>) for cards placed inside a
                   calendar or day-planner.
+                </li>
+                <li><code>.cui-media-card</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> and styles its own body descendants contextually. Add it
+                  in markup, e.g. <code>class="cui-surface cui-media-card"</code> with a
+                  <code>.cui-stack</code> body. The card feeds the <code>--cui-surface-*</code> vars
+                  from its <code>--cui-content-card-*</code> / <code>--cui-media-card-*</code> knobs
+                  and sets <code>--cui-surface-padding: 0</code> so the media still bleeds; the body
+                  carries the padding. The <code>flat</code> / <code>borderless</code> /
+                  <code>data-orient</code> variants are unchanged. (The body slot classes are
+                  dropped - see Removed.) <code>.cui-media-overlay</code> keeps its own scrim chrome
+                  but likewise styles its body descendants - no slot classes.
                 </li>
               </ul>
             </div>
