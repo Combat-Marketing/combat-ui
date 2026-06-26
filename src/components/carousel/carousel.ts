@@ -71,8 +71,8 @@ const PAUSE_ICON =
  * <cui-carousel autoplay interval="6000" aria-label="Featured work">
  *   <section slot="slide" class="cui-media-overlay" data-align="start">
  *     <img src="/one.jpg" alt="">
- *     <div class="cui-media-overlay-body">
- *       <h2 class="cui-media-overlay-title">A bold headline</h2>
+ *     <div class="cui-stack">
+ *       <h2 class="cui-display">A bold headline</h2>
  *       <cui-button data-variant="primary" href="/x">Read more</cui-button>
  *     </div>
  *   </section>

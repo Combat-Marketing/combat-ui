@@ -78,37 +78,37 @@
     <section class="docs-panel">
       <div class="cui-stack">
         <div class="cui-grid" data-columns="2">
-          <article class="cui-media-card">
+          <article class="cui-surface cui-media-card">
             <img class="cui-media-card-media" src="./hero-image.svg" alt="Composition pattern preview">
-            <div class="cui-media-card-body">
-              <p class="cui-media-card-meta">Pattern</p>
+            <div class="cui-stack">
+              <p class="cui-metadata">Pattern</p>
               <h3>Editorial spread</h3>
               <p>A media-led card pairs a leading visual with eyebrow, title, copy, and an action group.</p>
-              <div class="cui-media-card-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary" href="#media-blocks">Read more</cui-button>
               </div>
             </div>
           </article>
-          <article class="cui-media-card" data-variant="flat">
+          <article class="cui-surface cui-media-card" data-variant="flat">
             <img class="cui-media-card-media" src="./hero-image.svg" alt="Composition pattern preview">
-            <div class="cui-media-card-body">
-              <p class="cui-media-card-eyebrow">Editorial</p>
+            <div class="cui-stack">
+              <p class="cui-eyebrow">Editorial</p>
               <h3>Flat variant</h3>
               <p>Use <code>data-variant="flat"</code> to drop the elevation shadow for dense grids.</p>
             </div>
           </article>
         </div>
-        <article class="cui-media-card" data-orient="row">
+        <article class="cui-surface cui-media-card" data-orient="row">
           <img class="cui-media-card-media" src="./hero-image.svg" alt="Side-by-side media card">
-          <div class="cui-media-card-body">
-            <p class="cui-media-card-eyebrow">Side by side</p>
+          <div class="cui-stack">
+            <p class="cui-eyebrow">Side by side</p>
             <h3>Row orientation</h3>
             <p>
               Set <code>data-orient="row"</code> to place the media beside the body. The layout uses
               flex-wrap, so the media stacks above the body when the card is narrower than the combined
               flex basis.
             </p>
-            <div class="cui-media-card-actions">
+            <div class="cui-cluster">
               <cui-button variant="primary" href="#media-blocks">Continue reading</cui-button>
             </div>
           </div>
@@ -116,23 +116,23 @@
         <cui-code language="html">
           <script type="text/html">
                         <!-- Default: media on top, body below -->
-          <article class="cui-media-card">
+          <article class="cui-surface cui-media-card">
             <img class="cui-media-card-media" src="/cover.jpg" alt="Composition pattern preview">
-            <div class="cui-media-card-body">
-              <p class="cui-media-card-meta">Pattern</p>
+            <div class="cui-stack">
+              <p class="cui-metadata">Pattern</p>
               <h3>Editorial spread</h3>
               <p>A media-led card pairs a leading visual with eyebrow, title, copy, and action group.</p>
-              <div class="cui-media-card-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary">Read more</cui-button>
               </div>
             </div>
           </article>
 
           <!-- Row orientation: media beside body; wraps to stack on narrow widths -->
-          <article class="cui-media-card" data-orient="row">
+          <article class="cui-surface cui-media-card" data-orient="row">
             <img class="cui-media-card-media" src="/cover.jpg" alt="Side-by-side media card">
-            <div class="cui-media-card-body">
-              <p class="cui-media-card-eyebrow">Side by side</p>
+            <div class="cui-stack">
+              <p class="cui-eyebrow">Side by side</p>
               <h3>Row orientation</h3>
               <p>data-orient="row" places the media beside the body.</p>
             </div>
@@ -147,20 +147,20 @@
 
         <article class="cui-media-overlay">
           <img src="./hero-image.svg" alt="Campaign visual">
-          <div class="cui-media-overlay-body">
-            <p class="cui-media-overlay-eyebrow">Campaign</p>
-            <h3 class="cui-media-overlay-title">Tell the story above the fold.</h3>
+          <div class="cui-stack">
+            <p class="cui-eyebrow">Campaign</p>
+            <h3 class="cui-display">Tell the story above the fold.</h3>
             <p>Overlay cards layer copy on top of a media background with a configurable scrim.</p>
-            <div class="cui-media-overlay-actions">
+            <div class="cui-cluster">
               <cui-button variant="primary" href="#media-blocks">Read campaign</cui-button>
             </div>
           </div>
         </article>
         <article class="cui-media-overlay" data-align="center" data-scrim="solid">
           <img src="./hero-image.svg" alt="Centered overlay card">
-          <div class="cui-media-overlay-body">
-            <p class="cui-media-overlay-eyebrow">Centered</p>
-            <h3 class="cui-media-overlay-title">Solid scrim, centered content.</h3>
+          <div class="cui-stack">
+            <p class="cui-eyebrow">Centered</p>
+            <h3 class="cui-display">Solid scrim, centered content.</h3>
             <p>Use <code>data-align="center"</code> and <code>data-scrim="solid"</code> for poster-style blocks.</p>
           </div>
         </article>
@@ -169,11 +169,11 @@
           <script type="text/html">
                         <article class="cui-media-overlay">
                           <img src="/hero-image.svg" alt="Campaign visual">
-                          <div class="cui-media-overlay-body">
-                            <p class="cui-media-overlay-eyebrow">Campaign</p>
-                            <h3 class="cui-media-overlay-title">Tell the story above the fold.</h3>
+                          <div class="cui-stack">
+                            <p class="cui-eyebrow">Campaign</p>
+                            <h3 class="cui-display">Tell the story above the fold.</h3>
                             <p>Overlay cards layer copy on top of a media background with a configurable scrim.</p>
-                            <div class="cui-media-overlay-actions">
+                            <div class="cui-cluster">
                               <cui-button variant="primary">Read campaign</cui-button>
                             </div>
                           </div>
@@ -181,9 +181,9 @@
 
                         <article class="cui-media-overlay" data-align="center" data-scrim="solid">
                           <img src="/hero-image.svg" alt="">
-                          <div class="cui-media-overlay-body">
-                            <p class="cui-media-overlay-eyebrow">Centered</p>
-                            <h3 class="cui-media-overlay-title">Solid scrim, centered content.</h3>
+                          <div class="cui-stack">
+                            <p class="cui-eyebrow">Centered</p>
+                            <h3 class="cui-display">Solid scrim, centered content.</h3>
                           </div>
                         </article>
                       </script>
@@ -223,30 +223,24 @@
               </tr>
               <tr>
                 <td>
-                  <code>.cui-media-card</code> / <code>.cui-media-card-media</code> /
-                  <code>.cui-media-card-body</code>
+                  <code>.cui-surface.cui-media-card</code> / <code>.cui-media-card-media</code>
                 </td>
                 <td>
-                  Card with a leading media block above (or beside) eyebrow / meta, heading, copy, and an
-                  action cluster. Drop inside <code>.cui-grid</code> for responsive grids.
+                  Card with a leading media block above (or beside) a <code>.cui-stack</code> body. Composes
+                  <code>.cui-surface</code> for chrome and styles its own descendants; the body carries a
+                  <code>.cui-eyebrow</code>, a bare heading, copy, a <code>.cui-metadata</code> line, and a
+                  <code>.cui-cluster</code>. Drop inside <code>.cui-grid</code> for responsive grids.
                 </td>
               </tr>
               <tr>
                 <td>
-                  <code>.cui-media-card-eyebrow</code> / <code>.cui-media-card-meta</code> /
-                  <code>.cui-media-card-actions</code>
-                </td>
-                <td>Optional eyebrow kicker, meta line, and action cluster within the card body.</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>.cui-media-overlay</code> / <code>.cui-media-overlay-media</code> /
-                  <code>.cui-media-overlay-body</code>
+                  <code>.cui-media-overlay</code> / <code>.cui-media-overlay-media</code>
                 </td>
                 <td>
-                  Card with copy overlaid on a media background and a configurable scrim. Body content
-                  elements can use <code>.cui-media-overlay-eyebrow</code>,
-                  <code>.cui-media-overlay-title</code>, and <code>.cui-media-overlay-actions</code>.
+                  Card with copy overlaid on a media background and a configurable scrim. The body is a
+                  <code>.cui-stack</code> carrying a <code>.cui-eyebrow</code>, a <code>.cui-display</code>
+                  title, copy, and a <code>.cui-cluster</code> — the overlay styles them in place (light
+                  foreground, near-white eyebrow).
                 </td>
               </tr>
             </tbody>

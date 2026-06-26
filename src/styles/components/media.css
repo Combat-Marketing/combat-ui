@@ -213,8 +213,23 @@
  * `[data-orient="row"]` to pair media beside body, similar to the
  * article-card row variant.
  *
+ * **Contextual markup.** Compose `.cui-surface` for the card chrome and
+ * a `.cui-stack` body; the card styles its own descendants, so each part
+ * carries only the canonical primitive (or nothing at all):
+ *
+ * - `.cui-media-card-media` (or a bare first-child media element) — the
+ *   media region.
+ * - a `.cui-stack` — the body (eyebrow, heading, copy, meta, actions).
+ * - `.cui-eyebrow` — the kicker above the title.
+ * - a bare heading — the title (default heading scale).
+ * - a bare `<p>` — the description, rendered muted.
+ * - `.cui-metadata` — the date / reading-time / byline line.
+ * - `.cui-cluster` — the actions row.
+ *
+ * Lay cards out with `.cui-grid`.
+ *
  * @block cui-media-card
- * @summary Card with media region and content body.
+ * @summary Card with media region and content body; composes `.cui-surface` and styles its own descendants.
  * @variant row — Maps to `[data-orient]`. Media beside body; collapses to stacked on narrow widths.
  * @variant flat | borderless — Maps to `[data-variant]`. `flat`
  *   drops the shadow. `borderless` drops shadow and border.
@@ -223,28 +238,34 @@
  * @cssvar --cui-media-card-media-size — Media flex-basis in row orient. Defaults to 18rem.
  *
  * @example
- *   <article class="cui-media-card">
+ *   <article class="cui-surface cui-media-card">
  *     <img class="cui-media-card-media" src="/feature.jpg" alt="">
- *     <div class="cui-media-card-body">
- *       <p class="cui-media-card-eyebrow">Spotlight</p>
+ *     <div class="cui-stack">
+ *       <p class="cui-eyebrow">Spotlight</p>
  *       <h3>Card title</h3>
  *       <p>Card description.</p>
- *       <p class="cui-media-card-meta">5 min read</p>
- *       <div class="cui-media-card-actions">
+ *       <p class="cui-metadata">5 min read</p>
+ *       <div class="cui-cluster">
  *         <a class="cui-button" href="/post">Read more</a>
  *       </div>
  *     </div>
  *   </article>
  */
 .cui-media-card {
+  --cui-surface-bg: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  --cui-surface-radius: var(--cui-media-card-radius, var(--cui-radius-2, 0.5rem));
+  --cui-surface-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+  --cui-surface-padding: 0;
+
   display: grid;
   gap: 0;
   overflow: hidden;
-  border: var(--cui-border-size, 1px) solid var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
-  border-radius: var(--cui-media-card-radius, var(--cui-radius-2, 0.5rem));
-  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
   color: var(--cui-color, #1b1f27);
-  box-shadow: var(--cui-content-card-shadow, var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%)));
 }
 
 .cui-media-card[data-variant="flat"] {
@@ -275,72 +296,27 @@
   object-position: var(--cui-media-position, center);
 }
 
-/**
- * Content column inside `.cui-media-card`. A grid that stacks
- * eyebrow / title / body / meta / actions with the shared
- * `--cui-content-card-gap` between rows; direct heading and
- * paragraph children get `margin: 0`, and `<p>` siblings inherit
- * the muted content-card color (so descriptions read as
- * secondary text without an explicit class).
- *
- * @block cui-media-card-body
- * @summary Stacked content column inside a media card.
- */
-.cui-media-card-body {
-  display: grid;
-  gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
+/* Content column — the card's `.cui-stack`. The card zeroes its own
+ * padding (media bleeds), so the body owns the inset and feeds its gap
+ * from --cui-content-card-gap. Eyebrow, heading, copy, meta, and actions
+ * stack; a bare `<p>` reads as muted secondary copy without a class. */
+.cui-media-card > .cui-stack {
+  --cui-stack-gap: var(--cui-content-card-gap, var(--cui-space-3, 0.75rem));
+
   padding: var(--cui-content-card-padding, var(--cui-space-5, 1.5rem));
 }
 
-.cui-media-card-body > :where(h1, h2, h3, h4, p) {
-  margin: 0;
-}
-
-.cui-media-card-body > :where(p) {
+.cui-media-card > .cui-stack > p:not([class]) {
   color: var(--cui-content-card-muted-color, var(--cui-color-muted, #5d6675));
 }
 
-/**
- * Eyebrow / kicker inside `.cui-media-card-body`. Small-caps,
- * accent-tinted, tracked.
- *
- * @block cui-media-card-eyebrow
- * @summary Accent-tinted eyebrow above the title.
- * @cssvar --cui-media-card-eyebrow-color — Eyebrow tint. Defaults to `--cui-color-accent`.
- */
-.cui-media-card-eyebrow {
+/* Eyebrow — the body's `.cui-eyebrow`, with the card's tint knob. */
+.cui-media-card .cui-eyebrow {
   color: var(--cui-media-card-eyebrow-color, var(--cui-color-accent, oklch(57% 0.18 246deg)));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-/**
- * Metadata line inside `.cui-media-card-body` — date, reading
- * time, byline. Muted and bold.
- *
- * @block cui-media-card-meta
- * @summary Muted metadata line inside a media card body.
- */
-.cui-media-card-meta {
-  color: var(--cui-color-muted, #5d6675);
-  font-size: var(--cui-font-size-metadata, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-}
-
-/**
- * Actions row inside `.cui-media-card-body`. Flex-wrap with
- * `--cui-space-3` gap and a small top margin to separate it from
- * the body copy.
- *
- * @block cui-media-card-actions
- * @summary Flex-wrap row of action buttons inside a media card body.
- */
-.cui-media-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
+/* Actions — the body's `.cui-cluster`, set slightly apart from the copy. */
+.cui-media-card > .cui-stack > .cui-cluster {
   margin-block-start: var(--cui-space-2, 0.5rem);
 }
 
@@ -358,7 +334,7 @@
   aspect-ratio: auto;
 }
 
-.cui-media-card[data-orient="row"] > .cui-media-card-body {
+.cui-media-card[data-orient="row"] > .cui-stack {
   flex: 2 1 var(--cui-media-card-body-min, 18rem);
   min-inline-size: 0;
 }
@@ -392,14 +368,25 @@
  * @cssvar --cui-media-overlay-padding — Body padding inside the overlay. Defaults to `--cui-space-5 --cui-space-6`.
  * @cssvar --cui-media-overlay-content-size — Body max-inline-size. Defaults to 32rem.
  *
+ * **Contextual markup.** The overlay styles its own descendants, so the
+ * body carries only canonical primitives — no bespoke slot classes:
+ *
+ * - `.cui-media-overlay-media` (or a bare first-child media element) — the
+ *   background media.
+ * - a `.cui-stack` — the body (eyebrow, title, copy, actions).
+ * - `.cui-eyebrow` — the kicker, tinted for contrast over the scrim.
+ * - `.cui-display` — the title, retuned to overlay scale in place.
+ * - a bare `<p>` — supporting copy.
+ * - `.cui-cluster` — the actions row.
+ *
  * @example
  *   <section class="cui-media-overlay" data-align="start">
  *     <img src="/feature.jpg" alt="">
- *     <div class="cui-media-overlay-body">
- *       <p class="cui-media-overlay-eyebrow">Featured</p>
- *       <h2 class="cui-media-overlay-title">A bold headline</h2>
+ *     <div class="cui-stack">
+ *       <p class="cui-eyebrow">Featured</p>
+ *       <h2 class="cui-display">A bold headline</h2>
  *       <p>Two sentences of supporting copy.</p>
- *       <div class="cui-media-overlay-actions">
+ *       <div class="cui-cluster">
  *         <a class="cui-button" data-variant="primary" href="/x">Read more</a>
  *       </div>
  *     </div>
@@ -496,74 +483,35 @@
   display: none;
 }
 
-/**
- * Content body of `.cui-media-overlay`. A grid stack with
- * `--cui-space-3` gap, padded according to
- * `--cui-media-overlay-padding`, capped at
- * `--cui-media-overlay-content-size` inline-size so long copy
- * stays readable.
- *
- * @block cui-media-overlay-body
- * @summary Content body inside a media overlay (capped width, padded).
- */
-.cui-media-overlay-body {
-  display: grid;
-  gap: var(--cui-space-3, 0.75rem);
+/* Content body — the overlay's `.cui-stack`. Capped at
+ * --cui-media-overlay-content-size so long copy stays readable; padded
+ * per --cui-media-overlay-padding; foreground inherits the overlay color
+ * (light over the scrim). */
+.cui-media-overlay > .cui-stack {
+  --cui-stack-gap: var(--cui-space-3, 0.75rem);
+
   padding: var(--cui-media-overlay-padding, var(--cui-space-5, 1.5rem) var(--cui-space-6, 2rem));
   min-inline-size: 0;
   max-inline-size: var(--cui-media-overlay-content-size, 32rem);
   color: inherit;
 }
 
-.cui-media-overlay-body > :where(h1, h2, h3, h4, p) {
-  margin: 0;
-  color: inherit;
-}
-
-/**
- * Eyebrow inside `.cui-media-overlay-body`. Small-caps, tracked,
- * tinted near-white by default for contrast over the dark scrim.
- *
- * @block cui-media-overlay-eyebrow
- * @summary Eyebrow text above the overlay title.
- * @cssvar --cui-media-overlay-eyebrow-color — Eyebrow tint. Defaults to translucent white.
- */
-.cui-media-overlay-eyebrow {
+/* Eyebrow — the body's `.cui-eyebrow`, tinted near-white for contrast
+ * over the dark scrim. */
+.cui-media-overlay .cui-eyebrow {
   color: var(--cui-media-overlay-eyebrow-color, hsl(0deg 0% 100% / 86%));
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-/**
- * Title inside `.cui-media-overlay-body`. Display-weight, sized
- * at `--cui-font-size-3` by default, tight line-height, balanced.
- *
- * @block cui-media-overlay-title
- * @summary Display-weight title inside a media overlay.
- * @cssvar --cui-media-overlay-title-size — Title font size. Defaults to `--cui-font-size-3`.
- */
-.cui-media-overlay-title {
-  font-size: var(--cui-media-overlay-title-size, var(--cui-font-size-3, 2rem));
-  font-weight: var(--cui-font-weight-display, 760);
-  line-height: var(--cui-line-height-tight, 1.2);
-  text-wrap: balance;
+/* Title — `.cui-display` retuned to overlay scale (font-size-3, tight
+ * leading, no measure cap); inherits the light overlay color. */
+.cui-media-overlay .cui-display {
+  --cui-display-measure: none;
+  --cui-display-size: var(--cui-media-overlay-title-size, var(--cui-font-size-3, 2rem));
+  --cui-display-leading: var(--cui-line-height-tight, 1.2);
 }
 
-/**
- * Actions row inside `.cui-media-overlay-body`. Flex-wrap with
- * `--cui-space-3` gap and a small top margin. Use one or two
- * `.cui-button`s with `data-variant="primary"` for the primary
- * CTA — neutral buttons can disappear into the scrim.
- *
- * @block cui-media-overlay-actions
- * @summary Flex-wrap row of action buttons inside a media overlay body.
- */
-.cui-media-overlay-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
+/* Actions — the body's `.cui-cluster`, set slightly apart from the copy. */
+.cui-media-overlay > .cui-stack > .cui-cluster {
   margin-block-start: var(--cui-space-2, 0.5rem);
 }
 
@@ -573,7 +521,7 @@
   text-align: center;
 }
 
-.cui-media-overlay[data-align="center"] .cui-media-overlay-body {
+.cui-media-overlay[data-align="center"] > .cui-stack {
   justify-items: center;
   margin-inline: auto;
 }
@@ -584,7 +532,7 @@
   text-align: end;
 }
 
-.cui-media-overlay[data-align="end"] .cui-media-overlay-body {
+.cui-media-overlay[data-align="end"] > .cui-stack {
   justify-items: end;
   margin-inline-start: auto;
 }
