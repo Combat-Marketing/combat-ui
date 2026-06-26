@@ -67,8 +67,8 @@ function clampMonth(month: number): { year: number; month: number } {
  * <cui-calendar year="2026" month="6">
  *   <article class="cui-event-card" data-status="upcoming">
  *     <time class="cui-event-card-date" datetime="2026-06-15T10:00">…</time>
- *     <div class="cui-event-card-body">
- *       <h3 class="cui-event-card-title"><a href="/events/foo">Foo</a></h3>
+ *     <div class="cui-stack">
+ *       <h3 class="cui-display" data-cui-event-title><a href="/events/foo">Foo</a></h3>
  *     </div>
  *   </article>
  * </cui-calendar>

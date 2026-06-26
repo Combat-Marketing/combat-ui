@@ -119,8 +119,8 @@ function packColumns(events: ParsedEvent[]): PositionedEvent[] {
  *   <article class="cui-event-card" data-status="upcoming">
  *     <time class="cui-event-card-date" datetime="2026-06-15T10:00">…</time>
  *     <time datetime="2026-06-15T12:00"></time>
- *     <div class="cui-event-card-body">
- *       <h3 class="cui-event-card-title"><a href="/events/foo">Workshop</a></h3>
+ *     <div class="cui-stack">
+ *       <h3 class="cui-display" data-cui-event-title><a href="/events/foo">Workshop</a></h3>
  *     </div>
  *   </article>
  * </cui-day-planner>
