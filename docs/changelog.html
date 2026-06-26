@@ -178,6 +178,32 @@
                   <code>.cui-hero-bg</code> slots, and the <code>--cui-hero-content-size</code> /
                   <code>--cui-hero-title-size</code> knobs are preserved.
                 </li>
+                <li><code>.cui-event-card-body</code>, <code>.cui-event-card-category</code>,
+                  <code>.cui-event-card-title</code>, <code>.cui-event-card-excerpt</code>,
+                  <code>.cui-event-card-meta</code>, <code>.cui-event-card-time</code>,
+                  <code>.cui-event-card-location</code>, <code>.cui-event-card-actions</code>,
+                  <code>.cui-event-card-status</code> - the event card now styles its own
+                  descendants (contextual markup). The body is a <code>.cui-stack</code>, the
+                  category a <code>.cui-eyebrow</code>, the title a <code>.cui-display</code>
+                  (retuned to card scale; add <code>data-cui-event-title</code> so the calendar /
+                  day-planner can still read it), the time / location row the shared
+                  <code>.cui-meta</code> (its first entry reads at full strength), the excerpt a
+                  bare <code>&lt;p&gt;</code>, the actions a <code>.cui-cluster</code>, and the
+                  status pill a direct-child <code>&lt;span&gt;</code>. The bespoke
+                  <code>.cui-event-card-date</code> block (month / day / year) is preserved.
+                </li>
+                <li><code>.cui-event-grid</code> (and its <code>--cui-event-grid-min</code> var) -
+                  lay event cards out with <code>.cui-grid</code> and <code>--cui-grid-min: 22rem</code>;
+                  the <code>data-columns</code> / <code>data-gap</code> axes carry over.
+                </li>
+                <li><code>.cui-event-list</code> / <code>.cui-event-list-day</code> (and the
+                  <code>--cui-event-list-gap</code> var) - the single-column overview is a
+                  <code>.cui-stack</code> (set <code>--cui-stack-gap</code> for the rhythm). The
+                  <code>data-variant="stacked"</code> index and <code>data-variant="agenda"</code>
+                  grouping move to the stack and still draw hairline separators / day headers
+                  between event cards; the agenda day headers are author-supplied
+                  <code>&lt;h3&gt;</code>s (no dedicated class).
+                </li>
               </ul>
             </div>
 
@@ -241,6 +267,23 @@
                   internals no longer need slot classes (see Removed), and it keeps only its delta (the
                   sticky rail, the full-width apply button) feeding its gap through
                   <code>--cui-stack-gap</code>.
+                </li>
+                <li><code>.cui-event-card</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> and styles its own body descendants contextually. Add it
+                  in markup, e.g. <code>class="cui-surface cui-event-card"</code> with a
+                  <code>.cui-stack</code> body. The card feeds the <code>--cui-surface-*</code> vars
+                  from its <code>--cui-content-card-*</code> / <code>--cui-event-card-*</code> knobs
+                  and sets <code>--cui-surface-padding: 0</code> so the date block still bleeds; the
+                  body carries the padding. The <code>featured</code> / <code>compact</code> /
+                  <code>flat</code> / <code>borderless</code> / <code>data-orient</code> /
+                  <code>data-status</code> variants are unchanged. (The body slot classes are
+                  dropped - see Removed.)
+                </li>
+                <li>The <code>cui-calendar</code> / <code>cui-day-planner</code> components now read
+                  the event title from a <code>[data-cui-event-title]</code> element instead of
+                  <code>.cui-event-card-title</code>. Add <code>data-cui-event-title</code> to the
+                  title heading (alongside <code>.cui-display</code>) for cards placed inside a
+                  calendar or day-planner.
                 </li>
               </ul>
             </div>
