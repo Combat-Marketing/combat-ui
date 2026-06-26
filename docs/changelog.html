@@ -168,6 +168,16 @@
                   <code>--cui-page-intro-content-size</code> / <code>--cui-page-intro-title-size</code> knobs
                   are preserved.
                 </li>
+                <li><code>.cui-hero-content</code>, <code>.cui-hero-title</code>,
+                  <code>.cui-hero-actions</code> - the hero band now styles its own descendants
+                  (contextual markup). The content column is a <code>.cui-stack</code>, the title a
+                  <code>.cui-display</code> (kept at hero scale — the primitive already ships the 13ch
+                  display measure the hero wants, so only the size is driven from
+                  <code>--cui-hero-title-size</code>), and the actions a <code>.cui-cluster</code>. The
+                  <code>.cui-hero-inner</code> grid wrapper, the <code>.cui-hero-media</code> /
+                  <code>.cui-hero-bg</code> slots, and the <code>--cui-hero-content-size</code> /
+                  <code>--cui-hero-title-size</code> knobs are preserved.
+                </li>
               </ul>
             </div>
 

@@ -1,10 +1,21 @@
 /**
  * Hero band — the top-of-page opener with a content column and optional media,
  * background image, or overlay. Pure CSS; apply `.cui-hero` to a `<section>`.
- * Inside it, a `.cui-hero-inner` holds a `.cui-hero-content` stack and an
- * optional `.cui-hero-media` block. For the background variant, add a
- * `.cui-hero-bg` element and set its image with an inline custom property:
- * `style="--cui-hero-background-image: url('/hero.jpg')"`.
+ *
+ * **Contextual markup.** The band styles its own descendants, so the content
+ * carries only canonical primitives — no bespoke slot classes:
+ *
+ * - `.cui-hero-inner` — the width-capped grid (content + optional media).
+ * - a `.cui-stack` — the content column (eyebrow, title, copy, actions),
+ *   capped to the content width and retuned in place.
+ * - `.cui-eyebrow` — the kicker above the title.
+ * - `.cui-display` — the headline, at hero (display) scale.
+ * - a bare `<p>` — lead copy, rendered larger and muted.
+ * - `.cui-cluster` — the actions row.
+ * - `.cui-hero-media` — the optional image / video wrapper.
+ *
+ * For the background variant, add a `.cui-hero-bg` element and set its image
+ * with an inline custom property: `style="--cui-hero-background-image: url('/hero.jpg')"`.
  *
  * Modifiers compose on the container via data-attributes: the `data-variant`
  * layout (`split` — content + media side by side; `text` — no media; `overlay`
@@ -13,7 +24,7 @@
  * `data-width="narrow | default | wide"`.
  *
  * @block cui-hero
- * @summary Hero surface with content + optional media/background; variant modifiers.
+ * @summary Hero band; composes canonical primitives for the content + optional media; variant modifiers.
  * @variant split — `[data-variant="split"]`. Content and media side by side.
  * @variant text — `[data-variant="text"]`. Text-only hero; tighter rhythm and container.
  * @variant overlay — `[data-variant="overlay"]`. Light copy over a darkened media layer.
@@ -31,11 +42,11 @@
  * @example
  *   <section class="cui-hero" data-variant="split">
  *     <div class="cui-hero-inner">
- *       <div class="cui-hero-content">
+ *       <div class="cui-stack">
  *         <p class="cui-eyebrow">New release</p>
- *         <h1 class="cui-hero-title">Modern websites without the framework tax</h1>
+ *         <h1 class="cui-display">Modern websites without the framework tax</h1>
  *         <p>Web components and light-DOM blocks that ship in any stack.</p>
- *         <div class="cui-hero-actions">
+ *         <div class="cui-cluster">
  *           <a class="cui-button cui-button-primary" href="/start">Get started</a>
  *         </div>
  *       </div>
@@ -93,12 +104,13 @@
 }
 
 /**
- * Width-capped inner wrapper inside `.cui-hero`. Centers the content and
- * media columns to the active container width (set per `data-width`) and
- * supplies the column gap.
+ * Width-capped inner wrapper inside `.cui-hero`. Centers the content column
+ * and optional media to the active container width (set per `data-width`) and
+ * supplies the column gap. Load-bearing: the hero is a full-bleed band, so the
+ * centered, width-capped grid must live on an inner element.
  *
  * @block cui-hero-inner
- * @summary Width-capped, centered wrapper for the hero content + media.
+ * @summary Width-capped, centered grid for the hero content + optional media.
  */
 .cui-hero-inner {
   z-index: 1;
@@ -108,58 +120,33 @@
   gap: var(--cui-hero-gap, 3rem);
 }
 
-/**
- * Content column inside `.cui-hero-inner` — eyebrow, `.cui-hero-title`, copy,
- * and `.cui-hero-actions`. A capped-width grid that sits above any media or
- * background layer; unclassed paragraphs render larger and muted.
- *
- * @block cui-hero-content
- * @summary Capped content column (eyebrow + title + copy + actions).
- */
-.cui-hero-content {
+/* Content column — the inner grid's `.cui-stack`. A capped-width stack
+ * carrying the eyebrow, title, copy, and actions; sits above any media or
+ * background layer. The media sibling is a `.cui-hero-media`, so this rule
+ * only catches the content. */
+.cui-hero-inner > .cui-stack {
+  --cui-stack-gap: var(--cui-space-5, 1.5rem);
+
   position: relative;
   z-index: 1;
-  display: grid;
   max-inline-size: var(--cui-hero-content-size, 42rem);
-  gap: var(--cui-space-5, 1.5rem);
 }
 
-.cui-hero-content > :where(p):not([class]) {
+/* Lead copy — the content column's bare `<p>` (eyebrow / title carry their
+ * own classes). Larger and muted, at reading measure. */
+.cui-hero-inner > .cui-stack > :where(p):not([class]) {
   max-inline-size: var(--cui-content-measure, 68ch);
-  margin: 0;
   color: var(--cui-hero-muted-color, var(--cui-color-muted, #5d6675));
   font-size: var(--cui-font-size-2, 1.5rem);
   line-height: 1.4;
 }
 
-/**
- * Hero headline inside `.cui-hero-content`. The largest type in the system —
- * display weight, tight display line-height, balanced wrapping.
- *
- * @block cui-hero-title
- * @summary Display-scale hero headline.
- */
-.cui-hero-title {
-  max-inline-size: 13ch;
-  margin: 0;
-  font-size: var(--cui-hero-title-size, 5.5rem);
-  font-weight: var(--cui-font-weight-display, 760);
-  letter-spacing: 0;
-  line-height: var(--cui-line-height-display, 0.98);
-  text-wrap: balance;
-}
-
-/**
- * Actions row inside `.cui-hero-content`. A flex row of CTAs that wraps onto
- * multiple lines when the hero is narrow.
- *
- * @block cui-hero-actions
- * @summary Flex row of CTAs inside the hero; wraps on narrow viewports.
- */
-.cui-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
+/* Headline — `.cui-display` at hero scale. The primitive already ships hero
+ * scale (5.5rem, 13ch measure — exactly what the hero wants), so the band
+ * only drives the size from the preserved `--cui-hero-title-size` knob and
+ * keeps the default 13ch measure. */
+.cui-hero .cui-display {
+  --cui-display-size: var(--cui-hero-title-size, var(--cui-font-size-display, 5.5rem));
 }
 
 /**
@@ -194,7 +181,7 @@
 }
 
 /* Media-position start — media leads, content follows. */
-.cui-hero[data-media="start"] .cui-hero-content {
+.cui-hero[data-media="start"] .cui-hero-inner > .cui-stack {
   order: 2;
 }
 
@@ -209,7 +196,7 @@
   --cui-hero-container-size: var(--cui-container, 72rem);
 }
 
-.cui-hero[data-variant="text"] .cui-hero-content {
+.cui-hero[data-variant="text"] .cui-hero-inner > .cui-stack {
   justify-items: var(--cui-hero-text-justify, start);
   max-inline-size: var(--cui-hero-text-size, 54rem);
 }
@@ -218,13 +205,13 @@
   --cui-hero-text-justify: center;
 }
 
-.cui-hero[data-variant="text"][data-align="center"] .cui-hero-content {
+.cui-hero[data-variant="text"][data-align="center"] .cui-hero-inner > .cui-stack {
   margin-inline: auto;
   text-align: center;
 }
 
-.cui-hero[data-variant="text"][data-align="center"] .cui-hero-title,
-.cui-hero[data-variant="text"][data-align="center"] .cui-hero-content > :where(p):not([class]) {
+.cui-hero[data-variant="text"][data-align="center"] .cui-display,
+.cui-hero[data-variant="text"][data-align="center"] .cui-hero-inner > .cui-stack > :where(p):not([class]) {
   margin-inline: auto;
 }
 
@@ -286,7 +273,7 @@
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   }
 
-  .cui-hero[data-media="start"] .cui-hero-content,
+  .cui-hero[data-media="start"] .cui-hero-inner > .cui-stack,
   .cui-hero[data-media="start"] .cui-hero-media {
     order: initial;
   }

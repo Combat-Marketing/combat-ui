@@ -19,13 +19,13 @@
       <div class="cui-stack">
         <section class="cui-hero docs-hero-demo docs-hero-demo-split" data-variant="split">
           <div class="cui-hero-inner">
-            <div class="cui-hero-content">
+            <div class="cui-stack">
               <p class="cui-eyebrow">Campaign</p>
-              <h3 class="cui-hero-title">Launch pages with rich media.</h3>
+              <h3 class="cui-display">Launch pages with rich media.</h3>
               <p>
                 Pair concise copy with product visuals, venue photography, or campaign artwork.
               </p>
-              <div class="cui-hero-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary">Start</cui-button>
                 <cui-button>Preview</cui-button>
               </div>
@@ -39,11 +39,11 @@
           <script type="text/html">
             <section class="cui-hero" data-variant="split">
               <div class="cui-hero-inner">
-                <div class="cui-hero-content">
+                <div class="cui-stack">
                   <p class="cui-eyebrow">Campaign</p>
-                  <h1 class="cui-hero-title">Launch pages with rich media.</h1>
+                  <h1 class="cui-display">Launch pages with rich media.</h1>
                   <p>Pair concise copy with product visuals or campaign artwork.</p>
-                  <div class="cui-hero-actions">
+                  <div class="cui-cluster">
                     <cui-button variant="primary">Start</cui-button>
                   </div>
                 </div>
@@ -61,13 +61,13 @@
           <div class="cui-hero-bg"
             style="--cui-hero-background-image: url('./hero-image.svg'); --cui-hero-background-position: center;"></div>
           <div class="cui-hero-inner">
-            <div class="cui-hero-content">
+            <div class="cui-stack">
               <p class="cui-eyebrow">Background</p>
-              <h3 class="cui-hero-title">Put imagery behind the message.</h3>
+              <h3 class="cui-display">Put imagery behind the message.</h3>
               <p>
                 Background image heroes work well when the visual is decorative and the copy should lead.
               </p>
-              <div class="cui-hero-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary" href="./examples/">Explore</cui-button>
               </div>
             </div>
@@ -81,8 +81,8 @@
                 style="--cui-hero-background-image: url('hero.jpg'); --cui-hero-background-position: center;"
               ></div>
               <div class="cui-hero-inner">
-                <div class="cui-hero-content">
-                  <h1 class="cui-hero-title">Put imagery behind the message.</h1>
+                <div class="cui-stack">
+                  <h1 class="cui-display">Put imagery behind the message.</h1>
                   <p>Use this when the image is decorative and the copy should lead.</p>
                 </div>
               </div>
@@ -96,13 +96,13 @@
       <div class="cui-stack">
         <section class="cui-hero docs-hero-demo docs-hero-demo-overlay" data-variant="overlay">
           <div class="cui-hero-inner">
-            <div class="cui-hero-content">
+            <div class="cui-stack">
               <p class="cui-eyebrow">Editorial</p>
-              <h3 class="cui-hero-title">Video-backed stories with readable copy.</h3>
+              <h3 class="cui-display">Video-backed stories with readable copy.</h3>
               <p>
                 Use an overlay hero when motion supports the message and the headline still needs priority.
               </p>
-              <div class="cui-hero-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary" href="./examples/">Watch</cui-button>
               </div>
             </div>
@@ -117,8 +117,8 @@
           <script type="text/html">
             <section class="cui-hero" data-variant="overlay">
               <div class="cui-hero-inner">
-                <div class="cui-hero-content">
-                  <h1 class="cui-hero-title">Video-backed stories with readable copy.</h1>
+                <div class="cui-stack">
+                  <h1 class="cui-display">Video-backed stories with readable copy.</h1>
                   <p>Use overlays when motion supports the message.</p>
                 </div>
                 <div class="cui-hero-media">
@@ -137,13 +137,13 @@
       <div class="cui-stack">
         <section class="cui-hero docs-hero-demo" data-variant="text" data-align="center">
           <div class="cui-hero-inner">
-            <div class="cui-hero-content">
+            <div class="cui-stack">
               <p class="cui-eyebrow">Announcement</p>
-              <h3 class="cui-hero-title">A focused text hero for direct messages.</h3>
+              <h3 class="cui-display">A focused text hero for direct messages.</h3>
               <p>
                 Text-only heroes keep the first viewport calm for documentation, changelogs, and product updates.
               </p>
-              <div class="cui-hero-actions">
+              <div class="cui-cluster">
                 <cui-button variant="primary">Read more</cui-button>
               </div>
             </div>
@@ -153,13 +153,13 @@
           <script type="text/html">
             <section class="cui-hero" data-variant="text" data-align="center">
               <div class="cui-hero-inner">
-                <div class="cui-hero-content">
+                <div class="cui-stack">
                   <p class="cui-eyebrow">Announcement</p>
-                  <h3 class="cui-hero-title">A focused text hero for direct messages.</h3>
+                  <h3 class="cui-display">A focused text hero for direct messages.</h3>
                   <p>
                     Text-only heroes keep the first viewport calm for documentation, changelogs, and product updates.
                   </p>
-                  <div class="cui-hero-actions">
+                  <div class="cui-cluster">
                     <cui-button variant="primary">Read more</cui-button>
                   </div>
                 </div>
@@ -189,23 +189,31 @@
             </tr>
             <tr>
               <td><code>.cui-hero-inner</code></td>
-              <td>Centered, width-capped row wrapping the content and media.</td>
+              <td>Centered, width-capped grid wrapping the content column and optional media.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-content</code></td>
-              <td>Content column — eyebrow, title, lead copy, and actions.</td>
+              <td><code>.cui-stack</code></td>
+              <td>Content column — holds the eyebrow, title, lead copy, and actions. The band
+                caps its width and tightens the rhythm in place.
+              </td>
             </tr>
             <tr>
               <td><code>.cui-eyebrow</code></td>
               <td>Small kicker text rendered above the title.</td>
             </tr>
             <tr>
-              <td><code>.cui-hero-title</code></td>
-              <td>Display heading. Sized via <code>--cui-hero-title-size</code>.</td>
+              <td><code>.cui-display</code></td>
+              <td>The headline, at hero (display) scale. Sized via the preserved
+                <code>--cui-hero-title-size</code>.
+              </td>
             </tr>
             <tr>
-              <td><code>.cui-hero-actions</code></td>
+              <td><code>.cui-cluster</code></td>
               <td>CTA button group — a flex row that wraps on narrow viewports.</td>
+            </tr>
+            <tr>
+              <td>bare <code>&lt;p&gt;</code></td>
+              <td>Lead copy in the content column — rendered larger and muted at reading measure.</td>
             </tr>
             <tr>
               <td><code>.cui-hero-media</code></td>
