@@ -8,32 +8,32 @@ export interface CuiArticleFilterChangeDetail {
 }
 
 const CARD_SELECTOR = ".cui-article-card";
-const TARGET_SELECTOR = ".cui-article-grid, .cui-article-list";
 
 /**
- * Filters a sibling or selector-targeted list of article cards by category.
- * Reads `data-category` from each `.cui-article-card` and shows/hides cards
- * based on which radio/checkbox inputs inside the filter are checked.
- * 
+ * Filters a selector-targeted list of article cards by category. Reads
+ * `data-category` from each `.cui-article-card` and shows/hides cards based on
+ * which radio/checkbox inputs inside the filter are checked.
+ *
  * @element cui-article-filter
- * 
+ *
  * @slot - Radio or checkbox inputs (typically wrapped in labels). Each input's
  *   `value` is matched against the `data-category` on the target cards.
- * 
+ *
  * @attr {string} target - CSS selector for the element containing the cards.
- *   If omitted, the filter will look for a sibling `.cui-article-grid` or `.cui-article-list` to filter.
- * 
- * @fires {CustomEvent<CuiArticleFilterChangeDetail>} cui-article-filter-change - 
+ *   Required: if it is omitted, or it matches no element, the filter no-ops and
+ *   warns in the console.
+ *
+ * @fires {CustomEvent<CuiArticleFilterChangeDetail>} cui-article-filter-change -
  *   Fires when the visible-category set changes. `detail.selected` is the array of currently checked values.
- * 
+ *
  * @example
  * <cui-article-filter target="#news-grid">
  *   <label><input type="checkbox" value="product"> Product</label>
  *   <label><input type="checkbox" value="company"> Company</label>
  * </cui-article-filter>
- * <div id="news-grid" class="cui-article-grid">
- *   <article class="cui-article-card" data-category="product">...</article>
- *   <article class="cui-article-card" data-category="company">...</article>
+ * <div id="news-grid" class="cui-grid" style="--cui-grid-min: 18rem;">
+ *   <article class="cui-surface cui-article-card" data-category="product">...</article>
+ *   <article class="cui-surface cui-article-card" data-category="company">...</article>
  * </div>
  */
 export class CuiArticleFilter extends CombatElement {
@@ -114,22 +114,16 @@ export class CuiArticleFilter extends CombatElement {
 
   private resolveTarget(): HTMLElement | null {
     const selector = this.getAttribute("target");
-    if (selector) {
-      const matched = (this.getRootNode() as Document | ShadowRoot).querySelector?.(selector);
-      if (matched instanceof HTMLElement) return matched;
-      const fromDoc = document.querySelector<HTMLElement>(selector);
-      if (fromDoc) return fromDoc;
+    if (!selector) {
+      console.warn("cui-article-filter: no `target` attribute set; nothing to filter.");
+      return null;
     }
 
-    let sibling = this.nextElementSibling;
-    while (sibling) {
-      if (sibling instanceof HTMLElement && sibling.matches(TARGET_SELECTOR)) {
-        return sibling;
-      }
-      const nested = sibling.querySelector?.(TARGET_SELECTOR);
-      if (nested instanceof HTMLElement) return nested;
-      sibling = sibling.nextElementSibling;
-    }
+    const root = this.getRootNode() as Document | ShadowRoot;
+    const matched = root.querySelector?.(selector) ?? document.querySelector(selector);
+    if (matched instanceof HTMLElement) return matched;
+
+    console.warn(`cui-article-filter: target "${selector}" matched no element; nothing to filter.`);
     return null;
   }
 
