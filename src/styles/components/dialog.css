@@ -11,8 +11,14 @@
  * The `sheet-end` variant pins the dialog to the inline-end edge
  * as a full-height drawer.
  *
+ * **Contextual markup.** The dialog composes `.cui-surface` for its
+ * chrome (background, border, radius, shadow, padding) while keeping
+ * its own sizing, centering, and `::backdrop`. Add `.cui-surface` to
+ * the markup; the `--cui-dialog-*` knobs feed the matching
+ * `--cui-surface-*` vars.
+ *
  * @block cui-dialog
- * @summary Native `<dialog>` styling with size + side-sheet variants.
+ * @summary Native `<dialog>` styling with size + side-sheet variants; composes `.cui-surface`.
  * @variant sheet-end — Maps to `[data-variant]`. Pins the dialog to
  *   the inline-end edge as a full-height sheet (drawer pattern).
  * @variant sm | md | lg | full — Maps to `[data-size]`. Overrides
@@ -30,7 +36,7 @@
  *
  * @example
  *   <!-- Open via JS: document.getElementById('confirm').showModal() -->
- *   <dialog class="cui-dialog" id="confirm">
+ *   <dialog class="cui-dialog cui-surface" id="confirm">
  *     <div class="cui-dialog-header">
  *       <h2 class="cui-dialog-title">Delete this item?</h2>
  *       <button class="cui-dialog-close" aria-label="Close">×</button>
@@ -46,7 +52,7 @@
  *
  * @example
  *   <!-- Side-sheet drawer -->
- *   <dialog class="cui-dialog" data-variant="sheet-end" data-size="lg">
+ *   <dialog class="cui-dialog cui-surface" data-variant="sheet-end" data-size="lg">
  *     <div class="cui-dialog-header">
  *       <h2 class="cui-dialog-title">Edit profile</h2>
  *       <button class="cui-dialog-close" aria-label="Close">×</button>
@@ -64,14 +70,19 @@
   --cui-dialog-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
   --cui-dialog-backdrop: rgba(0, 0, 0, 0.4);
 
-  border: var(--cui-border-size, 1px) solid var(--cui-dialog-border);
-  border-radius: var(--cui-dialog-radius);
-  background: var(--cui-dialog-bg);
+  /* Chrome borrowed from the surface primitive (compose `.cui-surface` in
+     markup); the dialog keeps its own sizing, centering, and ::backdrop. The
+     `--cui-dialog-*` knobs feed the matching `--cui-surface-*` vars so
+     `[data-size]` / `[data-variant]` retune through the cascade. */
+  --cui-surface-bg: var(--cui-dialog-bg);
+  --cui-surface-border: var(--cui-border-size, 1px) solid var(--cui-dialog-border);
+  --cui-surface-radius: var(--cui-dialog-radius);
+  --cui-surface-shadow: var(--cui-dialog-shadow);
+  --cui-surface-padding: var(--cui-dialog-padding);
+
   color: var(--cui-dialog-color);
-  padding: var(--cui-dialog-padding);
   inline-size: min(100vi - 2rem, var(--cui-dialog-max-inline-size));
   max-block-size: calc(100vb - 2rem);
-  box-shadow: var(--cui-dialog-shadow);
   overflow: auto;
 }
 
@@ -93,9 +104,10 @@
 
 .cui-dialog[data-size="full"] {
   --cui-dialog-max-inline-size: 100vi;
+  --cui-surface-radius: 0;
+
   block-size: 100vb;
   max-block-size: 100vb;
-  border-radius: 0;
 }
 
 /**
@@ -196,13 +208,13 @@
 
 .cui-dialog[data-variant="sheet-end"] {
   --cui-dialog-max-inline-size: 28rem;
+  --cui-surface-radius: 0;
 
   margin-inline-start: auto;
   margin-inline-end: 0;
   margin-block: 0;
   block-size: 100vb;
   max-block-size: 100vb;
-  border-radius: 0;
   border-inline-end: 0;
   border-block: 0;
 }
