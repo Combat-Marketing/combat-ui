@@ -1,12 +1,17 @@
 /**
- * Container for a tablist plus the panels it controls. A simple
- * vertical stack with `--cui-space-4` between the tablist and the
- * active panel. Pair with the matching `cui-tabs` web component for
- * keyboard navigation, ARIA wiring, and panel visibility — without
- * it the block only handles layout.
+ * Horizontal row of `.cui-tab` controls with a bottom border that
+ * the active tab "punches" with the accent underline. Scrolls
+ * horizontally when tabs overflow the inline-size; `scrollbar-gutter:
+ * stable` keeps the tablist height steady regardless of whether the
+ * scrollbar is showing.
  *
- * @block cui-tabs
- * @summary Vertical container layout for a tablist + panels.
+ * The `<cui-tabs>` web component lays out the tablist and panels (a
+ * vertical stack) and wires up keyboard navigation, ARIA, and panel
+ * visibility — its element-level grid layout lives in
+ * `src/styles/elements.css`.
+ *
+ * @block cui-tablist
+ * @summary Horizontal strip of tab controls with overflow scroll.
  * @example
  *   <cui-tabs>
  *     <div class="cui-tablist">
@@ -16,21 +21,6 @@
  *     <section>Overview content.</section>
  *     <section>Pricing content.</section>
  *   </cui-tabs>
- */
-.cui-tabs {
-  display: grid;
-  gap: var(--cui-space-4, 1rem);
-}
-
-/**
- * Horizontal row of `.cui-tab` controls with a bottom border that
- * the active tab "punches" with the accent underline. Scrolls
- * horizontally when tabs overflow the inline-size; `scrollbar-gutter:
- * stable` keeps the tablist height steady regardless of whether the
- * scrollbar is showing.
- *
- * @block cui-tablist
- * @summary Horizontal strip of tab controls with overflow scroll.
  */
 .cui-tablist {
   display: flex;
