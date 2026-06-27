@@ -246,6 +246,30 @@
                   a <code>.cui-cluster</code>. The <code>.cui-location-card-media</code> panel is
                   preserved, and the <code>--cui-location-card-*</code> knobs are kept.
                 </li>
+                <li><code>.cui-article-card-body</code>, <code>.cui-article-card-category</code>,
+                  <code>.cui-article-card-title</code>, <code>.cui-article-card-excerpt</code>,
+                  <code>.cui-article-card-meta</code>, <code>.cui-article-card-author</code>,
+                  <code>.cui-article-card-actions</code> - the article card now styles its own
+                  descendants (contextual markup). The body is a <code>.cui-stack</code>, the category
+                  a <code>.cui-eyebrow</code> (wrap a child <code>&lt;a&gt;</code> to link), the title a
+                  <code>.cui-display</code> (retuned to card scale; link wrapped in a child
+                  <code>&lt;a&gt;</code>), the excerpt a bare <code>&lt;p&gt;</code>, the meta the shared
+                  <code>.cui-meta</code> (its first entry — the byline — reads at full strength), and
+                  the actions a <code>.cui-cluster</code>. The bespoke <code>.cui-article-card-media</code>
+                  region (bleeding media, hover zoom, bare first-child support) is preserved, as are the
+                  <code>--cui-article-card-*</code> knobs. (The undocumented <code>.cui-article-card-date</code>
+                  / <code>.cui-article-card-read-time</code> hooks were never styled; the meta items are now
+                  a plain <code>&lt;time&gt;</code> and a bare <code>&lt;li&gt;</code>.)
+                </li>
+                <li><code>.cui-article-grid</code> (and its <code>--cui-article-grid-min</code> var) /
+                  <code>.cui-article-list</code> (and its <code>--cui-article-list-gap</code> var) - lay
+                  article cards out with <code>.cui-grid</code> and <code>--cui-grid-min: 18rem</code>
+                  (the <code>data-columns</code> / <code>data-gap</code> axes carry over), and stack them
+                  in a <code>.cui-stack</code>. The <code>data-variant="stacked"</code> index moves to the
+                  stack and still draws hairline separators between article cards. Point a
+                  <code>cui-article-filter</code> at the grid / stack with its <code>target</code>
+                  selector (see Changed).
+                </li>
               </ul>
             </div>
 
@@ -357,6 +381,23 @@
                   carries the padding. The <code>flat</code> / <code>borderless</code> /
                   <code>data-orient="stacked"</code> variants are unchanged. (The body slot classes are
                   dropped - see Removed.)
+                </li>
+                <li><code>.cui-article-card</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> and styles its own body descendants contextually. Add it
+                  in markup, e.g. <code>class="cui-surface cui-article-card"</code> with a
+                  <code>.cui-stack</code> body. The card feeds the <code>--cui-surface-*</code> vars
+                  from its <code>--cui-content-card-*</code> / <code>--cui-article-card-*</code> knobs
+                  and sets <code>--cui-surface-padding: 0</code> so the media still bleeds; the body
+                  carries the padding. The <code>featured</code> / <code>compact</code> /
+                  <code>flat</code> / <code>borderless</code> / <code>data-orient</code> variants are
+                  unchanged. (The body slot classes are dropped - see Removed.)
+                </li>
+                <li>The <code>cui-article-filter</code> component no longer auto-discovers a sibling
+                  grid / list. Its <code>target</code> selector is now required: point it at the
+                  <code>.cui-grid</code> / <code>.cui-stack</code> of cards (e.g.
+                  <code>target="#news-grid"</code>). If <code>target</code> is omitted, or it matches no
+                  element, the filter no-ops and warns in the console. It still reads
+                  <code>data-category</code> on each <code>.cui-article-card</code> to show / hide it.
                 </li>
               </ul>
             </div>

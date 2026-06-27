@@ -1,9 +1,9 @@
 /**
  * Article card — blog post, news entry, or case study summary.
- * A grid container that stacks media on top of a body column with
- * title, excerpt, meta, and actions. Set `[data-orient="row"]` to
- * pair the media with the body horizontally (collapses at narrow
- * widths via flex-wrap). The first-child media slot accepts
+ * Stacks a media slot on top of a body column with category, title,
+ * excerpt, meta, and actions. Set `[data-orient="row"]` to pair the
+ * media with the body horizontally (collapses at narrow widths via
+ * flex-wrap). The first-child media slot accepts
  * `.cui-article-card-media` or any bare `<img>` / `<picture>` /
  * `<video>` / `<iframe>` / `<svg>` / `<a>` — the same selector
  * matches both, so the class is optional when media is the first
@@ -11,11 +11,30 @@
  *
  * Use this directly in HTML or wire it to data from a CMS; the
  * `cui-article-filter` component reads `[data-category]` on these
- * cards to drive its filtering, so include that attribute when
- * the page has a filter row.
+ * cards to drive its filtering, so include that attribute when the
+ * page has a filter row.
+ *
+ * **Contextual markup.** Compose `.cui-surface` for the card chrome and
+ * a `.cui-stack` body; the card styles its own descendants, so each part
+ * carries only the canonical primitive (or nothing at all):
+ *
+ * - `.cui-article-card-media` — the bespoke media region (or a bare
+ *   first-child `<img>` / `<picture>` / `<a>` …); kept, since it bleeds
+ *   edge-to-edge and the `<a>` wrapper gets the hover-zoom.
+ * - `.cui-eyebrow` — the category label (wrap a child `<a>` to link).
+ * - `.cui-display` — the title (wrap a child `<a>` so it is clickable).
+ *   Retuned to card scale in place.
+ * - a bare `<p>` — the muted excerpt.
+ * - `.cui-meta` — the author / date / reading-time row; the first entry
+ *   (the byline) reads at full strength.
+ * - `.cui-cluster` — the actions row.
+ *
+ * Lay cards out with `.cui-grid` (`--cui-grid-min: 18rem`) or stack them
+ * in a `.cui-stack`; point a `cui-article-filter` at that container with
+ * its `target` selector to filter the cards.
  *
  * @block cui-article-card
- * @summary Article / blog / news card with media, title, meta, actions.
+ * @summary Article / blog / news card with media, title, meta, actions; composes `.cui-surface` + a `.cui-stack` body and styles its own descendants.
  * @variant row — Maps to `[data-orient]`. Media beside body;
  *   collapses to stacked on narrow widths via flex-wrap.
  * @variant featured | compact | flat | borderless — Maps to
@@ -30,22 +49,23 @@
  * @cssvar --cui-article-card-media-ratio — Media aspect ratio. Defaults to `16 / 10`; `featured` widens to `21 / 9`.
  * @cssvar --cui-article-card-media-size — Media flex-basis in row orient. Defaults to 18rem.
  * @cssvar --cui-article-card-title-size — Title font size. Defaults to `--cui-font-size-2`.
+ * @cssvar --cui-article-card-category-color — Category-label tint. Defaults to `--cui-color-accent`.
  *
  * @example
- *   <article class="cui-article-card" data-category="product">
+ *   <article class="cui-surface cui-article-card" data-category="product">
  *     <a class="cui-article-card-media" href="/blog/post-1">
  *       <img src="/blog/post-1.jpg" alt="">
  *     </a>
- *     <div class="cui-article-card-body">
- *       <p class="cui-article-card-category">
+ *     <div class="cui-stack">
+ *       <p class="cui-eyebrow">
  *         <a href="/blog/category/product">Product</a>
  *       </p>
- *       <h2 class="cui-article-card-title">
+ *       <h3 class="cui-display">
  *         <a href="/blog/post-1">New release: shipping today</a>
- *       </h2>
- *       <p class="cui-article-card-excerpt">A two-sentence summary.</p>
- *       <ul class="cui-article-card-meta">
- *         <li class="cui-article-card-author">Jane Smith</li>
+ *       </h3>
+ *       <p>A two-sentence summary.</p>
+ *       <ul class="cui-meta">
+ *         <li>Jane Smith</li>
  *         <li><time datetime="2026-05-27">May 27, 2026</time></li>
  *         <li>4 min read</li>
  *       </ul>
@@ -54,11 +74,11 @@
  *
  * @example
  *   <!-- Row-oriented, featured -->
- *   <article class="cui-article-card" data-orient="row" data-variant="featured">
+ *   <article class="cui-surface cui-article-card" data-orient="row" data-variant="featured">
  *     <img src="/case/hero.jpg" alt="">
- *     <div class="cui-article-card-body">
- *       <h2 class="cui-article-card-title">Case study headline</h2>
- *       <p class="cui-article-card-excerpt">…</p>
+ *     <div class="cui-stack">
+ *       <h3 class="cui-display"><a href="/case">Case study headline</a></h3>
+ *       <p>…</p>
  *     </div>
  *   </article>
  */
@@ -69,19 +89,20 @@
   --cui-article-card-media-ratio: 16 / 10;
   --cui-article-card-media-size: 18rem;
   --cui-article-card-title-size: var(--cui-font-size-2, 1.5rem);
+  --cui-surface-bg: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  --cui-surface-radius: var(--cui-article-card-radius);
+  --cui-surface-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+  --cui-surface-padding: 0;
 
   display: grid;
   gap: 0;
   overflow: hidden;
-  border: var(--cui-border-size, 1px) solid
-    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
-  border-radius: var(--cui-article-card-radius);
-  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
   color: var(--cui-color, #1b1f27);
-  box-shadow: var(
-    --cui-content-card-shadow,
-    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
-  );
 }
 
 .cui-article-card[hidden] {
@@ -133,157 +154,76 @@ a.cui-article-card-media {
   text-decoration: none;
 }
 
-/**
- * Content column of `.cui-article-card`. A small grid that stacks
- * category, title, excerpt, meta, and actions; direct heading and
- * paragraph children get `margin: 0` so the grid gap controls
- * rhythm.
- *
- * @block cui-article-card-body
- * @summary Stacked content column inside an article card.
- */
-.cui-article-card-body {
-  display: grid;
-  gap: var(--cui-article-card-gap, var(--cui-space-2, 0.5rem));
+/* Content column — a `.cui-stack` carrying the card padding and gap.
+ * The card zeroes its own padding (the media bleeds edge-to-edge), so
+ * the body owns the inset; category, title, excerpt, meta, and actions
+ * stack with --cui-article-card-gap. */
+.cui-article-card > .cui-stack {
+  --cui-stack-gap: var(--cui-article-card-gap, var(--cui-space-2, 0.5rem));
+
+  align-content: start;
+  min-inline-size: 0;
   padding: var(--cui-article-card-padding, var(--cui-space-5, 1.5rem));
 }
 
-.cui-article-card-body > :where(h1, h2, h3, h4, h5, h6, p) {
-  margin: 0;
-}
-
-/**
- * Category eyebrow inside `.cui-article-card-body`. Small-caps,
- * accent-tinted, with an embedded `<a>` that inherits the color
- * and underlines on hover. Render as `<p>` (singular category)
- * or `<ul>` of comma-separated items.
- *
- * @block cui-article-card-category
- * @summary Accent-tinted category label above the title.
- * @cssvar --cui-article-card-category-color — Category tint. Defaults to `--cui-color-accent`.
- */
-.cui-article-card-category {
+/* Category — the body's `.cui-eyebrow`, retinted and with an embedded
+ * `<a>` that inherits the color and underlines on hover. */
+.cui-article-card .cui-eyebrow {
   color: var(
     --cui-article-card-category-color,
     var(--cui-color-accent, oklch(57% 0.18 246deg))
   );
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.cui-article-card-category a {
+.cui-article-card .cui-eyebrow a {
   color: inherit;
   text-decoration: none;
 }
 
-.cui-article-card-category a:hover,
-.cui-article-card-category a:focus-visible {
+.cui-article-card .cui-eyebrow a:hover,
+.cui-article-card .cui-eyebrow a:focus-visible {
   text-decoration: underline;
 }
 
-/**
- * Article title inside `.cui-article-card-body`. Sized at
- * `--cui-article-card-title-size`, bold, tight line-height, with
- * `text-wrap: balance` for even line lengths. Wrap the link as a
- * child `<a>` so the whole title is clickable while the heading
- * element keeps its outline role.
- *
- * @block cui-article-card-title
- * @summary Bold article title; link colors shift to accent on hover.
- */
-.cui-article-card-title {
-  font-size: var(--cui-article-card-title-size, var(--cui-font-size-2, 1.5rem));
-  font-weight: var(--cui-font-weight-strong, 680);
-  line-height: var(--cui-line-height-tight, 1.2);
-  text-wrap: balance;
+/* Title — `.cui-display` retuned to card scale (strong weight, tight
+ * leading, no measure cap so short titles don't wrap at the 13ch
+ * display default). Size is driven from the preserved title-size knob.
+ * Wrap the link as a child `<a>` so the whole title is clickable while
+ * the heading keeps its outline role; the link shifts to accent on
+ * hover. */
+.cui-article-card .cui-display {
+  --cui-display-measure: none;
+  --cui-display-size: var(--cui-article-card-title-size, var(--cui-font-size-2, 1.5rem));
+  --cui-display-weight: var(--cui-font-weight-strong, 680);
+  --cui-display-leading: var(--cui-line-height-tight, 1.2);
 }
 
-.cui-article-card-title a {
+.cui-article-card .cui-display a {
   color: inherit;
   text-decoration: none;
 }
 
-.cui-article-card-title a:hover,
-.cui-article-card-title a:focus-visible {
+.cui-article-card .cui-display a:hover,
+.cui-article-card .cui-display a:focus-visible {
   color: var(--cui-color-accent, oklch(57% 0.18 246deg));
 }
 
-/**
- * Excerpt paragraph inside `.cui-article-card-body`. Muted body
- * text, default line-height — keep to two or three lines for
- * grid cards; longer summaries belong on the article page itself.
- *
- * @block cui-article-card-excerpt
- * @summary Muted excerpt paragraph beneath the title.
- */
-.cui-article-card-excerpt {
+/* Excerpt — the body's bare `<p>` (category / title carry their own
+ * classes). Muted; keep it to two or three lines for grid cards. */
+.cui-article-card > .cui-stack > p:not([class]) {
   color: var(--cui-color-muted, #5d6675);
   line-height: var(--cui-line-height, 1.55);
 }
 
-/**
- * Metadata row inside `.cui-article-card-body` — author, date,
- * reading time, tags. Renders as a flex-wrap `<ul>` with `·`
- * separators inserted via `::before` between adjacent items.
- * Strips list-style and default margins so the items inline
- * naturally.
- *
- * @block cui-article-card-meta
- * @summary Flex-wrap list of article metadata with `·` separators.
- */
-.cui-article-card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--cui-space-2, 0.5rem) var(--cui-space-3, 0.75rem);
-  margin: 0;
-  margin-block-start: var(--cui-space-2, 0.5rem);
-  padding: 0;
-  list-style: none;
-  color: var(--cui-color-muted, #5d6675);
-  font-size: var(--cui-font-size-neg-1, 0.875rem);
-}
-
-.cui-article-card-meta > * {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--cui-space-2, 0.5rem);
-  margin: 0;
-}
-
-.cui-article-card-meta > * + *::before {
-  content: "·";
-  margin-inline-end: var(--cui-space-2, 0.5rem);
-  color: var(--cui-color-border, #cfd6df);
-}
-
-/**
- * Author entry inside `.cui-article-card-meta`. Bold, full-strength
- * color — overrides the muted meta-row color so the byline stands
- * out next to date and reading-time items.
- *
- * @block cui-article-card-author
- * @summary Bold author byline inside the meta row.
- */
-.cui-article-card-author {
+/* Byline emphasis — the first `.cui-meta` entry (the author) reads at
+ * full strength against the muted row, per the .cui-meta convention. */
+.cui-article-card .cui-meta > :first-child {
   color: var(--cui-color, #1b1f27);
-  font-weight: var(--cui-font-weight-strong, 680);
 }
 
-/**
- * Actions row at the bottom of `.cui-article-card-body`. Flex-wrap
- * row with `--cui-space-3` gap and a small top margin. Place one
- * or two `.cui-button`s here for "Read more" / "Share" affordances.
- *
- * @block cui-article-card-actions
- * @summary Flex-wrap row of action buttons inside an article card.
- */
-.cui-article-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
+/* Actions — the body's `.cui-cluster`, set slightly apart from the meta
+ * above. */
+.cui-article-card > .cui-stack > .cui-cluster {
   margin-block-start: var(--cui-space-3, 0.75rem);
 }
 
@@ -303,9 +243,8 @@ a.cui-article-card-media {
   aspect-ratio: auto;
 }
 
-.cui-article-card[data-orient="row"] > .cui-article-card-body {
+.cui-article-card[data-orient="row"] > .cui-stack {
   flex: 2 1 var(--cui-article-card-body-min, 20rem);
-  min-inline-size: 0;
 }
 
 /* Featured: larger media, prominent title. */
@@ -336,112 +275,29 @@ a.cui-article-card-media {
   --cui-content-card-shadow: none;
 }
 
-/* --- Article grid --------------------------------------------------- */
-
-/**
- * Grid container for `.cui-article-card`s. Auto-fits columns of
- * at least `--cui-article-grid-min` (18rem default). Gap and
- * column-count follow the same `[data-gap]` / `[data-columns]`
- * conventions as `.cui-grid` and the content-grid family.
+/* --- Article grid + list (contextual primitives) --------------------
+ * Lay article cards out with the `.cui-grid` primitive — set
+ * `--cui-grid-min: 18rem` for the article column and use its
+ * data-columns / data-gap axes:
+ *   <div class="cui-grid" data-columns="3" style="--cui-grid-min: 18rem;">
  *
- * @block cui-article-grid
- * @summary Responsive grid of article cards (18rem min).
- * @variant compact | spacious — Maps to `[data-gap]`. Override
- *   `--cui-content-grid-gap` to `--cui-space-3` or `--cui-space-7`.
- * @variant 2 | 3 | 4 — Maps to `[data-columns]`. Pin to fixed
- *   columns at viewports ≥48rem; below, falls back to auto-fit.
- * @cssvar --cui-article-grid-min — Minimum column width. Defaults to 18rem.
+ * The single-column index is the `.cui-stack` primitive — set
+ * --cui-stack-gap for the compact / spacious rhythm:
+ *   <div class="cui-stack">…</div>
  *
- * @example
- *   <div class="cui-article-grid" data-columns="3">
- *     <article class="cui-article-card">…</article>
- *     <article class="cui-article-card">…</article>
- *     <article class="cui-article-card">…</article>
- *   </div>
- */
-.cui-article-grid {
-  display: grid;
-  align-items: stretch;
-  gap: var(
-      --cui-content-grid-row-gap,
-      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
-    )
-    var(
-      --cui-content-grid-column-gap,
-      var(--cui-content-grid-gap, var(--cui-space-5, 1.5rem))
-    );
-  grid-template-columns: var(
-    --cui-content-grid-columns,
-    repeat(auto-fit, minmax(min(100%, var(--cui-article-grid-min, 18rem)), 1fr))
-  );
-}
-
-.cui-article-grid[data-gap="compact"] {
-  --cui-content-grid-gap: var(--cui-space-3, 0.75rem);
-}
-
-.cui-article-grid[data-gap="spacious"] {
-  --cui-content-grid-gap: var(--cui-space-7, 3rem);
-}
-
-@media (width >= 48rem) {
-  .cui-article-grid[data-columns="2"] {
-    --cui-content-grid-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cui-article-grid[data-columns="3"] {
-    --cui-content-grid-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .cui-article-grid[data-columns="4"] {
-    --cui-content-grid-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* --- Article list (single column, row-oriented by default) --------- */
-
-/**
- * Single-column list of `.cui-article-card`s. Useful for blog
- * indexes, search-results pages, and sidebars where a grid would
- * be too dense. The `stacked` variant collapses card chrome to
- * hairline separators — closer to a magazine-index look than a
- * card stack.
+ * Point a `cui-article-filter` at either container with its `target`
+ * selector to filter the cards.
  *
- * @block cui-article-list
- * @summary Single-column list of article cards; `stacked` variant for hairline-separated indexes.
- * @variant compact | spacious — Maps to `[data-gap]`. Override
- *   `--cui-article-list-gap` to `--cui-space-3` or `--cui-space-7`.
- * @variant stacked — Maps to `[data-variant]`. Removes gap;
- *   drops card chrome on each child and inserts hairline borders
- *   between siblings.
- * @cssvar --cui-article-list-gap — Gap between cards. Defaults to `--cui-space-5`.
- *
- * @example
- *   <div class="cui-article-list" data-variant="stacked">
- *     <article class="cui-article-card" data-orient="row">…</article>
- *     <article class="cui-article-card" data-orient="row">…</article>
- *     <article class="cui-article-card" data-orient="row">…</article>
- *   </div>
- */
-.cui-article-list {
-  display: grid;
-  gap: var(--cui-article-list-gap, var(--cui-space-5, 1.5rem));
+ * The dense magazine-index look keeps a bespoke rule, scoped to a stack
+ * that actually holds article cards. ------------------------------- */
+
+/* Stacked index — drop card chrome on each child and separate rows with
+ * hairline rules instead of gaps. */
+.cui-stack[data-variant="stacked"]:has(> .cui-article-card) {
+  --cui-stack-gap: 0;
 }
 
-.cui-article-list[data-gap="compact"] {
-  --cui-article-list-gap: var(--cui-space-3, 0.75rem);
-}
-
-.cui-article-list[data-gap="spacious"] {
-  --cui-article-list-gap: var(--cui-space-7, 3rem);
-}
-
-/* Stacked variant: hairline separators instead of cards. */
-.cui-article-list[data-variant="stacked"] {
-  --cui-article-list-gap: 0;
-}
-
-.cui-article-list[data-variant="stacked"] > .cui-article-card {
+.cui-stack[data-variant="stacked"] > .cui-article-card {
   --cui-border-size: 0;
   --cui-content-card-shadow: none;
   --cui-article-card-radius: 0;
@@ -451,7 +307,7 @@ a.cui-article-card-media {
   padding-block: var(--cui-space-4, 1rem);
 }
 
-.cui-article-list[data-variant="stacked"] > .cui-article-card:last-child {
+.cui-stack[data-variant="stacked"] > .cui-article-card:last-child {
   border-block-end: 0;
 }
 
