@@ -221,6 +221,31 @@
                   <code>.cui-cluster</code>. The <code>.cui-media-overlay-media</code> background slot
                   is preserved.
                 </li>
+                <li><code>.cui-contact-card-eyebrow</code>, <code>.cui-contact-card-title</code>,
+                  <code>.cui-contact-card-lead</code>, <code>.cui-contact-card-actions</code> - the
+                  contact card now styles its own descendants (contextual markup). The label is a
+                  <code>.cui-eyebrow</code> (retinted from the preserved
+                  <code>--cui-contact-card-eyebrow-color</code> knob), the title a
+                  <code>.cui-display</code> (retuned to card scale, the 13ch measure cap dropped), the
+                  lead a bare <code>&lt;p&gt;</code>, and the actions a <code>.cui-cluster</code>. The
+                  <code>--cui-contact-card-*</code> knobs are preserved.
+                </li>
+                <li><code>.cui-contact-method</code>, <code>.cui-contact-method-label</code>,
+                  <code>.cui-contact-method-value</code> - the contact-method list is now a semantic
+                  <code>&lt;dl&gt;</code>. Render <code>.cui-contact-methods</code> as a list of
+                  <code>&lt;dt&gt;</code> labels and <code>&lt;dd&gt;</code> values; the list styles
+                  them directly, so the per-row slot classes are gone. <code>data-layout="inline"</code>
+                  still lays the label beside the value. (<code>.cui-contact-methods</code> itself is
+                  kept as the shared list class.)
+                </li>
+                <li><code>.cui-location-card-body</code>, <code>.cui-location-card-name</code>,
+                  <code>.cui-location-card-address</code>, <code>.cui-location-card-actions</code> - the
+                  location card now styles its own descendants (contextual markup). The body is a
+                  <code>.cui-stack</code>, the name a <code>.cui-display</code> (retuned to card scale),
+                  the address a bare <code>&lt;address&gt;</code> (italic reset, muted), and the actions
+                  a <code>.cui-cluster</code>. The <code>.cui-location-card-media</code> panel is
+                  preserved, and the <code>--cui-location-card-*</code> knobs are kept.
+                </li>
               </ul>
             </div>
 
@@ -312,6 +337,26 @@
                   <code>data-orient</code> variants are unchanged. (The body slot classes are
                   dropped - see Removed.) <code>.cui-media-overlay</code> keeps its own scrim chrome
                   but likewise styles its body descendants - no slot classes.
+                </li>
+                <li><code>.cui-contact-card</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> + <code>.cui-stack</code> and styles its own descendants.
+                  Add the primitives in markup, e.g.
+                  <code>class="cui-surface cui-stack cui-contact-card"</code>. The card feeds the
+                  <code>--cui-surface-*</code> vars from its <code>--cui-content-card-*</code> /
+                  <code>--cui-contact-card-*</code> knobs and its gap through
+                  <code>--cui-stack-gap</code>. The <code>flat</code> / <code>borderless</code> /
+                  <code>inverse</code> / <code>data-align="center"</code> variants are unchanged. (The
+                  body slot classes are dropped - see Removed.)
+                </li>
+                <li><code>.cui-location-card</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> and styles its own body descendants contextually. Add it in
+                  markup, e.g. <code>class="cui-surface cui-location-card"</code> with a
+                  <code>.cui-stack</code> body. The card feeds the <code>--cui-surface-*</code> vars
+                  from its <code>--cui-content-card-*</code> / <code>--cui-location-card-*</code> knobs
+                  and sets <code>--cui-surface-padding: 0</code> so the media still bleeds; the body
+                  carries the padding. The <code>flat</code> / <code>borderless</code> /
+                  <code>data-orient="stacked"</code> variants are unchanged. (The body slot classes are
+                  dropped - see Removed.)
                 </li>
               </ul>
             </div>

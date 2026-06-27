@@ -3,9 +3,10 @@
     <h2>Contact</h2>
     <p>
       Contact cards, location cards, and a contact form layout. Each is CSS-only and works from
-      CMS-generated HTML — no JavaScript required. Contact and location cards share the
-      <code>.cui-contact-methods</code> list, so a phone number reads the same whether it sits on a
-      support card or beside an office address. Use real <code>&lt;a href="mailto:"&gt;</code> /
+      CMS-generated HTML — no JavaScript required. Both cards compose <code>.cui-surface</code> and
+      style their own descendants, and share the <code>.cui-contact-methods</code>
+      <code>&lt;dl&gt;</code>, so a phone number reads the same whether it sits on a support card or
+      beside an office address. Use real <code>&lt;a href="mailto:"&gt;</code> /
       <code>&lt;a href="tel:"&gt;</code> links and an <code>&lt;address&gt;</code> element so search
       engines and assistive tech pick the details up directly.
     </p>
@@ -28,63 +29,51 @@
 
     <section class="docs-panel">
       <div class="cui-grid" data-columns="2">
-        <article class="cui-contact-card">
-          <p class="cui-contact-card-eyebrow">Support</p>
-          <h3 class="cui-contact-card-title">Customer success</h3>
-          <p class="cui-contact-card-lead">
+        <article class="cui-surface cui-stack cui-contact-card">
+          <p class="cui-eyebrow">Support</p>
+          <h3 class="cui-display">Customer success</h3>
+          <p>
             Questions about your account or a live project? We reply within one business day.
           </p>
-          <ul class="cui-contact-methods">
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Email</span>
-              <a class="cui-contact-method-value" href="mailto:hello@example.com">hello@example.com</a>
-            </li>
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Phone</span>
-              <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
-            </li>
-          </ul>
-          <div class="cui-contact-card-actions">
+          <dl class="cui-contact-methods">
+            <dt>Email</dt>
+            <dd><a href="mailto:hello@example.com">hello@example.com</a></dd>
+            <dt>Phone</dt>
+            <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+          </dl>
+          <div class="cui-cluster">
             <cui-button href="mailto:hello@example.com">Send a message</cui-button>
           </div>
         </article>
 
-        <article class="cui-contact-card" data-variant="inverse">
-          <p class="cui-contact-card-eyebrow">Press</p>
-          <h3 class="cui-contact-card-title">Media &amp; partnerships</h3>
-          <p class="cui-contact-card-lead">
+        <article class="cui-surface cui-stack cui-contact-card" data-variant="inverse">
+          <p class="cui-eyebrow">Press</p>
+          <h3 class="cui-display">Media &amp; partnerships</h3>
+          <p>
             For interviews, brand assets, and partnership enquiries.
           </p>
-          <ul class="cui-contact-methods" data-layout="inline">
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Email</span>
-              <a class="cui-contact-method-value" href="mailto:press@example.com">press@example.com</a>
-            </li>
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Hours</span>
-              <span class="cui-contact-method-value">Mon–Fri · 9:00–17:00</span>
-            </li>
-          </ul>
+          <dl class="cui-contact-methods" data-layout="inline">
+            <dt>Email</dt>
+            <dd><a href="mailto:press@example.com">press@example.com</a></dd>
+            <dt>Hours</dt>
+            <dd>Mon–Fri · 9:00–17:00</dd>
+          </dl>
         </article>
       </div>
 
       <cui-code language="html">
         <script type="text/html">
-                      <article class="cui-contact-card">
-                        <p class="cui-contact-card-eyebrow">Support</p>
-                        <h3 class="cui-contact-card-title">Customer success</h3>
-                        <p class="cui-contact-card-lead">We reply within one business day.</p>
-                        <ul class="cui-contact-methods">
-                          <li class="cui-contact-method">
-                            <span class="cui-contact-method-label">Email</span>
-                            <a class="cui-contact-method-value" href="mailto:hello@example.com">hello@example.com</a>
-                          </li>
-                          <li class="cui-contact-method">
-                            <span class="cui-contact-method-label">Phone</span>
-                            <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
-                          </li>
-                        </ul>
-                        <div class="cui-contact-card-actions">
+                      <article class="cui-surface cui-stack cui-contact-card">
+                        <p class="cui-eyebrow">Support</p>
+                        <h3 class="cui-display">Customer success</h3>
+                        <p>We reply within one business day.</p>
+                        <dl class="cui-contact-methods">
+                          <dt>Email</dt>
+                          <dd><a href="mailto:hello@example.com">hello@example.com</a></dd>
+                          <dt>Phone</dt>
+                          <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+                        </dl>
+                        <div class="cui-cluster">
                           <a class="cui-button" href="mailto:hello@example.com">Send a message</a>
                         </div>
                       </article>
@@ -93,26 +82,22 @@
     </section>
 
     <section class="docs-panel">
-      <article class="cui-location-card">
+      <article class="cui-surface cui-location-card">
         <div class="cui-location-card-media">
           <img src="./hero-image.svg" alt="Map of the Amsterdam office">
         </div>
-        <div class="cui-location-card-body">
-          <h3 class="cui-location-card-name">Amsterdam HQ</h3>
-          <address class="cui-location-card-address">
+        <div class="cui-stack">
+          <h3 class="cui-display">Amsterdam HQ</h3>
+          <address>
             Keizersgracht 123<br>1015 CJ Amsterdam<br>Netherlands
           </address>
-          <ul class="cui-contact-methods" data-layout="inline">
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Hours</span>
-              <span class="cui-contact-method-value">Mon–Fri · 9:00–18:00</span>
-            </li>
-            <li class="cui-contact-method">
-              <span class="cui-contact-method-label">Phone</span>
-              <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
-            </li>
-          </ul>
-          <div class="cui-location-card-actions">
+          <dl class="cui-contact-methods" data-layout="inline">
+            <dt>Hours</dt>
+            <dd>Mon–Fri · 9:00–18:00</dd>
+            <dt>Phone</dt>
+            <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+          </dl>
+          <div class="cui-cluster">
             <cui-button href="#contact-blocks">Get directions</cui-button>
           </div>
         </div>
@@ -120,23 +105,21 @@
 
       <cui-code language="html">
         <script type="text/html">
-                      <article class="cui-location-card">
+                      <article class="cui-surface cui-location-card">
                         <div class="cui-location-card-media">
                           <img src="/offices/amsterdam.jpg" alt="Our Amsterdam office">
                           <!-- or <cui-map>…</cui-map>, or an <iframe> map embed -->
                         </div>
-                        <div class="cui-location-card-body">
-                          <h3 class="cui-location-card-name">Amsterdam HQ</h3>
-                          <address class="cui-location-card-address">
+                        <div class="cui-stack">
+                          <h3 class="cui-display">Amsterdam HQ</h3>
+                          <address>
                             Keizersgracht 123<br>1015 CJ Amsterdam<br>Netherlands
                           </address>
-                          <ul class="cui-contact-methods" data-layout="inline">
-                            <li class="cui-contact-method">
-                              <span class="cui-contact-method-label">Hours</span>
-                              <span class="cui-contact-method-value">Mon–Fri · 9:00–18:00</span>
-                            </li>
-                          </ul>
-                          <div class="cui-location-card-actions">
+                          <dl class="cui-contact-methods" data-layout="inline">
+                            <dt>Hours</dt>
+                            <dd>Mon–Fri · 9:00–18:00</dd>
+                          </dl>
+                          <div class="cui-cluster">
                             <a class="cui-button" href="https://maps.example.com/?q=Keizersgracht+123">Get directions</a>
                           </div>
                         </div>
@@ -245,29 +228,32 @@
             <tr>
               <td><code>.cui-contact-card</code></td>
               <td>
-                Single point of contact. Carry <code>data-variant="flat | borderless | inverse"</code>
-                for chrome, <code>data-align="center"</code> to center content. Children:
-                <code>.cui-contact-card-eyebrow</code>, <code>.cui-contact-card-title</code>,
-                <code>.cui-contact-card-lead</code>, <code>.cui-contact-card-actions</code>.
+                Single point of contact; compose <code>class="cui-surface cui-stack cui-contact-card"</code>.
+                Carry <code>data-variant="flat | borderless | inverse"</code> for chrome,
+                <code>data-align="center"</code> to center content. The card styles its own
+                descendants: a <code>.cui-eyebrow</code> label, a <code>.cui-display</code> title, a
+                bare <code>&lt;p&gt;</code> lead, a <code>.cui-contact-methods</code> list, and a
+                <code>.cui-cluster</code> actions row.
               </td>
             </tr>
             <tr>
               <td><code>.cui-contact-methods</code></td>
               <td>
-                Label / value list shared by both cards. Render as <code>&lt;ul&gt;</code> of
-                <code>.cui-contact-method</code> rows (or a <code>&lt;dl&gt;</code>).
-                <code>data-layout="inline"</code> lays the label beside the value. Children:
-                <code>.cui-contact-method-label</code>, <code>.cui-contact-method-value</code>.
+                Label / value list shared by both cards. Render as a <code>&lt;dl&gt;</code> of
+                <code>&lt;dt&gt;</code> labels and <code>&lt;dd&gt;</code> values — no per-row slot
+                classes. <code>data-layout="inline"</code> lays the label beside the value.
               </td>
             </tr>
             <tr>
               <td><code>.cui-location-card</code></td>
               <td>
-                Office / venue card: media panel plus body. <code>data-orient="stacked"</code> pins the
-                media on top; <code>data-variant="flat | borderless"</code> for chrome. Children:
-                <code>.cui-location-card-media</code>, <code>.cui-location-card-body</code>,
-                <code>.cui-location-card-name</code>, <code>.cui-location-card-address</code> (on
-                <code>&lt;address&gt;</code>), <code>.cui-location-card-actions</code>.
+                Office / venue card: media panel plus body; compose
+                <code>class="cui-surface cui-location-card"</code> with a <code>.cui-stack</code> body.
+                <code>data-orient="stacked"</code> pins the media on top;
+                <code>data-variant="flat | borderless"</code> for chrome. The body styles its own
+                descendants: a <code>.cui-display</code> name, an <code>&lt;address&gt;</code>, a
+                <code>.cui-contact-methods</code> list, and a <code>.cui-cluster</code> actions row.
+                The <code>.cui-location-card-media</code> panel is kept.
               </td>
             </tr>
             <tr>
