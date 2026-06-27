@@ -64,7 +64,7 @@
                       </button>
 
                       <cui-modal id="docs-confirm-modal">
-                        <dialog class="cui-dialog">
+                        <dialog class="cui-dialog cui-surface">
                           <header class="cui-dialog-header">
                             <h3 class="cui-dialog-title">Delete project?</h3>
                             <button type="button" class="cui-dialog-close" data-cui-modal-close
@@ -92,7 +92,7 @@
                         <button class="cui-button" data-cui-modal-target="confirm">Delete</button>
 
                         <cui-modal id="confirm">
-                          <dialog class="cui-dialog">
+                          <dialog class="cui-dialog cui-surface">
                             <header class="cui-dialog-header">
                               <h3 class="cui-dialog-title">Delete project?</h3>
                               <button type="button" class="cui-dialog-close" data-cui-modal-close aria-label="Close">&times;</button>
@@ -129,7 +129,7 @@
                         profile</button>
 
                       <cui-modal id="docs-form-modal">
-                        <dialog class="cui-dialog" data-size="md">
+                        <dialog class="cui-dialog cui-surface" data-size="md">
                           <form method="dialog" class="cui-stack">
                             <header class="cui-dialog-header">
                               <h3 class="cui-dialog-title">Edit profile</h3>
@@ -161,7 +161,7 @@
                   <cui-code language="html">
                     <script type="text/html">
                         <cui-modal id="edit-profile">
-                          <dialog class="cui-dialog" data-size="md">
+                          <dialog class="cui-dialog cui-surface" data-size="md">
                             <form method="dialog" class="cui-stack">
                               <header class="cui-dialog-header">
                                 <h3 class="cui-dialog-title">Edit profile</h3>
@@ -201,7 +201,7 @@
                         settings</button>
 
                       <cui-modal id="docs-sheet-modal">
-                        <dialog class="cui-dialog" data-variant="sheet-end">
+                        <dialog class="cui-dialog cui-surface" data-variant="sheet-end">
                           <header class="cui-dialog-header">
                             <h3 class="cui-dialog-title">Settings</h3>
                             <button type="button" class="cui-dialog-close" data-cui-modal-close
@@ -222,7 +222,7 @@
                   <cui-code language="html">
                     <script type="text/html">
                         <cui-modal id="settings">
-                          <dialog class="cui-dialog" data-variant="sheet-end">
+                          <dialog class="cui-dialog cui-surface" data-variant="sheet-end">
                             <header class="cui-dialog-header">
                               <h3 class="cui-dialog-title">Settings</h3>
                               <button type="button" class="cui-dialog-close" data-cui-modal-close aria-label="Close">&times;</button>
@@ -300,8 +300,10 @@
                         <td>On any element inside a modal. Closes with optional <code>returnValue</code>.</td>
                       </tr>
                       <tr>
-                        <td><code>.cui-dialog</code></td>
-                        <td>Required class on the <code>&lt;dialog&gt;</code> for styling.</td>
+                        <td><code>.cui-dialog</code> · <code>.cui-surface</code></td>
+                        <td>Both on the <code>&lt;dialog&gt;</code>. <code>.cui-dialog</code> handles
+                          sizing, centering, and the backdrop; compose <code>.cui-surface</code> for the
+                          card chrome (background, border, radius, shadow, padding).</td>
                       </tr>
                       <tr>
                         <td><code>.cui-dialog-header</code> · <code>.cui-dialog-title</code> ·
@@ -415,7 +417,7 @@
                   <div class="docs-preview">
                     <div class="docs-preview-frame">
                       <cui-disclosure>
-                        <details class="cui-disclosure">
+                        <details class="cui-disclosure cui-surface">
                           <summary>How does Combat UI ship CSS?</summary>
                           <div class="cui-disclosure-body">
                             <p>Components inject their shadow styles through constructable stylesheets and
@@ -431,7 +433,7 @@
                   <cui-code language="html">
                     <script type="text/html">
                         <cui-disclosure>
-                          <details class="cui-disclosure">
+                          <details class="cui-disclosure cui-surface">
                             <summary>How does Combat UI ship CSS?</summary>
                             <div class="cui-disclosure-body">
                               <p>Components inject shadow styles…</p>
@@ -447,9 +449,9 @@
                 <div class="cui-stack">
                   <div class="docs-preview">
                     <div class="docs-preview-frame">
-                      <div class="cui-disclosure-group" data-variant="stacked">
+                      <div class="cui-stack" data-variant="stacked">
                         <cui-disclosure>
-                          <details class="cui-disclosure" name="docs-disclosure-faq">
+                          <details class="cui-disclosure cui-surface" name="docs-disclosure-faq">
                             <summary>Does it work without JavaScript?</summary>
                             <div class="cui-disclosure-body">
                               <p>Yes. The component progressively enhances the native
@@ -461,7 +463,7 @@
                           </details>
                         </cui-disclosure>
                         <cui-disclosure>
-                          <details class="cui-disclosure" name="docs-disclosure-faq">
+                          <details class="cui-disclosure cui-surface" name="docs-disclosure-faq">
                             <summary>How do I make an accordion?</summary>
                             <div class="cui-disclosure-body">
                               <p>Give each inner <code>&lt;details&gt;</code> the same <code>name</code>
@@ -470,7 +472,7 @@
                           </details>
                         </cui-disclosure>
                         <cui-disclosure>
-                          <details class="cui-disclosure" name="docs-disclosure-faq">
+                          <details class="cui-disclosure cui-surface" name="docs-disclosure-faq">
                             <summary>Can I style the chevron?</summary>
                             <div class="cui-disclosure-body">
                               <p>Override <code>--cui-disclosure-marker-color</code> or replace the
@@ -485,15 +487,15 @@
 
                   <cui-code language="html">
                     <script type="text/html">
-                        <div class="cui-disclosure-group" data-variant="stacked">
+                        <div class="cui-stack" data-variant="stacked">
                           <cui-disclosure>
-                            <details class="cui-disclosure" name="faq">
+                            <details class="cui-disclosure cui-surface" name="faq">
                               <summary>Does it work without JavaScript?</summary>
                               <div class="cui-disclosure-body">…</div>
                             </details>
                           </cui-disclosure>
                           <cui-disclosure>
-                            <details class="cui-disclosure" name="faq">
+                            <details class="cui-disclosure cui-surface" name="faq">
                               <summary>How do I make an accordion?</summary>
                               <div class="cui-disclosure-body">…</div>
                             </details>
@@ -508,7 +510,7 @@
                 <div class="cui-stack">
                   <div class="docs-preview">
                     <div class="docs-preview-frame">
-                      <div class="cui-disclosure-group">
+                      <div class="cui-stack" style="--cui-stack-gap: var(--cui-space-2, 0.5rem);">
                         <cui-disclosure>
                           <details class="cui-disclosure" data-variant="ghost">
                             <summary>Inline ghost disclosure</summary>
@@ -556,7 +558,7 @@
                       </div>
                       <cui-disclosure id="docs-disclosure-remote"
                         style="margin-block-start: var(--cui-space-3, 0.75rem);">
-                        <details class="cui-disclosure">
+                        <details class="cui-disclosure cui-surface">
                           <summary>Remote-controlled disclosure</summary>
                           <div class="cui-disclosure-body">
                             <p>Any element with <code>data-cui-disclosure-target="&lt;id&gt;"</code>
@@ -574,7 +576,7 @@
                     <script type="text/html">
                         <cui-button data-cui-disclosure-target="settings">Toggle</cui-button>
                         <cui-disclosure id="settings">
-                          <details class="cui-disclosure">
+                          <details class="cui-disclosure cui-surface">
                             <summary>Settings</summary>
                             <div class="cui-disclosure-body">…</div>
                           </details>
@@ -633,16 +635,19 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td><code>.cui-disclosure</code></td>
-                        <td>Required class on the <code>&lt;details&gt;</code> for styling.</td>
+                        <td><code>.cui-disclosure</code> · <code>.cui-surface</code></td>
+                        <td>Both on the <code>&lt;details&gt;</code> for a default card — compose
+                          <code>.cui-surface</code> for the chrome. <code>data-variant="ghost"</code>
+                          needs no surface.</td>
                       </tr>
                       <tr>
                         <td><code>.cui-disclosure-body</code></td>
                         <td>Optional wrapper around the disclosure content for consistent padding.</td>
                       </tr>
                       <tr>
-                        <td><code>.cui-disclosure-group</code></td>
-                        <td>Container that lays out adjacent disclosures with consistent spacing.</td>
+                        <td><code>.cui-stack</code></td>
+                        <td>Container that lays out adjacent disclosures with consistent spacing
+                          (replaces the former <code>.cui-disclosure-group</code>).</td>
                       </tr>
                       <tr>
                         <td><code>data-variant="ghost"</code></td>
@@ -650,7 +655,7 @@
                       </tr>
                       <tr>
                         <td><code>data-variant="stacked"</code></td>
-                        <td>On the group. Joins adjacent disclosures with shared borders.</td>
+                        <td>On the <code>.cui-stack</code>. Joins adjacent disclosures with shared borders.</td>
                       </tr>
                       <tr>
                         <td><code>data-tone="subtle"</code></td>
@@ -755,7 +760,7 @@
               <section class="docs-panel">
                 <div class="cui-stack">
                   <div class="cui-stack">
-                    <div class="cui-alert" data-variant="info" role="status">
+                    <div class="cui-alert cui-surface" data-variant="info" role="status">
                       <span class="cui-alert-icon" aria-hidden="true">i</span>
                       <div class="cui-stack">
                         <p class="cui-alert-title">Heads up</p>
@@ -764,7 +769,7 @@
                       <button type="button" class="cui-alert-dismiss" data-cui-dismiss
                         aria-label="Dismiss">&times;</button>
                     </div>
-                    <div class="cui-alert" data-variant="success" role="status">
+                    <div class="cui-alert cui-surface" data-variant="success" role="status">
                       <span class="cui-alert-icon" aria-hidden="true">✓</span>
                       <div class="cui-stack">
                         <p class="cui-alert-title">Saved.</p>
@@ -773,7 +778,7 @@
                       <button type="button" class="cui-alert-dismiss" data-cui-dismiss
                         aria-label="Dismiss">&times;</button>
                     </div>
-                    <div class="cui-alert" data-variant="warning" role="alert">
+                    <div class="cui-alert cui-surface" data-variant="warning" role="alert">
                       <span class="cui-alert-icon" aria-hidden="true">!</span>
                       <div class="cui-stack">
                         <p class="cui-alert-title">Be careful</p>
@@ -782,7 +787,7 @@
                       <button type="button" class="cui-alert-dismiss" data-cui-dismiss
                         aria-label="Dismiss">&times;</button>
                     </div>
-                    <div class="cui-alert" data-variant="danger" role="alert">
+                    <div class="cui-alert cui-surface" data-variant="danger" role="alert">
                       <span class="cui-alert-icon" aria-hidden="true">✕</span>
                       <div class="cui-stack">
                         <p class="cui-alert-title">Failed</p>
@@ -795,7 +800,7 @@
 
                   <cui-code language="html">
                     <script type="text/html">
-                        <div class="cui-alert" data-variant="success" role="status">
+                        <div class="cui-alert cui-surface" data-variant="success" role="status">
                           <span class="cui-alert-icon" aria-hidden="true">✓</span>
                           <div class="cui-stack">
                             <p class="cui-alert-title">Saved.</p>
@@ -859,25 +864,25 @@
               <section class="docs-panel">
                 <div class="cui-stack">
                   <div class="cui-stack">
-                    <div class="cui-alert" data-variant="info" role="status">
+                    <div class="cui-alert cui-surface" data-variant="info" role="status">
                       <span class="cui-alert-icon" aria-hidden="true">i</span>
                       <div class="cui-stack">
                         <p>Default <code>outline</code> tone. Surface background with an accent stripe.</p>
                       </div>
                     </div>
-                    <div class="cui-alert" data-variant="info" data-tone="filled" role="status">
+                    <div class="cui-alert cui-surface" data-variant="info" data-tone="filled" role="status">
                       <span class="cui-alert-icon" aria-hidden="true">i</span>
                       <div class="cui-stack">
                         <p><code>data-tone="filled"</code>. Subtle accent-tinted background.</p>
                       </div>
                     </div>
-                    <div class="cui-alert" data-variant="success" data-tone="solid" role="status">
+                    <div class="cui-alert cui-surface" data-variant="success" data-tone="solid" role="status">
                       <span class="cui-alert-icon" aria-hidden="true">✓</span>
                       <div class="cui-stack">
                         <p><code>data-tone="solid"</code>. Full accent background, high-contrast text.</p>
                       </div>
                     </div>
-                    <div class="cui-alert" data-variant="danger" data-tone="solid" role="alert">
+                    <div class="cui-alert cui-surface" data-variant="danger" data-tone="solid" role="alert">
                       <span class="cui-alert-icon" aria-hidden="true">✕</span>
                       <div class="cui-stack">
                         <p class="cui-alert-title">Critical</p>
@@ -888,8 +893,8 @@
 
                   <cui-code language="html">
                     <script type="text/html">
-                        <div class="cui-alert" data-variant="info" data-tone="filled">…</div>
-                        <div class="cui-alert" data-variant="danger" data-tone="solid">…</div>
+                        <div class="cui-alert cui-surface" data-variant="info" data-tone="filled">…</div>
+                        <div class="cui-alert cui-surface" data-variant="danger" data-tone="solid">…</div>
                       </script>
                   </cui-code>
                 </div>
@@ -980,9 +985,9 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td><code>.cui-alert</code></td>
-                        <td>Container. Composes <code>.cui-surface</code> for chrome; grid layout:
-                          icon · body · dismiss.</td>
+                        <td><code>.cui-alert</code> · <code>.cui-surface</code></td>
+                        <td>Container. Both classes on the element — compose <code>.cui-surface</code>
+                          for chrome; the alert keeps its grid layout: icon · body · dismiss.</td>
                       </tr>
                       <tr>
                         <td><code>.cui-alert-icon</code> · <code>.cui-alert-title</code> ·

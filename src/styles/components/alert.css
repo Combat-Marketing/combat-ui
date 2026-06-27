@@ -11,7 +11,8 @@
  *
  * **Contextual markup.** The alert composes `.cui-surface` for its chrome
  * (background, border, radius, padding — shadow suppressed) while keeping
- * its own icon · body · dismiss grid and the inline-start accent rail. The
+ * its own icon · body · dismiss grid and the inline-start accent rail. Add
+ * `.cui-surface` alongside `.cui-alert` in the markup. The
  * body is a `.cui-stack`; the icon, title, message, and dismiss button keep
  * their classes (the icon is bespoke, the title / message are JS hooks the
  * `toast()` runtime reads, the dismiss button pairs with `data-cui-dismiss`).
@@ -35,7 +36,7 @@
  * @cssvar --cui-alert-radius — Outer corner radius.
  *
  * @example
- *   <div class="cui-alert" data-variant="info">
+ *   <div class="cui-alert cui-surface" data-variant="info">
  *     <span class="cui-alert-icon" aria-hidden="true">i</span>
  *     <div class="cui-stack">
  *       <p class="cui-alert-title">Heads up</p>
@@ -44,7 +45,7 @@
  *   </div>
  *
  * @example
- *   <div class="cui-alert" data-variant="warning" data-tone="solid" role="alert">
+ *   <div class="cui-alert cui-surface" data-variant="warning" data-tone="solid" role="alert">
  *     <span class="cui-alert-icon" aria-hidden="true">!</span>
  *     <div class="cui-stack">
  *       <p class="cui-alert-title">Session expiring</p>

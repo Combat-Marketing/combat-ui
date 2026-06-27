@@ -305,6 +305,13 @@
                   <code>.cui-pagination</code>, <code>.cui-pagination-link</code>,
                   <code>.cui-pagination-ellipsis</code>, and <code>.cui-pagination-status</code> are kept.
                 </li>
+                <li><code>.cui-disclosure-group</code> (and its <code>data-variant="stacked"</code>) - stack
+                  adjacent disclosures with a plain <code>.cui-stack</code> (set
+                  <code>--cui-stack-gap: var(--cui-space-2)</code> for the old default spacing). The FAQ-list
+                  look moves to <code>&lt;div class="cui-stack" data-variant="stacked"&gt;</code>; the gap
+                  collapse, sibling-border merge, and first/last corner rounding are preserved via rules
+                  scoped to <code>.cui-stack[data-variant="stacked"] &gt; .cui-disclosure</code>.
+                </li>
               </ul>
             </div>
 
@@ -458,6 +465,34 @@
                   (drops inline padding, applies the strong font weight). Any bare fieldset/legend now lays
                   out cleanly without a wrapper class; this is what lets <code>.cui-fieldset</code> retire in
                   favour of <code>&lt;fieldset class="cui-stack"&gt;</code> (see Removed).
+                </li>
+                <li><code>.cui-dialog</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> (background, border, radius, shadow, padding) while keeping its
+                  own sizing, centering, and <code>::backdrop</code>. Add it in markup, e.g.
+                  <code>class="cui-dialog cui-surface"</code> on the <code>&lt;dialog&gt;</code>. The
+                  <code>--cui-dialog-bg</code> / <code>-border</code> / <code>-radius</code> /
+                  <code>-shadow</code> / <code>-padding</code> knobs are preserved - they now feed the
+                  matching <code>--cui-surface-*</code> vars, so <code>data-size</code> /
+                  <code>data-variant="sheet-end"</code> still retune through the cascade.
+                </li>
+                <li><code>.cui-disclosure</code> no longer carries its own chrome; a default disclosure
+                  composes <code>.cui-surface</code> (shadow suppressed, padding zeroed since the
+                  summary/body pad themselves). Add it in markup, e.g.
+                  <code>class="cui-disclosure cui-surface"</code> on the <code>&lt;details&gt;</code>. The
+                  <code>data-variant="ghost"</code> treatment needs no surface - it strips to a single
+                  bottom border. Every <code>--cui-disclosure-*</code> knob is preserved.
+                </li>
+                <li><code>.cui-dropdown-menu</code> no longer carries its own chrome; it composes
+                  <code>.cui-surface</code> (border, radius, background, shadow, padding) while keeping its
+                  own grid layout and open/close animation. Add it in markup, e.g.
+                  <code>class="cui-dropdown-menu cui-surface"</code>. The class name is unchanged, so the
+                  <code>cui-navbar</code> dropdown logic still finds it.
+                </li>
+                <li><code>.cui-alert</code> markup now requires <code>.cui-surface</code> alongside
+                  <code>.cui-alert</code> for its card chrome (the chrome moved to surface in this release
+                  but the demos/examples had not yet adopted the class). Update markup to
+                  <code>class="cui-alert cui-surface"</code>; the <code>toast()</code> runtime now emits both
+                  classes automatically.
                 </li>
               </ul>
             </div>

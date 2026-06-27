@@ -7,15 +7,20 @@
  * control or attribute-driven open state. The custom CSS marker
  * replaces the native triangle and rotates on `[open]`.
  *
- * Stack multiple disclosures inside `.cui-disclosure-group` for FAQ
- * patterns. Combine `data-variant="ghost"` on each disclosure with
- * `data-variant="stacked"` on the group for the borderless FAQ
- * list.
+ * **Contextual markup.** A default disclosure composes `.cui-surface`
+ * for its card chrome (background, border, radius — shadow suppressed,
+ * padding zeroed since the summary/body pad themselves). The `ghost`
+ * variant needs no surface; it strips to a single bottom border.
+ *
+ * Stack multiple disclosures inside a `.cui-stack` for FAQ patterns.
+ * Combine `data-variant="ghost"` on each disclosure with
+ * `data-variant="stacked"` on the `.cui-stack` for the borderless FAQ
+ * list (replaces the former `.cui-disclosure-group`).
  *
  * @block cui-disclosure
- * @summary Bordered disclosure card with custom marker; wraps `<details>`.
+ * @summary Bordered disclosure card with custom marker; wraps `<details>`. Composes `.cui-surface`.
  * @variant ghost — `[data-variant="ghost"]`. Strips box chrome and
- *   uses a bottom-border only; good for stacking inside `.cui-disclosure-group`.
+ *   uses a bottom-border only; good for stacking inside a `.cui-stack`.
  * @tone subtle — `[data-tone="subtle"]`. Muted background fill
  *   instead of the default raised surface.
  * @cssvar --cui-disclosure-bg — Card background. Defaults to `--cui-color-surface-raised`.
@@ -29,7 +34,7 @@
  * @cssvar --cui-disclosure-hover-bg — Summary hover background. Defaults to `--cui-color-surface-muted`.
  *
  * @example
- *   <details class="cui-disclosure">
+ *   <details class="cui-disclosure cui-surface">
  *     <summary>How long does shipping take?</summary>
  *     <div class="cui-disclosure-body">
  *       <p>Orders ship within two business days.</p>
@@ -38,7 +43,7 @@
  *
  * @example
  *   <!-- Borderless FAQ list -->
- *   <div class="cui-disclosure-group" data-variant="stacked">
+ *   <div class="cui-stack" data-variant="stacked">
  *     <details class="cui-disclosure" data-variant="ghost">
  *       <summary>Question one</summary>
  *       <div class="cui-disclosure-body"><p>Answer one.</p></div>
@@ -60,10 +65,17 @@
   --cui-disclosure-marker-color: var(--cui-color-muted, #5d6675);
   --cui-disclosure-hover-bg: var(--cui-color-surface-muted, #edf0f4);
 
+  /* Chrome borrowed from the surface primitive (compose `.cui-surface` in
+     markup); the summary and body carry the inner padding, so surface padding
+     is zeroed and the flat card suppresses the shadow. The `ghost` variant
+     needs no surface — it strips to a single bottom border. */
+  --cui-surface-bg: var(--cui-disclosure-bg);
+  --cui-surface-border: var(--cui-border-size, 1px) solid var(--cui-disclosure-border);
+  --cui-surface-radius: var(--cui-disclosure-radius);
+  --cui-surface-shadow: none;
+  --cui-surface-padding: 0;
+
   display: block;
-  border: var(--cui-border-size, 1px) solid var(--cui-disclosure-border);
-  border-radius: var(--cui-disclosure-radius);
-  background: var(--cui-disclosure-bg);
   color: var(--cui-disclosure-color);
   overflow: clip;
 }
@@ -172,55 +184,36 @@
   --cui-disclosure-hover-bg: var(--cui-color-surface, #f7f8fa);
 }
 
-/**
- * Vertical group of disclosures. Default spacing is `--cui-space-2`
- * between cards; the `stacked` variant collapses gaps to zero,
- * merges borders between siblings, and rounds only the first and
- * last corners — the canonical FAQ-list look. Pair the stacked
- * group with `data-variant="ghost"` on each disclosure for the
- * cleanest borderless rendering.
- *
- * @block cui-disclosure-group
- * @summary Stack of disclosures; `stacked` variant for borderless FAQ lists.
- * @variant stacked — `[data-variant="stacked"]`. Removes gaps,
- *   merges sibling borders, rounds only first/last corners.
- *
- * @example
- *   <div class="cui-disclosure-group">
- *     <details class="cui-disclosure">…</details>
- *     <details class="cui-disclosure">…</details>
- *   </div>
- *
- * @example
- *   <!-- FAQ-list style -->
- *   <div class="cui-disclosure-group" data-variant="stacked">
- *     <details class="cui-disclosure" data-variant="ghost">…</details>
- *     <details class="cui-disclosure" data-variant="ghost">…</details>
- *   </div>
+/*
+ * Disclosure list — a plain `.cui-stack` of disclosures (replaces the former
+ * `.cui-disclosure-group`). Default spacing comes from the stack gap; set
+ * `--cui-stack-gap: var(--cui-space-2)` to match the historical group spacing.
+ * The `stacked` variant collapses the gap to zero, merges borders between
+ * siblings, and rounds only the first and last corners — the canonical
+ * FAQ-list look. Pair `data-variant="stacked"` on the stack with
+ * `data-variant="ghost"` on each disclosure for the cleanest borderless
+ * rendering. Descendant selectors (matching the disclosure whether it sits
+ * bare or wrapped in a `<cui-disclosure>` element) keyed off `.cui-disclosure`,
+ * so the rules never touch other `.cui-stack[data-variant="stacked"]` consumers.
  */
-.cui-disclosure-group {
-  display: grid;
-  gap: var(--cui-space-2, 0.5rem);
+.cui-stack[data-variant="stacked"]:has(.cui-disclosure) {
+  --cui-stack-gap: 0;
 }
 
-.cui-disclosure-group[data-variant="stacked"] {
-  gap: 0;
-}
-
-.cui-disclosure-group[data-variant="stacked"] .cui-disclosure {
+.cui-stack[data-variant="stacked"] .cui-disclosure {
   border-radius: 0;
 }
 
-.cui-disclosure-group[data-variant="stacked"] .cui-disclosure + .cui-disclosure {
+.cui-stack[data-variant="stacked"] .cui-disclosure + .cui-disclosure {
   border-block-start: 0;
 }
 
-.cui-disclosure-group[data-variant="stacked"] .cui-disclosure:first-child {
+.cui-stack[data-variant="stacked"] .cui-disclosure:first-child {
   border-start-start-radius: var(--cui-disclosure-radius, 0.5rem);
   border-start-end-radius: var(--cui-disclosure-radius, 0.5rem);
 }
 
-.cui-disclosure-group[data-variant="stacked"] .cui-disclosure:last-child {
+.cui-stack[data-variant="stacked"] .cui-disclosure:last-child {
   border-end-start-radius: var(--cui-disclosure-radius, 0.5rem);
   border-end-end-radius: var(--cui-disclosure-radius, 0.5rem);
 }

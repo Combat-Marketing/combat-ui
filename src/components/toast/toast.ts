@@ -116,7 +116,7 @@ function ensureRegion(placement: CuiToastPlacement): CuiToastRegion {
 function renderAlert(options: CuiToastOptions): HTMLElement {
   const variant = options.variant ?? "info";
   const el = document.createElement("div");
-  el.className = "cui-alert";
+  el.className = "cui-alert cui-surface";
   el.setAttribute("data-variant", variant);
   if (options.tone) el.setAttribute("data-tone", options.tone);
   el.setAttribute(

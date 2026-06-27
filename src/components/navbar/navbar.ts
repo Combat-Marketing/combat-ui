@@ -36,7 +36,7 @@ import { findInComposedPath } from "../../internal/dom";
  *           <a class="cui-nav-link" href="/components" aria-current="page">Components</a>
  *           <div class="cui-dropdown">
  *             <button class="cui-nav-link cui-dropdown-toggle" type="button">Resources</button>
- *             <div class="cui-dropdown-menu" hidden>
+ *             <div class="cui-dropdown-menu cui-surface" hidden>
  *               <a class="cui-dropdown-item" href="/docs">Docs</a>
  *               <a class="cui-dropdown-item" href="/blog">Blog</a>
  *             </div>

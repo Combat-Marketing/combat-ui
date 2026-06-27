@@ -54,12 +54,12 @@
                               <a class="cui-nav-link" href="#" aria-current="page">Home</a>
                               <div class="cui-dropdown">
                                 <button class="cui-nav-link cui-dropdown-toggle" type="button">Services</button>
-                                <div class="cui-dropdown-menu" hidden>
+                                <div class="cui-dropdown-menu cui-surface" hidden>
                                   <a class="cui-dropdown-item" href="#">Strategy</a>
                                   <a class="cui-dropdown-item" href="#">Design</a>
                                   <div class="cui-dropdown">
                                     <button class="cui-dropdown-item cui-dropdown-toggle" type="button">Development</button>
-                                    <div class="cui-dropdown-menu" hidden>
+                                    <div class="cui-dropdown-menu cui-surface" hidden>
                                       <a class="cui-dropdown-item" href="#">Frontend</a>
                                       <a class="cui-dropdown-item" href="#">CMS</a>
                                     </div>
@@ -90,12 +90,12 @@
                             <a class="cui-nav-link" href="#" aria-current="page">Home</a>
                             <div class="cui-dropdown">
                               <button class="cui-nav-link cui-dropdown-toggle" type="button">Services</button>
-                              <div class="cui-dropdown-menu" hidden>
+                              <div class="cui-dropdown-menu cui-surface" hidden>
                                 <a class="cui-dropdown-item" href="#">Strategy</a>
                                 <a class="cui-dropdown-item" href="#">Design</a>
                                 <div class="cui-dropdown">
                                   <button class="cui-dropdown-item cui-dropdown-toggle" type="button">Development</button>
-                                  <div class="cui-dropdown-menu" hidden>
+                                  <div class="cui-dropdown-menu cui-surface" hidden>
                                     <a class="cui-dropdown-item" href="#">Frontend</a>
                                     <a class="cui-dropdown-item" href="#">CMS</a>
                                   </div>
@@ -208,8 +208,9 @@
                   <tr>
                     <td><code>.cui-dropdown</code> / <code>.cui-dropdown-toggle</code> /
                       <code>.cui-dropdown-menu</code> / <code>.cui-dropdown-item</code></td>
-                    <td>Nested dropdown markup. The toggle is a <code>&lt;button&gt;</code>; the menu has
-                      <code>hidden</code> by default and gets unhidden by the navbar's dropdown logic.</td>
+                    <td>Nested dropdown markup. The toggle is a <code>&lt;button&gt;</code>; the menu
+                      composes <code>.cui-surface</code> for its chrome, has <code>hidden</code> by
+                      default, and gets unhidden by the navbar's dropdown logic.</td>
                   </tr>
                 </tbody>
               </table>

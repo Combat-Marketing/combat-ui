@@ -69,7 +69,7 @@
  * @example
  *   <div class="cui-dropdown">
  *     <button class="cui-dropdown-toggle" aria-expanded="false">Resources</button>
- *     <ul class="cui-dropdown-menu" hidden>
+ *     <ul class="cui-dropdown-menu cui-surface" hidden>
  *       <li><a class="cui-dropdown-item" href="/docs">Docs</a></li>
  *       <li><a class="cui-dropdown-item" href="/blog">Blog</a></li>
  *     </ul>
@@ -126,19 +126,26 @@
  * separators. Nested menus open to the inline-end on viewports
  * ≥48rem.
  *
+ * Composes `.cui-surface` for its chrome (border, radius, background,
+ * shadow, padding) — add `.cui-surface` alongside `.cui-dropdown-menu`
+ * in markup — while keeping its own grid layout and reveal animation.
+ *
  * @block cui-dropdown-menu
- * @summary Flyout list inside `.cui-dropdown`; reveal via parent `[data-open]`.
+ * @summary Flyout list inside `.cui-dropdown`; reveal via parent `[data-open]`. Composes `.cui-surface`.
  */
 .cui-dropdown-menu {
+  /* Chrome borrowed from the surface primitive (compose `.cui-surface` in
+     markup); the menu keeps its own grid layout and open/close animation. */
+  --cui-surface-border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
+  --cui-surface-radius: var(--cui-radius-2, 0.5rem);
+  --cui-surface-bg: var(--cui-color-surface-raised, #fff);
+  --cui-surface-shadow: var(--cui-shadow-2, 0 12px 28px hsl(220deg 25% 10% / 14%));
+  --cui-surface-padding: var(--cui-space-2, 0.5rem);
+
   display: grid;
   min-inline-size: var(--cui-dropdown-min-size, 12rem);
   gap: var(--cui-space-1, 0.25rem);
-  border: var(--cui-border-size, 1px) solid var(--cui-color-border, #cfd6df);
-  border-radius: var(--cui-radius-2, 0.5rem);
-  background: var(--cui-color-surface-raised, #fff);
-  box-shadow: var(--cui-shadow-2, 0 12px 28px hsl(220deg 25% 10% / 14%));
   opacity: 0;
-  padding: var(--cui-space-2, 0.5rem);
   transform: translateY(var(--cui-dropdown-animation-distance, 0.25rem));
   transform-origin: top;
   transition:
