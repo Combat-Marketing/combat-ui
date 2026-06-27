@@ -2,13 +2,25 @@
  * Contact card — a single point of contact: a department, an
  * office desk, a person's direct line, or a general "get in touch"
  * panel. Stacks an optional eyebrow, a title, a short lead, a list
- * of contact methods (`.cui-contact-methods`), and an actions row.
- * Shares its surface tokens with `.cui-content-card` so it sits
- * cleanly beside feature, case, and person cards in mixed layouts;
- * drop several into a `.cui-card-grid` for a contacts directory.
+ * of contact methods, and an actions row. Shares its surface tokens
+ * with `.cui-content-card` so it sits cleanly beside feature, case,
+ * and person cards in mixed layouts; drop several into a `.cui-grid`
+ * for a contacts directory.
+ *
+ * **Contextual markup.** Compose `.cui-surface` for the card chrome and
+ * `.cui-stack` for the body rhythm; the card styles its own descendants,
+ * so each part carries only the canonical primitive (or a semantic
+ * element):
+ *
+ * - `.cui-eyebrow` — the team / department label ("Support", "Press").
+ * - `.cui-display` — the title, retuned to card scale in place.
+ * - a bare `<p>` — the muted lead / intro paragraph.
+ * - a `.cui-contact-methods` `<dl>` — the label / value method list
+ *   (shared with `.cui-location-card`; see its own block).
+ * - `.cui-cluster` — the actions row.
  *
  * @block cui-contact-card
- * @summary Contact card with title, lead, contact-method list, actions.
+ * @summary Contact card (title, lead, method list, actions); composes `.cui-surface` + `.cui-stack` and styles its own descendants.
  * @variant flat | borderless | inverse — Maps to `[data-variant]`.
  *   `flat` drops the shadow. `borderless` drops shadow, border, and
  *   inline padding (use inside a grid with its own gaps). `inverse`
@@ -20,25 +32,22 @@
  * @cssvar --cui-contact-card-padding — Card padding. Defaults to `--cui-space-5`.
  * @cssvar --cui-contact-card-gap — Gap between stacked sections. Defaults to `--cui-space-3`.
  * @cssvar --cui-contact-card-title-size — Title font size. Defaults to `--cui-font-size-2`.
+ * @cssvar --cui-contact-card-eyebrow-color — Eyebrow tint. Defaults to `--cui-color-accent`.
  *
  * @example
- *   <article class="cui-contact-card">
- *     <p class="cui-contact-card-eyebrow">Support</p>
- *     <h3 class="cui-contact-card-title">Customer success</h3>
- *     <p class="cui-contact-card-lead">
+ *   <article class="cui-surface cui-stack cui-contact-card">
+ *     <p class="cui-eyebrow">Support</p>
+ *     <h3 class="cui-display">Customer success</h3>
+ *     <p>
  *       Questions about your account or a live project? We reply within one business day.
  *     </p>
- *     <ul class="cui-contact-methods">
- *       <li class="cui-contact-method">
- *         <span class="cui-contact-method-label">Email</span>
- *         <a class="cui-contact-method-value" href="mailto:hello@example.com">hello@example.com</a>
- *       </li>
- *       <li class="cui-contact-method">
- *         <span class="cui-contact-method-label">Phone</span>
- *         <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
- *       </li>
- *     </ul>
- *     <div class="cui-contact-card-actions">
+ *     <dl class="cui-contact-methods">
+ *       <dt>Email</dt>
+ *       <dd><a href="mailto:hello@example.com">hello@example.com</a></dd>
+ *       <dt>Phone</dt>
+ *       <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+ *     </dl>
+ *     <div class="cui-cluster">
  *       <a class="cui-button" href="mailto:hello@example.com">Send a message</a>
  *     </div>
  *   </article>
@@ -48,190 +57,55 @@
   --cui-contact-card-padding: var(--cui-space-5, 1.5rem);
   --cui-contact-card-gap: var(--cui-space-3, 0.75rem);
   --cui-contact-card-title-size: var(--cui-font-size-2, 1.5rem);
-
-  display: grid;
-  align-content: start;
-  gap: var(--cui-contact-card-gap);
-  border: var(--cui-border-size, 1px) solid
+  --cui-surface-bg: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-border: var(--cui-border-size, 1px) solid
     var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
-  border-radius: var(--cui-contact-card-radius);
-  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
-  color: var(--cui-color, #1b1f27);
-  box-shadow: var(
+  --cui-surface-radius: var(--cui-contact-card-radius);
+  --cui-surface-shadow: var(
     --cui-content-card-shadow,
     var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
   );
-  padding: var(--cui-contact-card-padding);
+  --cui-surface-padding: var(--cui-contact-card-padding);
+  --cui-stack-gap: var(--cui-contact-card-gap);
+
+  align-content: start;
+  color: var(--cui-color, #1b1f27);
 }
 
 .cui-contact-card[hidden] {
   display: none;
 }
 
-.cui-contact-card > :where(h1, h2, h3, h4, h5, h6, p) {
-  margin: 0;
-}
-
-/**
- * Eyebrow / category label above the contact-card title — small-
- * caps, tracked, accent-tinted. Use for the team, department, or
- * region this contact belongs to ("Support", "Press", "Amsterdam").
- *
- * @block cui-contact-card-eyebrow
- * @summary Accent-tinted eyebrow above the contact-card title.
- * @cssvar --cui-contact-card-eyebrow-color — Eyebrow tint. Defaults to `--cui-color-accent`.
- */
-.cui-contact-card-eyebrow {
+/* Eyebrow — team / department label. Retints `.cui-eyebrow` from the
+ * preserved knob (which itself defaults to accent, the primitive's own
+ * default). */
+.cui-contact-card .cui-eyebrow {
   color: var(
     --cui-contact-card-eyebrow-color,
     var(--cui-color-accent, oklch(57% 0.18 246deg))
   );
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-/**
- * Title of a `.cui-contact-card`. Bold, sized at
- * `--cui-contact-card-title-size`, tight line-height with
- * `text-wrap: balance`. Pick a heading element that fits the
- * surrounding outline (`<h3>` inside a grid, `<h2>` on a dedicated
- * contact page).
- *
- * @block cui-contact-card-title
- * @summary Bold contact-card title.
- */
-.cui-contact-card-title {
-  font-size: var(--cui-contact-card-title-size, var(--cui-font-size-2, 1.5rem));
-  font-weight: var(--cui-font-weight-strong, 680);
-  line-height: var(--cui-line-height-tight, 1.2);
-  text-wrap: balance;
+/* Title — `.cui-display` retuned to card scale (strong weight, tight
+ * leading, no measure cap so short titles don't wrap at the 13ch
+ * display default). Size is driven from the preserved title-size knob. */
+.cui-contact-card .cui-display {
+  --cui-display-measure: none;
+  --cui-display-size: var(--cui-contact-card-title-size, var(--cui-font-size-2, 1.5rem));
+  --cui-display-weight: var(--cui-font-weight-strong, 680);
+  --cui-display-leading: var(--cui-line-height-tight, 1.2);
 }
 
-/**
- * Lead paragraph inside a `.cui-contact-card`. Muted body text —
- * one or two sentences setting expectations (what this contact is
- * for, response time). Keep longer copy on a dedicated page.
- *
- * @block cui-contact-card-lead
- * @summary Muted lead paragraph beneath the contact-card title.
- */
-.cui-contact-card-lead {
+/* Lead — the card's bare `<p>` intro (the eyebrow carries its own type
+ * class). Muted body copy setting expectations (what this contact is
+ * for, response time). */
+.cui-contact-card > p:not([class]) {
   color: var(--cui-color-muted, #5d6675);
   line-height: var(--cui-line-height, 1.55);
 }
 
-/**
- * Contact-method list — a stacked list of label / value rows for
- * email, phone, address, hours, and social links. Shared by
- * `.cui-contact-card` and `.cui-location-card`. Render as a `<ul>`
- * of `.cui-contact-method` items, or as a `<dl>` with
- * `.cui-contact-method-label` on `<dt>` and `.cui-contact-method-value`
- * on `<dd>` for stricter semantics.
- *
- * @block cui-contact-methods
- * @summary Stacked list of contact label / value rows.
- * @variant inline — Maps to `[data-layout]`. Lays each row out
- *   horizontally (label beside value) instead of stacked, sized for
- *   scannable directories.
- * @cssvar --cui-contact-methods-gap — Gap between rows. Defaults to `--cui-space-3`.
- *
- * @example
- *   <ul class="cui-contact-methods">
- *     <li class="cui-contact-method">
- *       <span class="cui-contact-method-label">Email</span>
- *       <a class="cui-contact-method-value" href="mailto:hi@example.com">hi@example.com</a>
- *     </li>
- *   </ul>
- */
-.cui-contact-methods {
-  display: grid;
-  gap: var(--cui-contact-methods-gap, var(--cui-space-3, 0.75rem));
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/**
- * One row inside `.cui-contact-methods` — a label above (or, in the
- * `inline` layout, beside) its value. Stacks the label and value
- * with a hairline gap by default. Use a `<li>`, or a `<dt>` + `<dd>`
- * pair inside a `<dl>`.
- *
- * @block cui-contact-method
- * @summary Label / value row inside a contact-method list.
- */
-.cui-contact-method {
-  display: grid;
-  gap: var(--cui-space-1, 0.25rem);
-  margin: 0;
-}
-
-/**
- * Small muted label inside a `.cui-contact-method` — the kind of
- * method ("Email", "Phone", "Address", "Hours"). Uppercase, tracked,
- * sized down from the value beneath it.
- *
- * @block cui-contact-method-label
- * @summary Small uppercase label for a contact method.
- */
-.cui-contact-method-label {
-  color: var(--cui-color-muted, #5d6675);
-  font-size: var(--cui-font-size-eyebrow, 0.875rem);
-  font-weight: var(--cui-font-weight-strong, 680);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/**
- * Value inside a `.cui-contact-method` — the address, number, or
- * email. Full-strength color; when it wraps a link the color is
- * inherited and an underline appears on hover / focus. Apply to a
- * `<span>`, `<a>`, or `<address>`.
- *
- * @block cui-contact-method-value
- * @summary Full-strength contact value; links underline on hover.
- */
-.cui-contact-method-value {
-  color: var(--cui-color, #1b1f27);
-  font-style: normal;
-  line-height: var(--cui-line-height, 1.55);
-}
-
-a.cui-contact-method-value,
-.cui-contact-method-value a {
-  color: inherit;
-  text-decoration: none;
-}
-
-a.cui-contact-method-value:hover,
-a.cui-contact-method-value:focus-visible,
-.cui-contact-method-value a:hover,
-.cui-contact-method-value a:focus-visible {
-  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
-  text-decoration: underline;
-}
-
-/* Inline layout: label beside value, for dense directories. */
-.cui-contact-methods[data-layout="inline"] .cui-contact-method {
-  grid-template-columns: minmax(5rem, auto) minmax(0, 1fr);
-  align-items: baseline;
-  gap: var(--cui-space-2, 0.5rem) var(--cui-space-4, 1rem);
-}
-
-/**
- * Actions row at the bottom of a `.cui-contact-card`. Flex-wrap row
- * with `--cui-space-3` gap and a small top margin. Place one or two
- * `.cui-button`s here ("Send a message", "Book a call").
- *
- * @block cui-contact-card-actions
- * @summary Flex-wrap row of action buttons inside a contact card.
- */
-.cui-contact-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
+/* Actions — a `.cui-cluster` row with a small top margin. */
+.cui-contact-card > .cui-cluster {
   margin-block-start: var(--cui-space-2, 0.5rem);
 }
 
@@ -240,8 +114,8 @@ a.cui-contact-method-value:focus-visible,
   text-align: center;
 }
 
-.cui-contact-card[data-align="center"] .cui-contact-card-actions {
-  justify-content: center;
+.cui-contact-card[data-align="center"] > .cui-cluster {
+  --cui-cluster-justify: center;
 }
 
 .cui-contact-card[data-variant="flat"] {
@@ -262,12 +136,99 @@ a.cui-contact-method-value:focus-visible,
   color: var(--cui-color-surface, #f7f8fa);
 }
 
-.cui-contact-card[data-variant="inverse"] .cui-contact-card-lead,
-.cui-contact-card[data-variant="inverse"] .cui-contact-method-label {
+.cui-contact-card[data-variant="inverse"] > p:not([class]) {
   color: color-mix(in oklab, currentcolor 70%, transparent);
 }
 
-.cui-contact-card[data-variant="inverse"] .cui-contact-method-value {
+/**
+ * Contact-method list — a list of label / value pairs for email,
+ * phone, address, hours, and social links. Shared by
+ * `.cui-contact-card` and `.cui-location-card`, so a phone number
+ * reads the same whether it sits on a support card or beside an
+ * office address. Render as a `<dl>` of `<dt>` labels and `<dd>`
+ * values; the list styles them directly, so no per-row slot classes
+ * are needed. By default the value stacks beneath its label;
+ * `[data-layout="inline"]` lays the label beside the value for
+ * scannable directories.
+ *
+ * @block cui-contact-methods
+ * @summary Definition list of contact label / value pairs.
+ * @variant inline — Maps to `[data-layout]`. Lays each label beside
+ *   its value (two columns) instead of stacked.
+ * @cssvar --cui-contact-methods-gap — Gap between method pairs. Defaults to `--cui-space-3`.
+ *
+ * @example
+ *   <dl class="cui-contact-methods">
+ *     <dt>Email</dt>
+ *     <dd><a href="mailto:hi@example.com">hi@example.com</a></dd>
+ *     <dt>Phone</dt>
+ *     <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+ *   </dl>
+ */
+.cui-contact-methods {
+  margin: 0;
+  padding: 0;
+}
+
+/* Label — small uppercase tracked muted "Email" / "Phone" / "Hours".
+ * Each label (bar the first) opens a new method pair, so it carries the
+ * between-pair gap on top. */
+.cui-contact-methods > dt {
+  margin-block-start: var(--cui-contact-methods-gap, var(--cui-space-3, 0.75rem));
+  color: var(--cui-color-muted, #5d6675);
+  font-size: var(--cui-font-size-eyebrow, 0.875rem);
+  font-weight: var(--cui-font-weight-strong, 680);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cui-contact-methods > dt:first-child {
+  margin-block-start: 0;
+}
+
+/* Value — full-strength address / number / email a hairline below its
+ * label; a wrapped link inherits the color and underlines on hover. */
+.cui-contact-methods > dd {
+  margin: var(--cui-space-1, 0.25rem) 0 0;
+  color: var(--cui-color, #1b1f27);
+  font-style: normal;
+  line-height: var(--cui-line-height, 1.55);
+}
+
+.cui-contact-methods a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cui-contact-methods a:hover,
+.cui-contact-methods a:focus-visible {
+  color: var(--cui-color-accent, oklch(57% 0.18 246deg));
+  text-decoration: underline;
+}
+
+/* Inline layout: label beside value (two columns), for dense
+ * directories. The dt / dd flow into the grid columns row by row, so the
+ * stacked-layout margins are dropped in favour of the grid gap. */
+.cui-contact-methods[data-layout="inline"] {
+  display: grid;
+  grid-template-columns: minmax(5rem, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--cui-space-2, 0.5rem) var(--cui-space-4, 1rem);
+}
+
+.cui-contact-methods[data-layout="inline"] > dt,
+.cui-contact-methods[data-layout="inline"] > dd {
+  margin: 0;
+}
+
+/* Inverse contact card: mute the method labels and keep the values at
+ * full strength against the dark surface. Defined after the base method
+ * rules so the variant override follows what it overrides. */
+.cui-contact-card[data-variant="inverse"] .cui-contact-methods > dt {
+  color: color-mix(in oklab, currentcolor 70%, transparent);
+}
+
+.cui-contact-card[data-variant="inverse"] .cui-contact-methods > dd {
   color: currentcolor;
 }
 
@@ -282,8 +243,19 @@ a.cui-contact-method-value:focus-visible,
  * every width. Reuses `.cui-contact-methods` for hours / phone, so
  * a location card and a contact card read consistently.
  *
+ * **Contextual markup.** Compose `.cui-surface` for the chrome and a
+ * `.cui-stack` body; the card zeroes its own padding (the media bleeds)
+ * and the body owns the inset. The body styles its own descendants:
+ *
+ * - `.cui-location-card-media` — the map / photo / embed panel (a
+ *   bespoke fixed-column / banner region; kept).
+ * - `.cui-display` — the location name, retuned to card scale.
+ * - an `<address>` — the postal address (reset to plain, muted text).
+ * - a `.cui-contact-methods` `<dl>` — hours / phone (the shared list).
+ * - `.cui-cluster` — the actions row.
+ *
  * @block cui-location-card
- * @summary Location card pairing a map / photo with address and details.
+ * @summary Location card pairing a map / photo with address and details; composes `.cui-surface` + a `.cui-stack` body.
  * @variant stacked — Maps to `[data-orient]`. Pins the media above
  *   the body at every width (default stacks only below 40rem).
  * @variant flat | borderless — Maps to `[data-variant]`. `flat`
@@ -294,26 +266,22 @@ a.cui-contact-method-value:focus-visible,
  * @cssvar --cui-location-card-media-size — Media column width in row orient. Defaults to 16rem.
  *
  * @example
- *   <article class="cui-location-card">
+ *   <article class="cui-surface cui-location-card">
  *     <div class="cui-location-card-media">
  *       <img src="/offices/amsterdam.jpg" alt="Our Amsterdam office">
  *     </div>
- *     <div class="cui-location-card-body">
- *       <h3 class="cui-location-card-name">Amsterdam HQ</h3>
- *       <address class="cui-location-card-address">
+ *     <div class="cui-stack">
+ *       <h3 class="cui-display">Amsterdam HQ</h3>
+ *       <address>
  *         Keizersgracht 123<br>1015 CJ Amsterdam<br>Netherlands
  *       </address>
- *       <ul class="cui-contact-methods" data-layout="inline">
- *         <li class="cui-contact-method">
- *           <span class="cui-contact-method-label">Hours</span>
- *           <span class="cui-contact-method-value">Mon–Fri · 9:00–18:00</span>
- *         </li>
- *         <li class="cui-contact-method">
- *           <span class="cui-contact-method-label">Phone</span>
- *           <a class="cui-contact-method-value" href="tel:+31201234567">+31 20 123 4567</a>
- *         </li>
- *       </ul>
- *       <div class="cui-location-card-actions">
+ *       <dl class="cui-contact-methods" data-layout="inline">
+ *         <dt>Hours</dt>
+ *         <dd>Mon–Fri · 9:00–18:00</dd>
+ *         <dt>Phone</dt>
+ *         <dd><a href="tel:+31201234567">+31 20 123 4567</a></dd>
+ *       </dl>
+ *       <div class="cui-cluster">
  *         <a class="cui-button" href="https://maps.example.com/?q=Keizersgracht+123">Get directions</a>
  *       </div>
  *     </div>
@@ -324,25 +292,60 @@ a.cui-contact-method-value:focus-visible,
   --cui-location-card-padding: var(--cui-space-5, 1.5rem);
   --cui-location-card-gap: var(--cui-space-3, 0.75rem);
   --cui-location-card-media-size: 16rem;
+  --cui-surface-bg: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
+  --cui-surface-border: var(--cui-border-size, 1px) solid
+    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
+  --cui-surface-radius: var(--cui-location-card-radius);
+  --cui-surface-shadow: var(
+    --cui-content-card-shadow,
+    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
+  );
+  --cui-surface-padding: 0;
 
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  gap: 0;
   overflow: hidden;
-  border: var(--cui-border-size, 1px) solid
-    var(--cui-content-card-border, var(--cui-color-border, #cfd6df));
-  border-radius: var(--cui-location-card-radius);
-  background: var(--cui-content-card-bg, var(--cui-color-surface-raised, #fff));
   color: var(--cui-color, #1b1f27);
-  box-shadow: var(
-    --cui-content-card-shadow,
-    var(--cui-shadow-1, 0 1px 2px hsl(220deg 25% 10% / 12%))
-  );
 }
 
 .cui-location-card[hidden] {
   display: none;
+}
+
+/* Content column — a `.cui-stack` carrying the body inset and gap. The
+ * card zeroes its own padding (the media bleeds edge-to-edge), so the
+ * body owns the inset; name, address, methods, and actions stack with
+ * --cui-location-card-gap. */
+.cui-location-card > .cui-stack {
+  --cui-stack-gap: var(--cui-location-card-gap, var(--cui-space-3, 0.75rem));
+
+  flex: 1 1 var(--cui-location-card-body-min, 16rem);
+  align-content: start;
+  min-inline-size: 0;
+  padding: var(--cui-location-card-padding, var(--cui-space-5, 1.5rem));
+}
+
+/* Name — `.cui-display` retuned to card scale (font-size-1, strong
+ * weight, tight leading, no measure cap). */
+.cui-location-card .cui-display {
+  --cui-display-measure: none;
+  --cui-display-size: var(--cui-location-card-name-size, var(--cui-font-size-1, 1.1875rem));
+  --cui-display-weight: var(--cui-font-weight-strong, 680);
+  --cui-display-leading: var(--cui-line-height-tight, 1.2);
+}
+
+/* Address — the body's `<address>`. Resets the browser's default italic
+ * so the lines read as plain muted text; use `<br>` between lines. */
+.cui-location-card address {
+  color: var(--cui-color-muted, #5d6675);
+  font-style: normal;
+  line-height: var(--cui-line-height, 1.55);
+}
+
+/* Actions — a `.cui-cluster` row with a small top margin. */
+.cui-location-card > .cui-stack > .cui-cluster {
+  margin-block-start: var(--cui-space-2, 0.5rem);
 }
 
 /**
@@ -370,71 +373,6 @@ a.cui-contact-method-value:focus-visible,
   border: 0;
   object-fit: cover;
   object-position: center;
-}
-
-/**
- * Content column of a `.cui-location-card`. A small grid that stacks
- * the name, address, contact methods, and actions; direct headings
- * and paragraphs get `margin: 0` so the grid gap controls rhythm.
- *
- * @block cui-location-card-body
- * @summary Stacked content column inside a location card.
- */
-.cui-location-card-body {
-  display: grid;
-  flex: 1 1 var(--cui-location-card-body-min, 16rem);
-  align-content: start;
-  gap: var(--cui-location-card-gap, var(--cui-space-3, 0.75rem));
-  min-inline-size: 0;
-  padding: var(--cui-location-card-padding, var(--cui-space-5, 1.5rem));
-}
-
-.cui-location-card-body > :where(h1, h2, h3, h4, h5, h6, p) {
-  margin: 0;
-}
-
-/**
- * Name / title of a `.cui-location-card`. Bold, sized at
- * `--cui-font-size-1`, tight line-height. Pick a heading element
- * that fits the surrounding outline.
- *
- * @block cui-location-card-name
- * @summary Bold location name inside a location card.
- */
-.cui-location-card-name {
-  font-size: var(--cui-location-card-name-size, var(--cui-font-size-1, 1.1875rem));
-  font-weight: var(--cui-font-weight-strong, 680);
-  line-height: var(--cui-line-height-tight, 1.2);
-}
-
-/**
- * Postal address inside a `.cui-location-card`. Render on an
- * `<address>` element — the class resets the browser's default
- * italic so the lines read as plain text, with the document's
- * line-height. Use `<br>` between address lines.
- *
- * @block cui-location-card-address
- * @summary Reset `<address>` block for a location's postal address.
- */
-.cui-location-card-address {
-  color: var(--cui-color-muted, #5d6675);
-  font-style: normal;
-  line-height: var(--cui-line-height, 1.55);
-}
-
-/**
- * Actions row at the bottom of a `.cui-location-card-body`. Flex-wrap
- * row with `--cui-space-3` gap and a small top margin. Place a
- * "Get directions" or "Call" button here.
- *
- * @block cui-location-card-actions
- * @summary Flex-wrap row of action buttons inside a location card.
- */
-.cui-location-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cui-space-3, 0.75rem);
-  margin-block-start: var(--cui-space-2, 0.5rem);
 }
 
 /* Stack the media on top below 40rem regardless of orientation. */
