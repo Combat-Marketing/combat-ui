@@ -26,6 +26,24 @@ textarea {
   font: inherit;
 }
 
+/* Strip the native `<fieldset>` box (groove border, padding, the
+   `min-inline-size: min-content` quirk) so a layout primitive like
+   `.cui-stack` can own the grouping. `<legend>` keeps a bold weight
+   and loses its inline padding; spacing below it comes from the
+   stack gap. Component-layer fieldsets (e.g. `.cui-article-filter`)
+   re-set these and still win. */
+fieldset {
+  min-inline-size: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+  font-weight: var(--cui-font-weight-strong, 680);
+}
+
 button {
   cursor: pointer;
 

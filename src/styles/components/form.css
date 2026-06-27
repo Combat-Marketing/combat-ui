@@ -216,37 +216,6 @@ cui-field[data-invalid] :where(.cui-input, .cui-select, .cui-textarea) {
 }
 
 /**
- * Resets the browser's default `<fieldset>` chrome (border,
- * padding, margins) and replaces it with a stacked grid layout
- * with `--cui-space-3` gap. Inner `<legend>` gets bold weight and
- * `--cui-space-2` bottom margin. Use to group related form fields
- * semantically without the default visual box.
- *
- * @block cui-fieldset
- * @summary Reset `<fieldset>` with stacked grid layout for grouped fields.
- * @example
- *   <fieldset class="cui-fieldset">
- *     <legend>Shipping address</legend>
- *     <label class="cui-field-label">Street</label>
- *     <input class="cui-input" name="street">
- *     <label class="cui-field-label">City</label>
- *     <input class="cui-input" name="city">
- *   </fieldset>
- */
-.cui-fieldset {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: var(--cui-space-3, 0.75rem);
-}
-
-.cui-fieldset > legend {
-  font-weight: var(--cui-font-weight-strong, 680);
-  margin-block-end: var(--cui-space-2, 0.5rem);
-}
-
-/**
  * Standalone field label — bold, full-width, with `--cui-space-1`
  * bottom margin to gap from the control. Use on `<label>` elements
  * paired with `.cui-input` / `.cui-select` / `.cui-textarea`.

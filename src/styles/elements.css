@@ -38,10 +38,10 @@ cui-field {
    injects only the burger toggle, so the bar lays out identically before and
    after the element upgrades. No `:not(:defined)` reserve-layout is needed. */
 
-/* Tabs (cui-tabs) renders no shadow structure — it enhances `.cui-tabs` /
-   `.cui-tablist` / `.cui-tab` light-DOM markup, styled by
-   src/styles/components/tabs.css. The element-level grid layout is set in the
-   box-model baselines above. */
+/* Tabs (cui-tabs) renders no shadow structure — it enhances the `.cui-tablist`
+   / `.cui-tab` light-DOM markup, styled by src/styles/components/tabs.css. The
+   element-level grid layout (tablist above the active panel) is set in the
+   box-model baselines above; there is no light-DOM container class. */
 
 /* Field ------------------------------------------------------------------ */
 cui-field > [slot="help"] {

@@ -287,6 +287,24 @@
                   <code>.cui-itinerary-marker</code> and every <code>--cui-itinerary-*</code> knob are
                   preserved.
                 </li>
+                <li><code>.cui-fieldset</code> - group fields with a plain
+                  <code>&lt;fieldset class="cui-stack"&gt;</code> (set <code>--cui-stack-gap</code> for the
+                  rhythm; the old default was <code>--cui-space-3</code>). The native
+                  <code>&lt;fieldset&gt;</code> box reset and the bold <code>&lt;legend&gt;</code> now live in
+                  the reset layer, so any fieldset/legend gets them for free.
+                </li>
+                <li><code>.cui-tabs</code> - the light-DOM container class was vestigial; the
+                  <code>&lt;cui-tabs&gt;</code> element's grid layout (tablist above the active panel) is set
+                  on the element itself in <code>elements.css</code>. <code>.cui-tablist</code> and
+                  <code>.cui-tab</code> (the controls the component reads) are unchanged.
+                </li>
+                <li><code>.cui-pagination-list</code> / <code>.cui-pagination-item</code> - the pagination
+                  <code>&lt;nav&gt;</code> now styles its own <code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code>
+                  descendants (contextual markup), so the wrapper classes are gone. The flex-wrap row, native
+                  list reset, and <code>--cui-pagination-gap</code> are preserved on <code>.cui-pagination ul</code>;
+                  <code>.cui-pagination</code>, <code>.cui-pagination-link</code>,
+                  <code>.cui-pagination-ellipsis</code>, and <code>.cui-pagination-status</code> are kept.
+                </li>
               </ul>
             </div>
 
@@ -434,6 +452,12 @@
                   <code>--cui-content-card-*</code> knobs (shadow suppressed). The <code>compact</code>
                   / <code>bare</code> / <code>data-status</code> variants are unchanged. (The container
                   and body slot classes are dropped - see Removed.)
+                </li>
+                <li>The reset layer now normalizes <code>&lt;fieldset&gt;</code> (strips the groove border,
+                  padding, margin, and the <code>min-inline-size</code> quirk) and <code>&lt;legend&gt;</code>
+                  (drops inline padding, applies the strong font weight). Any bare fieldset/legend now lays
+                  out cleanly without a wrapper class; this is what lets <code>.cui-fieldset</code> retire in
+                  favour of <code>&lt;fieldset class="cui-stack"&gt;</code> (see Removed).
                 </li>
               </ul>
             </div>
