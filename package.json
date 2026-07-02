@@ -1,8 +1,11 @@
 {
   "name": "@combat-ui/core",
-  "version": "0.6.0",
+  "version": "0.6.0-alpha.1",
   "description": "A responsive, customizable web component framework targeting modern baseline web standards.",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Combat-Marketing/combat-ui.git"
+  },
   "engines": {
     "node": ">=24"
   },
@@ -25,6 +28,10 @@
     }
   ],
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "sideEffects": [
     "**/*.css",
     "./src/auto.ts",
