@@ -49,7 +49,7 @@ async function main() {
     OUTPUT,
     JSON.stringify(
       {
-        schemaVersion: "1.1.0",
+        schemaVersion: "1.2.0",
         blocks: allBlocks,
         tokenGroups: allTokenGroups,
       },

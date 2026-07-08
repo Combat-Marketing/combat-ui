@@ -23,6 +23,7 @@
  * @typedef {object} NamedItem
  * @property {string} name
  * @property {string} [description]
+ * @property {string} [value] Default value, when the documented rule declares the property.
  *
  * @typedef {object} Block
  * @property {string} name
@@ -67,18 +68,85 @@ export function parseCssDoc(cssText, sourcePath) {
     const offset = match.index ?? 0;
     const sourceLine = countLinesUpTo(text, offset);
     const parsed = parseCommentBody(body);
+    const declaredValues = parseCustomPropertyValues(
+      extractRuleBody(text, offset + match[0].length),
+    );
 
     if (parsed.tags.block?.[0]?.trim()) {
       result.blocks.push(
-        buildBlock(parsed, rawSelector, sourcePath, sourceLine),
+        buildBlock(parsed, rawSelector, sourcePath, sourceLine, declaredValues),
       );
     } else if (parsed.tags["token-group"]?.[0]?.trim()) {
       result.tokenGroups.push(
-        buildTokenGroup(parsed, rawSelector, sourcePath, sourceLine),
+        buildTokenGroup(
+          parsed,
+          rawSelector,
+          sourcePath,
+          sourceLine,
+          declaredValues,
+        ),
       );
     }
   }
   return result;
+}
+
+/**
+ * Returns the rule body starting right after its opening brace, up to the
+ * matching closing brace.
+ *
+ * @param {string} text
+ * @param {number} bodyStart Offset just past the rule's `{`.
+ * @returns {string}
+ */
+function extractRuleBody(text, bodyStart) {
+  let depth = 1;
+  for (let i = bodyStart; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === "{") depth++;
+    else if (ch === "}" && --depth === 0) return text.slice(bodyStart, i);
+  }
+  return text.slice(bodyStart);
+}
+
+/**
+ * Extracts `--custom-property: value` declarations from a rule body.
+ * Declaration values cannot contain a top-level `;`, so splitting on it is
+ * safe for the token stylesheets this parser targets.
+ *
+ * @param {string} body
+ * @returns {Map<string, string>}
+ */
+function parseCustomPropertyValues(body) {
+  /** @type {Map<string, string>} */
+  const values = new Map();
+  for (const declaration of body.split(";")) {
+    const colon = declaration.indexOf(":");
+    if (colon === -1) continue;
+    const name = declaration.slice(0, colon).trim();
+    if (!name.startsWith("--")) continue;
+    const value = declaration
+      .slice(colon + 1)
+      .replace(/\s+/g, " ")
+      .trim();
+    if (value) values.set(name, value);
+  }
+  return values;
+}
+
+/**
+ * Attaches declared default values to named items in place.
+ *
+ * @param {NamedItem[]} items
+ * @param {Map<string, string>} values
+ * @returns {NamedItem[]}
+ */
+function attachValues(items, values) {
+  for (const item of items) {
+    const value = values.get(item.name);
+    if (value !== undefined) item.value = value;
+  }
+  return items;
 }
 
 /**
@@ -156,9 +224,10 @@ function stripCommentPrefix(line) {
  * @param {string} rawSelector
  * @param {string} sourcePath
  * @param {number} sourceLine
+ * @param {Map<string, string>} declaredValues
  * @returns {Block}
  */
-function buildBlock(parsed, rawSelector, sourcePath, sourceLine) {
+function buildBlock(parsed, rawSelector, sourcePath, sourceLine, declaredValues) {
   const { description, tags } = parsed;
   const name = (tags.block?.[0] ?? "").trim();
   const summary = tags.summary?.[0]?.replace(/\s+/g, " ").trim();
@@ -170,9 +239,12 @@ function buildBlock(parsed, rawSelector, sourcePath, sourceLine) {
     selector,
     variants: (tags.variant ?? []).flatMap(parseMultiNamed),
     tones: (tags.tone ?? []).flatMap(parseMultiNamed),
-    cssVars: (tags.cssvar ?? [])
-      .map(parseSingleNamed)
-      .filter((item) => item.name.startsWith("--")),
+    cssVars: attachValues(
+      (tags.cssvar ?? [])
+        .map(parseSingleNamed)
+        .filter((item) => item.name.startsWith("--")),
+      declaredValues,
+    ),
     examples: (tags.example ?? []).map(normalizeExample),
     sourcePath,
     sourceLine,
@@ -187,9 +259,10 @@ function buildBlock(parsed, rawSelector, sourcePath, sourceLine) {
  * @param {string} rawSelector
  * @param {string} sourcePath
  * @param {number} sourceLine
+ * @param {Map<string, string>} declaredValues
  * @returns {TokenGroup}
  */
-function buildTokenGroup(parsed, rawSelector, sourcePath, sourceLine) {
+function buildTokenGroup(parsed, rawSelector, sourcePath, sourceLine, declaredValues) {
   const { description, tags } = parsed;
   const name = (tags["token-group"]?.[0] ?? "").trim();
   const summary = tags.summary?.[0]?.replace(/\s+/g, " ").trim();
@@ -199,9 +272,12 @@ function buildTokenGroup(parsed, rawSelector, sourcePath, sourceLine) {
   const group = {
     name,
     selector,
-    tokens: (tags.cssvar ?? [])
-      .map(parseSingleNamed)
-      .filter((item) => item.name.startsWith("--")),
+    tokens: attachValues(
+      (tags.cssvar ?? [])
+        .map(parseSingleNamed)
+        .filter((item) => item.name.startsWith("--")),
+      declaredValues,
+    ),
     examples: (tags.example ?? []).map(normalizeExample),
     sourcePath,
     sourceLine,
